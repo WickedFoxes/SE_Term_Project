@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public class Comment {
 	private String content;
 	private LocalDateTime writtenDate;
-	private Account wirter;
+	private User wirter;
 	public String getContent() {
 		return content;
 	}
@@ -18,10 +18,10 @@ public class Comment {
 	public void setWrittenDate(LocalDateTime writtenDate) {
 		this.writtenDate = writtenDate;
 	}
-	public Account getWirter() {
+	public User getWriter() {
 		return wirter;
 	}
-	public void setWirter(Account wirter) {
+	public void setWriter(User wirter) {
 		this.wirter = wirter;
 	}
 }

@@ -11,11 +11,11 @@ public class Issue {
 	private LocalDateTime reportedDate;
 	private Priority priority;
 	private State state;
-	private Account reporter;
-	private Account assignee;
-	private Account fixer;
+	private Tester reporter;
+	private Dev assignee;
+	private Dev fixer;
 	public Issue(String title, String description, Priority priority, State state, 
-			Account reporter, Account assignee,Account fixer) {
+			Tester reporter, Dev assignee, Dev fixer) {
 		this.title = title;
 		this.description = description;
 		this.priority = priority;
@@ -54,22 +54,22 @@ public class Issue {
 	public void setState(State state) {
 		this.state = state;
 	}
-	public Account getReporter() {
+	public Tester getReporter() {
 		return reporter;
 	}
-	public void setReporter(Account reporter) {
+	public void setReporter(Tester reporter) {
 		this.reporter = reporter;
 	}
-	public Account getAssignee() {
+	public Dev getAssignee() {
 		return assignee;
 	}
-	public void setAssignee(Account assignee) {
+	public void setAssignee(Dev assignee) {
 		this.assignee = assignee;
 	}
-	public Account getFixer() {
+	public Dev getFixer() {
 		return fixer;
 	}
-	public void setFixer(Account fixer) {
+	public void setFixer(Dev fixer) {
 		this.fixer = fixer;
 	}
 }

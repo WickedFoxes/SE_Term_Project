@@ -4,24 +4,24 @@ import main.domain.enumeration.State;
 
 public class FilterOption {
 	private State state;
-	private Account reporter;
-	private Account assignee;
+	private Tester reporter;
+	private Dev assignee;
 	public State getState() {
 		return state;
 	}
 	public void setState(State state) {
 		this.state = state;
 	}
-	public Account getReporter() {
+	public Tester getReporter() {
 		return reporter;
 	}
-	public void setReporter(Account reporter) {
+	public void setReporter(Tester reporter) {
 		this.reporter = reporter;
 	}
-	public Account getAssignee() {
+	public Dev getAssignee() {
 		return assignee;
 	}
-	public void setAssignee(Account assignee) {
+	public void setAssignee(Dev assignee) {
 		this.assignee = assignee;
 	} 
 }
