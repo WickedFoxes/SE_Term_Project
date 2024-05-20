@@ -1,19 +1,24 @@
 package main.domain;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import main.domain.enumeration.Priority;
 import main.domain.enumeration.State;
 
 public class Issue {
+	private int id;
 	private String title;
 	private String description;
-	private LocalDateTime reportedDate;
+	private Timestamp reportedDate;
 	private Priority priority;
 	private State state;
 	private Tester reporter;
 	private Dev assignee;
 	private Dev fixer;
+	public Issue(String title, String description) {
+		this.title = title;
+		this.description = description;
+	}
 	public Issue(String title, String description, Priority priority, State state, 
 			Tester reporter, Dev assignee, Dev fixer) {
 		this.title = title;
@@ -36,10 +41,10 @@ public class Issue {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public LocalDateTime getReportedDate() {
+	public Timestamp getReportedDate() {
 		return reportedDate;
 	}
-	public void setReportedDate(LocalDateTime reportedDate) {
+	public void setReportedDate(Timestamp reportedDate) {
 		this.reportedDate = reportedDate;
 	}
 	public Priority getPriority() {
@@ -71,5 +76,11 @@ public class Issue {
 	}
 	public void setFixer(Dev fixer) {
 		this.fixer = fixer;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }
