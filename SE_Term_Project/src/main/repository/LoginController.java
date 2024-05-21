@@ -12,14 +12,11 @@ public class LoginController {
 		this.repo = r;
 	}
 	
-	public void login(String id, String pw) {
-		if(!repo.contains(id)) {
-			//popup
-			return;
-		}
+	public boolean tryLogin(String id, String pw) {
+		if(!repo.contains(id)) return false;
 		User user = repo.find(id);
 		systemManager.setUser(user);
-		//change view
+		return true;
 	}
 	
 	public void logout() {
