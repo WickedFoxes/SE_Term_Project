@@ -11,10 +11,10 @@ import javax.swing.JTextField;
 public class TestView extends JFrame{
     private JLabel j1, j2;
     private JTextField jt1, jt2;
-    private JButton btn;
+    private JButton btn1, btn2;
 	
 	public TestView() {
-        super("J프레임 테스트");
+        super("J");
         setSize(500,500);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -25,27 +25,32 @@ public class TestView extends JFrame{
         jt1 = new JTextField();
         jt2 = new JTextField();
         
-        btn = new JButton("Login");
+        btn1 = new JButton("Login");
+        btn2 = new JButton("Login");
         
         add(j1);
         add(jt1);
         add(j2);
         add(jt2);
-        add(btn);
+        add(btn1);
+        add(btn2);
         
         setVisible(true);
 	}
 	
 	public String getID() {
-		return j1.getText();
+		return jt1.getText();
 	}
 	
 	public String getPW() {
-		return j2.getText();
+		return jt2.getText();
 	}
 	
-	public void setListener(ActionListener listener) {
-		btn.addActionListener(listener);
+	public void setLoginListener(ActionListener listener) {
+		btn1.addActionListener(listener);
+	}
+	public void setLogoutListener(ActionListener listener) {
+		btn2.addActionListener(listener);
 	}
 	
 	

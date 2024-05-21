@@ -21,6 +21,5 @@ public class LoginController {
 	
 	public void logout() {
 		systemManager.setUser(null);
-		//change view
 	}
 }

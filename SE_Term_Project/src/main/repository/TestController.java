@@ -10,7 +10,7 @@ public class TestController implements ActionListener {
 	public TestController(LoginController l, TestView view) {
 		this.loginController = l;
 		this.view = view;
-		this.view.setListener(this);
+		this.view.setLoginListener(this);
 	}
 	
 	@Override
