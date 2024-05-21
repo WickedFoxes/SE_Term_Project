@@ -1,12 +1,12 @@
 package main.domain;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Project {
+	private int id;
 	private String name;
-	private LocalDateTime createdDate;
+	private Timestamp createdDate;
 	public Project(String name) {
 		this.name = name;
-		this.createdDate = LocalDateTime.now(); 
 	}
 	public String getName() {
 		return name;
@@ -14,10 +14,16 @@ public class Project {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public LocalDateTime getCreatedDate() {
+	public Timestamp getCreatedDate() {
 		return createdDate;
 	}
-	public void setCreatedDate(LocalDateTime createdDate) {
+	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }

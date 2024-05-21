@@ -1,10 +1,12 @@
 package main.domain;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Comment {
+	private int id;
 	private String content;
-	private LocalDateTime writtenDate;
+	private Timestamp writtenDate;
 	private User wirter;
 	public String getContent() {
 		return content;
@@ -12,10 +14,10 @@ public class Comment {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public LocalDateTime getWrittenDate() {
+	public Timestamp getWrittenDate() {
 		return writtenDate;
 	}
-	public void setWrittenDate(LocalDateTime writtenDate) {
+	public void setWrittenDate(Timestamp writtenDate) {
 		this.writtenDate = writtenDate;
 	}
 	public User getWriter() {
@@ -23,5 +25,11 @@ public class Comment {
 	}
 	public void setWriter(User wirter) {
 		this.wirter = wirter;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 }
