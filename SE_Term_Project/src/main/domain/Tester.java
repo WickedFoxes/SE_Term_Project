@@ -4,11 +4,11 @@ import main.domain.enumeration.Authority;
 
 public class Tester extends User{
 
-	public Tester(String id, String password) {
-		super(id, password);
+	public Tester(int id, String accountID, String password) {
+		super(id, accountID, password);
 	}
-	
-	@Ovrride
+
+	@Override
 	public Authority getAuthority() {
 		return Authority.TESTER;
 	}

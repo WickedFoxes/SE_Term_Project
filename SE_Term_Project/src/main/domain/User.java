@@ -1,17 +1,25 @@
 package main.domain;
 
+import main.domain.enumeration.Authority;
+
 public abstract class User {
-	private String id;
+	private int id;
+	private String accountID;
 	private String password;
-	public User(String id, String password) {
-		this.setId(id);
+	
+	public User(int id, String accountID, String password) {
+		this.id = id;
+		this.setAccountID(accountID);
 		this.setPassword(password);
 	}
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public String getAccountID() {
+		return accountID;
+	}
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
 	}
 	public String getPassword() {
 		return password;

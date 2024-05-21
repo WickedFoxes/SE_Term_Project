@@ -1,7 +1,9 @@
-package main.repository;
+package main.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import main.view.TestView;
 
 public class TestController2 implements ActionListener {
 	private LoginController loginController;

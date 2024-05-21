@@ -1,4 +1,4 @@
-package main.repository;
+package main.view;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;

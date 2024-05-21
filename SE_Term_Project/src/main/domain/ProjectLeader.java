@@ -1,9 +1,16 @@
 package main.domain;
 
-public class ProjectLeader extends User{
+import main.domain.enumeration.Authority;
 
-	public ProjectLeader(String id, String password) {
-		super(id, password);
+public class ProjectLeader extends User{
+	
+	public ProjectLeader(int id, String accountID, String password) {
+		super(id, accountID, password);
+	}
+
+	@Override
+	public Authority getAuthority() {
+		return Authority.PL;
 	}
 
 }
