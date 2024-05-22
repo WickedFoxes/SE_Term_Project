@@ -1,14 +1,14 @@
-package main.repository;
+package main.model;
 
 import main.domain.SystemManager;
 import main.domain.User;
+import main.repository.AccountRepo;
 
-public class LoginController {
-	private SystemManager systemManager;
+public class LoginModel extends Model {
 	private AccountRepo repo;
 	
-	public LoginController(SystemManager s, AccountRepo r) {
-		this.systemManager = s;
+	public LoginModel(SystemManager s, AccountRepo r) {
+		super(s);
 		this.repo = r;
 	}
 	

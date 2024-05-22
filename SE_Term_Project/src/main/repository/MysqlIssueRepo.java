@@ -111,14 +111,14 @@ public class MysqlIssueRepo implements IssueRepo{
                 String userid = rs.getString(2);
                 String pw = rs.getString(3);
                 
-                if(rs.getString(4).equals("PL"))
-                	user = new ProjectLeader(userid, pw);
-                else if(rs.getString(4).equals("TESTER"))
-                	user = new Tester(userid, pw);
-                else if(rs.getString(4).equals("DEV"))
-                	user = new Dev(userid, pw);
-                else if(rs.getString(4).equals("ADMIN"))
-                	user = new Admin(userid, pw);
+//                if(rs.getString(4).equals("PL"))
+//                	user = new ProjectLeader(userid, pw);
+//                else if(rs.getString(4).equals("TESTER"))
+//                	user = new Tester(userid, pw);
+//                else if(rs.getString(4).equals("DEV"))
+//                	user = new Dev(userid, pw);
+//                else if(rs.getString(4).equals("ADMIN"))
+//                	user = new Admin(userid, pw);
             }
             
             connection.close(); 
@@ -148,21 +148,21 @@ public class MysqlIssueRepo implements IssueRepo{
             pstm.setString(2, issue.getDescription());
             pstm.setString(3, issue.getPriority().name());
             pstm.setString(4, issue.getState().name());
-            if(issue.getReporter() == null)
-            	pstm.setNull(5, Types.INTEGER);
-            else
-            	pstm.setInt(5, getAccount(issue.getReporter().getId()));
-            
-            if(issue.getAssignee() == null)
-            	pstm.setNull(6, Types.INTEGER);
-            else
-            	pstm.setInt(6, getAccount(issue.getAssignee().getId()));
-            
-            if(issue.getFixer() == null)
-            	pstm.setNull(7, Types.INTEGER);
-            else
-            	pstm.setInt(7, getAccount(issue.getFixer().getId()));
-            
+//            if(issue.getReporter() == null)
+//            	pstm.setNull(5, Types.INTEGER);
+//            else
+//            	pstm.setInt(5, getAccount(issue.getReporter().getId()));
+//            
+//            if(issue.getAssignee() == null)
+//            	pstm.setNull(6, Types.INTEGER);
+//            else
+//            	pstm.setInt(6, getAccount(issue.getAssignee().getId()));
+//            
+//            if(issue.getFixer() == null)
+//            	pstm.setNull(7, Types.INTEGER);
+//            else
+//            	pstm.setInt(7, getAccount(issue.getFixer().getId()));
+//            
             pstm.setInt(8, project.getId());
             
             int res = pstm.executeUpdate();
@@ -184,7 +184,7 @@ public class MysqlIssueRepo implements IssueRepo{
         PreparedStatement pstm = null;
         List<Issue> issues = new ArrayList<>();
         
-        Authority auth = getAuthority(user.getId());
+      //  Authority auth = getAuthority(user.getId());
         
         String sql = "select * from Issue where project_id=?";
         
@@ -219,16 +219,16 @@ public class MysqlIssueRepo implements IssueRepo{
             	if(fixer != null)
             		temp.setFixer(fixer);
             	
-            	// user authority check
-            	if(auth == Authority.DEV) {
-            		if(assignee == null) continue;
-            		if(!assignee.getId().equals(user.getId())) continue;
-            	}
-            	if(auth == Authority.TESTER) {
-            		if(reporter == null) continue;
-            		if(!reporter.getId().equals(user.getId())) continue;
-            	}
-            	
+//            	// user authority check
+//            	if(auth == Authority.DEV) {
+//            		if(assignee == null) continue;
+//            		if(!assignee.getId().equals(user.getId())) continue;
+//            	}
+//            	if(auth == Authority.TESTER) {
+//            		if(reporter == null) continue;
+//            		if(!reporter.getId().equals(user.getId())) continue;
+//            	}
+//            	
             	issues.add(temp);
             }
             
@@ -249,7 +249,7 @@ public class MysqlIssueRepo implements IssueRepo{
         Tester filter_reporter = option.getReporter();
         State filter_state = option.getState();
         
-        Authority auth = getAuthority(user.getId());
+        //Authority auth = getAuthority(user.getId());
         
         String sql = "select * from Issue where project_id=?";
         
@@ -285,23 +285,23 @@ public class MysqlIssueRepo implements IssueRepo{
             		temp.setFixer(fixer);
             	
             	// user authority check
-            	if(auth == Authority.DEV) {
-            		if(assignee == null) continue;
-            		if(!assignee.getId().equals(user.getId())) continue;
-            	}
-            	if(auth == Authority.TESTER) {
-            		if(reporter == null) continue;
-            		if(!reporter.getId().equals(user.getId())) continue;
-            	}
-            	
-            	// filtering option check
-            	if(filter_assignee != null)
-            		if(!filter_assignee.getId().equals(assignee.getId())) continue;
-            	if(filter_reporter != null)
-            		if(!filter_reporter.getId().equals(reporter.getId())) continue;
-            	if(filter_state != null)
-            		if(filter_state != temp.getState()) continue;
-            	
+//            	if(auth == Authority.DEV) {
+//            		if(assignee == null) continue;
+//            		if(!assignee.getId().equals(user.getId())) continue;
+//            	}
+//            	if(auth == Authority.TESTER) {
+//            		if(reporter == null) continue;
+//            		if(!reporter.getId().equals(user.getId())) continue;
+//            	}
+//            	
+//            	// filtering option check
+//            	if(filter_assignee != null)
+//            		if(!filter_assignee.getId().equals(assignee.getId())) continue;
+//            	if(filter_reporter != null)
+//            		if(!filter_reporter.getId().equals(reporter.getId())) continue;
+//            	if(filter_state != null)
+//            		if(filter_state != temp.getState()) continue;
+//            	
             	issues.add(temp);
             }
             connection.close(); 
@@ -358,7 +358,7 @@ public class MysqlIssueRepo implements IssueRepo{
             connection = DriverManager.getConnection(jdbc_connect);
 
             pstm = connection.prepareStatement(sql);
-            pstm.setInt(1, getAccount(assignee.getId()));
+            //pstm.setInt(1, getAccount(assignee.getId()));
             pstm.setInt(2, issue.getId());
             
             int res = pstm.executeUpdate();
@@ -391,7 +391,7 @@ public class MysqlIssueRepo implements IssueRepo{
 
             pstm = connection.prepareStatement(sql);
             pstm.setInt(1, issue.getId());
-            pstm.setInt(2, getAccount(fixer.getId()));
+            //pstm.setInt(2, getAccount(fixer.getId()));
             
             int res = pstm.executeUpdate();
             if(res > 0 ) {

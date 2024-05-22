@@ -1,4 +1,4 @@
-package main.repository;
+package main.model;
 
 import main.domain.Dev;
 import main.domain.Project;
@@ -6,13 +6,14 @@ import main.domain.ProjectLeader;
 import main.domain.SystemManager;
 import main.domain.Tester;
 import main.domain.User;
+import main.repository.ProjectRepo;
 
-public class ProjectListController {
+public class ProjectListModel extends Model {
 	private SystemManager systemManager;
 	private ProjectRepo repo;
 	
-	public ProjectListController(SystemManager s, ProjectRepo r) {
-		this.systemManager = s;
+	public ProjectListModel(SystemManager s, ProjectRepo r) {
+		super(s);
 		this.repo = r;
 	}
 	

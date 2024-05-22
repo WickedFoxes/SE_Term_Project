@@ -78,14 +78,14 @@ public class MysqlCommentRepo implements CommentRepo{
                 String userid = rs.getString(2);
                 String pw = rs.getString(3);
                 
-                if(rs.getString(4).equals("PL"))
-                	user = new ProjectLeader(userid, pw);
-                else if(rs.getString(4).equals("TESTER"))
-                	user = new Tester(userid, pw);
-                else if(rs.getString(4).equals("DEV"))
-                	user = new Dev(userid, pw);
-                else if(rs.getString(4).equals("ADMIN"))
-                	user = new Admin(userid, pw);
+//                if(rs.getString(4).equals("PL"))
+//                	user = new ProjectLeader(userid, pw);
+//                else if(rs.getString(4).equals("TESTER"))
+//                	user = new Tester(userid, pw);
+//                else if(rs.getString(4).equals("DEV"))
+//                	user = new Dev(userid, pw);
+//                else if(rs.getString(4).equals("ADMIN"))
+//                	user = new Admin(userid, pw);
             }
             
             connection.close(); 
@@ -111,7 +111,7 @@ public class MysqlCommentRepo implements CommentRepo{
 
             pstm = connection.prepareStatement(sql);
             pstm.setString(1, comment.getContent());
-            pstm.setInt(2, getAccount(user.getId()));
+            //pstm.setInt(2, getAccount(user.getId()));
             pstm.setInt(3, issue.getId());
             
             int res = pstm.executeUpdate();
