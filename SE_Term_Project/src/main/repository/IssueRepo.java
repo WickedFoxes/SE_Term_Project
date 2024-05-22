@@ -13,7 +13,7 @@ public interface IssueRepo {
 	void add(Project project, Issue issue);
 	void setAssignee(Issue issue, Dev assignee);
 	void setFixer(Issue issue, Dev fixer);
-	List<Issue> find(User user, Project project);
-	List<Issue> find(User user, Project project, FilterOption option);
+	List<Issue> findAll(Project project, User user);
+	List<Issue> findAll(Project project, User user, FilterOption option);
 	void setState(Issue issue, State state);
 }
