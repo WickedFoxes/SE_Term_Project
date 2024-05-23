@@ -89,6 +89,7 @@ public class MysqlIssueRepo implements IssueRepo{
             pstm.setString(2, issue.getDescription());
             pstm.setString(3, issue.getPriority().name());
             pstm.setString(4, issue.getState().name());
+
             if(issue.getReporter() == null)
             	pstm.setNull(5, Types.INTEGER);
             else
@@ -102,7 +103,7 @@ public class MysqlIssueRepo implements IssueRepo{
             if(issue.getFixer() == null)
             	pstm.setNull(7, Types.INTEGER);
             else
-            	pstm.setInt(7, issue.getAssignee().getId());
+            	pstm.setInt(7, issue.getFixer().getId());
             
             pstm.setInt(8, project.getId());
             
@@ -191,6 +192,7 @@ public class MysqlIssueRepo implements IssueRepo{
         State filter_state = option.getState();
         
         Authority auth = user.getAuthority();
+
         
         String sql = "select * from Issue where project_id=?";
         
@@ -303,6 +305,7 @@ public class MysqlIssueRepo implements IssueRepo{
             connection = DriverManager.getConnection(jdbc_connect);
 
             pstm = connection.prepareStatement(sql);
+
             pstm.setInt(1, assignee.getId());
             pstm.setInt(2, issue.getId());
             
