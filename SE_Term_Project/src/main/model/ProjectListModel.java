@@ -28,8 +28,8 @@ public class ProjectListModel extends Model {
 		}
 	}
 	
-	public Project[] getProjectList() {
-		User user = systemManager.getUser();
-		return repo.find(user);
-	}
+//	public Project[] getProjectList() {
+//		User user = systemManager.getUser();
+//		return repo.find(user);
+//	}
 }
