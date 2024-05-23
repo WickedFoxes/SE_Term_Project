@@ -1,31 +1,19 @@
 package main.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class SwingLoginView extends JFrame{
-    private JPanel panel;
+public class SwingLoginView extends SwingView{
 	private JLabel idLabel, pwLabel;
     private JTextField idTextField, pwTextField;
     private JButton loginButton;
     
 	public SwingLoginView() {
-        super("Login");
-        setSize(500, 250);
-        setLayout(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        super(500, 250);
+
         idLabel = new JLabel("ID");
         idLabel.setBounds(50, 50, 50, 50);
         pwLabel = new JLabel("PW");
