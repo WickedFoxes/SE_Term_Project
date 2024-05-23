@@ -19,15 +19,12 @@ public class Issue {
 		this.title = title;
 		this.description = description;
 	}
-	public Issue(String title, String description, Priority priority, State state, 
-			Tester reporter, Dev assignee, Dev fixer) {
+	public Issue(String title, String description, Priority priority, State state, Tester reporter) {
 		this.title = title;
 		this.description = description;
 		this.priority = priority;
 		this.state = state;
-		this.setReporter(reporter);
-		this.setAssignee(assignee);
-		this.setFixer(fixer);
+		this.reporter = reporter;
 	}
 	public String getTitle() {
 		return title;

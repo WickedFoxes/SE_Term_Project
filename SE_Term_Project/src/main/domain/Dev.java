@@ -3,9 +3,8 @@ package main.domain;
 import main.domain.enumeration.Authority;
 
 public class Dev extends User{
-
-	public Dev(int id, String accountID, String password) {
-		super(id, accountID, password);
+	public Dev(String accountID, String password) {
+		super(accountID, password);
 	}
 
 	@Override

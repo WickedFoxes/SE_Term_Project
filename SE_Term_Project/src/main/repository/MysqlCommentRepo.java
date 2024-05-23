@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,36 +25,11 @@ public class MysqlCommentRepo implements CommentRepo{
 	private String jdbc_name = "org.sqlite.JDBC";
 	private String jdbc_connect = "jdbc:sqlite:SE_Term_Project.sqlite3";
 	
-	private int getAccount(String id) {
-        Connection connection = null;
-        PreparedStatement pstm = null;
-        
-        int account_id = -1;
-        String sql = "select * from Account where userid=?";
-        
-        try {
-			Class.forName(jdbc_name);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-        try {
-            connection = DriverManager.getConnection(jdbc_connect);
-
-            pstm = connection.prepareStatement(sql);
-            pstm.setString(1, id);
-            
-            ResultSet rs = pstm.executeQuery();
-            
-            if(rs.next()) {
-            	account_id = rs.getInt(1);
-            }
-            
-            connection.close(); 
-        } catch(SQLException e){
-            System.err.println(e.getMessage());
-        }
-        return account_id;
+	public void setJDBC(String name, String con) {
+		this.jdbc_name = name;
+		this.jdbc_connect = con;
 	}
+	
 	private User getUser(int id) {		
         Connection connection = null;
         PreparedStatement pstm = null;
@@ -75,17 +51,20 @@ public class MysqlCommentRepo implements CommentRepo{
             ResultSet rs = pstm.executeQuery();
             
             if(rs.next()) {
-                String userid = rs.getString(2);
+                String accountid = rs.getString(2);
                 String pw = rs.getString(3);
+                Authority auth = Authority.valueOf(rs.getString(4));
                 
-//                if(rs.getString(4).equals("PL"))
-//                	user = new ProjectLeader(userid, pw);
-//                else if(rs.getString(4).equals("TESTER"))
-//                	user = new Tester(userid, pw);
-//                else if(rs.getString(4).equals("DEV"))
-//                	user = new Dev(userid, pw);
-//                else if(rs.getString(4).equals("ADMIN"))
-//                	user = new Admin(userid, pw);
+                if(auth == Authority.PL)
+                	user = new ProjectLeader(accountid, pw);
+                else if(auth == Authority.TESTER)
+                	user = new Tester(accountid, pw);
+                else if(auth == Authority.DEV)
+                	user = new Dev(accountid, pw);
+                else if(auth == Authority.ADMIN)
+                	user = new Admin(accountid, pw);
+                
+                user.setId(id);
             }
             
             connection.close(); 
@@ -95,12 +74,12 @@ public class MysqlCommentRepo implements CommentRepo{
         return user;
 	}
 	@Override
-	public void add(User user, Issue issue, Comment comment) {
+	public void add(Issue issue, Comment comment) {
         Connection connection = null;
         PreparedStatement pstm = null;
         String sql = "insert into Comment (\"content\", \"created_date\", \"writer\", \"issue_id\") "
         		+ "values (?, datetime(\"now\"), ?, ? ) ";
-
+        
         try {
 			Class.forName(jdbc_name);
 		} catch (ClassNotFoundException e) {
@@ -111,7 +90,7 @@ public class MysqlCommentRepo implements CommentRepo{
 
             pstm = connection.prepareStatement(sql);
             pstm.setString(1, comment.getContent());
-            //pstm.setInt(2, getAccount(user.getId()));
+            pstm.setInt(2, comment.getWriter().getId());
             pstm.setInt(3, issue.getId());
             
             int res = pstm.executeUpdate();
@@ -128,7 +107,7 @@ public class MysqlCommentRepo implements CommentRepo{
 	}
 
 	@Override
-	public List<Comment> find(Issue issue) {
+	public List<Comment> findAll(Issue issue) {
         Connection connection = null;
         PreparedStatement pstm = null;
         List<Comment> comments = new ArrayList<>();
@@ -148,16 +127,17 @@ public class MysqlCommentRepo implements CommentRepo{
             
             ResultSet rs = pstm.executeQuery();
             while(rs.next()) {
-            	Comment temp = new Comment();
-            	temp.setContent(rs.getString(2));
-            	temp.setWrittenDate(rs.getTimestamp(3));
+            	String content = rs.getString(2);
+            	Timestamp writtenDate = rs.getTimestamp(3);
+            	User tempuser = getUser(rs.getInt(4));
+            	int issue_id = rs.getInt(5);
+            	Comment temp = new Comment(content, tempuser);
+            	temp.setWrittenDate(writtenDate);
             	
-            	User user = getUser(rs.getInt(4));
-            	temp.setWriter(user);
+            	if(issue_id != issue.getId()) continue;
             	
             	comments.add(temp);
             }
-            
             connection.close(); 
         } catch(SQLException e){
             System.err.println(e.getMessage());

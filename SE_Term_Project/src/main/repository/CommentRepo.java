@@ -6,6 +6,6 @@ import main.domain.User;
 import java.util.List;
 
 public interface CommentRepo {
-	void add(User user, Issue issue, Comment comment);
-	List<Comment> find(Issue issue);
+	void add(Issue issue, Comment comment);
+	List<Comment> findAll(Issue issue);
 }

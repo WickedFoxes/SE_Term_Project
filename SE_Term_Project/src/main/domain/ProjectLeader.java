@@ -4,8 +4,8 @@ import main.domain.enumeration.Authority;
 
 public class ProjectLeader extends User{
 	
-	public ProjectLeader(int id, String accountID, String password) {
-		super(id, accountID, password);
+	public ProjectLeader(String accountID, String password) {
+		super(accountID, password);
 	}
 
 	@Override

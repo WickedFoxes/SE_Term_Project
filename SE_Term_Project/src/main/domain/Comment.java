@@ -7,7 +7,12 @@ public class Comment {
 	private int id;
 	private String content;
 	private Timestamp writtenDate;
-	private User wirter;
+	private User writer;
+	public Comment(String content, User writer) {
+		this.content=content;
+		this.writer=writer;
+	}
+	
 	public String getContent() {
 		return content;
 	}
@@ -21,10 +26,10 @@ public class Comment {
 		this.writtenDate = writtenDate;
 	}
 	public User getWriter() {
-		return wirter;
+		return writer;
 	}
 	public void setWriter(User wirter) {
-		this.wirter = wirter;
+		this.writer = wirter;
 	}
 	public int getId() {
 		return id;
