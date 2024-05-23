@@ -5,13 +5,105 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="main/resources/" kind="src" path="src"/>
+	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.45.3.0.jar"/>
 	<classpathentry kind="lib" path="lib/slf4j-api-2.0.9.jar"/>
 	<classpathentry kind="lib" path="lib/junit-jupiter-api-5.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-jupiter-5.4.2.jar"/>
 	<classpathentry kind="lib" path="lib/junit-jupiter-engine-5.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/junit-jupiter-params-5.3.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/accessors-smart-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring/android-json-0.0.20131108.vaadin1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/apiguardian-api-1.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/asm-9.3.jar"/>
+	<classpathentry kind="lib" path="lib/spring/assertj-core-3.24.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/attoparser-2.0.7.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/awaitility-4.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring/byte-buddy-1.12.21.jar"/>
+	<classpathentry kind="lib" path="lib/spring/byte-buddy-agent-1.14.9.jar"/>
+	<classpathentry kind="lib" path="lib/spring/hamcrest-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/HikariCP-5.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jackson-annotations-2.15.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jackson-core-2.15.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jackson-databind-2.15.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jackson-datatype-jdk8-2.15.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jackson-datatype-jsr310-2.15.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jackson-module-parameter-names-2.15.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jakarta.activation-api-2.1.3.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jakarta.annotation-api-2.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jakarta.xml.bind-api-4.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jsonassert-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/json-path-2.9.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring/json-smart-2.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring/jul-to-slf4j-2.0.12.jar"/>
+	<classpathentry kind="lib" path="lib/spring/junit-jupiter-5.10.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/junit-jupiter-api-5.10.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/junit-jupiter-engine-5.10.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/junit-jupiter-params-5.10.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/junit-platform-commons-1.10.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/junit-platform-engine-1.10.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/log4j-api-2.21.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/log4j-to-slf4j-2.21.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring/logback-classic-1.4.14.jar"/>
+	<classpathentry kind="lib" path="lib/spring/logback-core-1.4.14.jar"/>
+	<classpathentry kind="lib" path="lib/spring/micrometer-commons-1.12.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/micrometer-observation-1.12.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/mockito-core-5.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring/mockito-junit-jupiter-5.7.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring/objenesis-3.3.jar"/>
+	<classpathentry kind="lib" path="lib/spring/opentest4j-1.3.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring/slf4j-api-2.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/spring/snakeyaml-2.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-aop-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-beans-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-autoconfigure-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-starter-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-starter-jdbc-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-starter-json-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-starter-logging-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-starter-test-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-starter-thymeleaf-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-starter-tomcat-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-starter-web-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-test-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-boot-test-autoconfigure-3.2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-context-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-core-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-expression-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-jcl-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-jdbc-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-test-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-tx-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-web-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/spring-webmvc-6.1.5.jar"/>
+	<classpathentry kind="lib" path="lib/spring/thymeleaf-3.1.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/thymeleaf-spring6-3.1.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/tomcat-embed-core-10.1.19.jar"/>
+	<classpathentry kind="lib" path="lib/spring/tomcat-embed-el-10.1.19.jar"/>
+	<classpathentry kind="lib" path="lib/spring/tomcat-embed-websocket-10.1.19.jar"/>
+	<classpathentry kind="lib" path="lib/spring/unbescape-1.1.6.RELEASE.jar"/>
+	<classpathentry kind="lib" path="lib/spring/xmlunit-core-2.9.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/angus-activation-2.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/antlr4-runtime-4.13.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/byte-buddy-1.14.15.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/classmate-1.5.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/hibernate-commons-annotations-6.0.6.Final.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/hibernate-community-dialects-6.5.2.Final.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/hibernate-core-6.5.2.Final.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/istack-commons-runtime-4.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jakarta.activation-api-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jakarta.inject-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jakarta.persistence-api-3.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jakarta.transaction-api-2.0.1.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jakarta.xml.bind-api-4.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jandex-3.1.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jaxb-core-4.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jaxb-runtime-4.0.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/jboss-logging-3.5.0.Final.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/sqlite-jdbc-3.25.2.jar"/>
+	<classpathentry kind="lib" path="lib/spring-sqlite/txw2-4.0.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
