@@ -1,6 +1,7 @@
 package main.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -17,18 +18,18 @@ public class SwingProjectListView extends SwingView{
 	JPanel projectPanel;
 	List<JButton> projectButtons;
 	
-	public SwingProjectListView() {
-		super(700, 600);
+	public SwingProjectListView(Mediator mediator) {
+		super(mediator, new Dimension(700, 600));
 		
 		logoutButton = new JButton("Logout");
 		logoutButton.setBounds(550, 30, 100, 40);
 		createAccountButton = new JButton("<HTML><body><center>Create<br>Account</center></body></HTML>");
-		createAccountButton.setBounds(400, 90, 100, 40);
+		createAccountButton.setBounds(430, 30, 100, 40);
 		createProjectButton = new JButton("<HTML><body><center>Create<br>Project</center></body></HTML>");
-		createProjectButton.setBounds(520, 90, 100, 40);
+		createProjectButton.setBounds(310, 30, 100, 40);
 
 		projectPanel = new JPanel();
-		projectPanel.setBounds(80, 150, 540, 380);
+		projectPanel.setBounds(80, 90, 540, 430);
 		projectPanel.setBackground(Color.GREEN);
 		projectPanel.setLayout(new FlowLayout());
 		projectButtons = new ArrayList<JButton>();
@@ -74,15 +75,15 @@ public class SwingProjectListView extends SwingView{
 			button.setText(name);
 			//button.setaction
 		}
-		
-		projectButtons.add();
+//		
+//		projectButtons.add();
 	}
 	
-	public void setCreateAccountButtonVisibility(boolean isVisible) {
+	public void setCreateAccountButtonVisible(boolean isVisible) {
 		createAccountButton.setVisible(isVisible);
 	}
 	
-	public void setCreateProjectButtonVisibility(boolean isVisible) {
+	public void setCreateProjectButtonVisible(boolean isVisible) {
 		createProjectButton.setVisible(isVisible);
 	}
 	

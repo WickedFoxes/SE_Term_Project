@@ -1,14 +1,34 @@
 package main.view;
 
-import javax.swing.JFrame;
+import java.awt.Dimension;
 
-public class SwingView extends JFrame{
-	public SwingView(int x, int y) {
-        super("Issue Handle Program");
-        setSize(x, y);
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+public abstract class SwingView extends JPanel{
+	protected Mediator mediator;
+	private Dimension preferredSize;
+	
+	public SwingView(Mediator mediator, Dimension size) {
+        super();
+        this.mediator = mediator;
+        this.preferredSize = size;
         setLayout(null);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public Dimension getPreferredSize() {
+		return preferredSize;
+	}
+	
+	public void display() {
+		setVisible(true);
+	}
+	
+	public void showMessagePopup(String title, String content, int messageType) {
+		JOptionPane.showMessageDialog(this, content, title, messageType);
+	}
+	
+	public void requestChangeView(String targetViewName) {
+		mediator.notify(this, targetViewName);
 	}
 }

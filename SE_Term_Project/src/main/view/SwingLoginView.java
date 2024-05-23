@@ -1,5 +1,6 @@
 package main.view;
 
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,8 +12,8 @@ public class SwingLoginView extends SwingView{
     private JTextField idTextField, pwTextField;
     private JButton loginButton;
     
-	public SwingLoginView() {
-        super(500, 250);
+	public SwingLoginView(Mediator mediator) {
+        super(mediator, new Dimension(500, 250));
 
         idLabel = new JLabel("ID");
         idLabel.setBounds(50, 50, 50, 50);
