@@ -2,6 +2,9 @@ package main.view;
 
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,6 +48,13 @@ public class SwingLoginView extends SwingView{
 	
 	public void setLoginListener(ActionListener listener) {
 		loginButton.addActionListener(listener);
+	}
+
+	@Override
+	public List<String> getAccessableViewNames() {
+		List<String> list = new ArrayList<String>();
+		list.add("ProjectListView");
+		return list;
 	}
 }
 

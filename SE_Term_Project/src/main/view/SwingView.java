@@ -1,6 +1,7 @@
 package main.view;
 
 import java.awt.Dimension;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,10 +21,6 @@ public abstract class SwingView extends JPanel{
 		return preferredSize;
 	}
 	
-	public void display() {
-		setVisible(true);
-	}
-	
 	public void showMessagePopup(String title, String content, int messageType) {
 		JOptionPane.showMessageDialog(this, content, title, messageType);
 	}
@@ -31,4 +28,6 @@ public abstract class SwingView extends JPanel{
 	public void requestChangeView(String targetViewName) {
 		mediator.notify(this, targetViewName);
 	}
+	
+	public abstract List<String> getAccessableViewNames();
 }
