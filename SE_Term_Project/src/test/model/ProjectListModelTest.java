@@ -75,8 +75,8 @@ public class ProjectListModelTest {
     	select_tester.add((Tester)testers.get(0));
     	select_tester.add((Tester)testers.get(1));
     	
-    	projectList_model.createProject("project1", select_pl1, select_dev, select_tester);
-    	projectList_model.createProject("project2", select_pl2, select_dev, select_tester);
+    	projectList_model.tryCreateProject("project1", select_pl1, select_dev, select_tester);
+    	projectList_model.tryCreateProject("project2", select_pl2, select_dev, select_tester);
     	
     	int repo_test = project_repo.findAll(pls.get(0)).size();
     	
@@ -99,8 +99,8 @@ public class ProjectListModelTest {
     	select_tester.add((Tester)testers.get(0));
     	select_tester.add((Tester)testers.get(1));
     	
-    	projectList_model.createProject("project1", select_pl1, select_dev, select_tester);
-    	projectList_model.createProject("project2", select_pl2, select_dev, select_tester);
+    	projectList_model.tryCreateProject("project1", select_pl1, select_dev, select_tester);
+    	projectList_model.tryCreateProject("project2", select_pl2, select_dev, select_tester);
     	
     	login_model.logout();
     	login_model.tryLogin("dev1", "dev1");

@@ -18,7 +18,7 @@ public class ProjectListModel extends Model {
 		this.repo = r;
 	}
 	
-	public boolean createProject(String name, ProjectLeader pl, List<Dev> devs, List<Tester> testers) {
+	public boolean tryCreateProject(String name, ProjectLeader pl, List<Dev> devs, List<Tester> testers) {
 		if(getUser() == null) return false;
 		if(getUser().getAuthority() != Authority.ADMIN) return false;
 		

@@ -93,8 +93,8 @@ public class IssueListModelTest {
     	List<Tester> select_tester = new ArrayList<Tester>();
     	select_tester.add((Tester)testers.get(0));
     	select_tester.add((Tester)testers.get(1));
-    	projectListModel.createProject("project1", select_pl1, select_dev, select_tester);
-    	projectListModel.createProject("project2", select_pl2, select_dev, select_tester);
+    	projectListModel.tryCreateProject("project1", select_pl1, select_dev, select_tester);
+    	projectListModel.tryCreateProject("project2", select_pl2, select_dev, select_tester);
     }
     
     @Test
