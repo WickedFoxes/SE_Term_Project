@@ -1,15 +1,17 @@
 package main.model;
 
+import java.util.List;
+
 import main.domain.Dev;
 import main.domain.Project;
 import main.domain.ProjectLeader;
 import main.domain.SystemManager;
 import main.domain.Tester;
 import main.domain.User;
+import main.domain.enumeration.Authority;
 import main.repository.ProjectRepo;
 
 public class ProjectListModel extends Model {
-	private SystemManager systemManager;
 	private ProjectRepo repo;
 	
 	public ProjectListModel(SystemManager s, ProjectRepo r) {
@@ -17,19 +19,29 @@ public class ProjectListModel extends Model {
 		this.repo = r;
 	}
 	
-	public void createProject(String name, ProjectLeader pl, Dev[] devs, Tester[] testers) {
+	public boolean createProject(String name, ProjectLeader pl, List<Dev> devs, List<Tester> testers) {
+		if(super.systemManager.getUser() == null) return false;
+		if(super.systemManager.getUser().getAuthority() != Authority.ADMIN) return false;
+		
 		Project project = new Project(name);
-		repo.add(project);
-		for(int i = 0; i < devs.length; i++) {
-			repo.add(project, devs[i]);
+		project = repo.add(project);
+		
+		repo.add(project, pl);
+		for(Dev dev : devs) {
+			repo.add(project, dev);
 		}
-		for(int i = 0; i < testers.length; i++) {
-			repo.add(project, testers[i]);
+		for(Tester tester : testers) {
+			repo.add(project, tester);
 		}
+		return true;
 	}
 	
-//	public Project[] getProjectList() {
-//		User user = systemManager.getUser();
-//		return repo.find(user);
-//	}
+	public List<Project> getProjectList() {
+		User user = systemManager.getUser();
+		return repo.findAll(user);
+	}
+	
+	public User getUser() {
+		return systemManager.getUser();
+	}
 }

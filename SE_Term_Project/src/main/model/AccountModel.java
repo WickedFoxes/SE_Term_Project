@@ -1,10 +1,10 @@
 package main.model;
 
-import main.domain.Dev;
-import main.domain.ProjectLeader;
-import main.domain.SystemManager;
-import main.domain.Tester;
-import main.domain.enumeration.Authority;
+import java.util.ArrayList;
+import java.util.List;
+
+import main.domain.*;
+import main.domain.enumeration.*;
 import main.repository.AccountRepo;
 
 public class AccountModel extends Model {
@@ -37,5 +37,12 @@ public class AccountModel extends Model {
 			return false;
 		}
 		return true;
+	}
+	
+	public List<User> getAccounts(Authority authority){
+		List<User> accountList = new ArrayList<>();
+		for(User user : repo.findAll(authority))
+			accountList.add(user);
+		return accountList;
 	}
 }

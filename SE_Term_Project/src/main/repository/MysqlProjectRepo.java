@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,14 @@ public class MysqlProjectRepo implements ProjectRepo{
 	}
 	
 	@Override
-	public void add(Project project) {
+	public Project add(Project project) {
         Connection connection = null;
         PreparedStatement pstm = null;
+        int id = 0;
+        
         String sql = "insert into Project (\"name\", \"created_date\") "
         		+ "values (?, datetime(\"now\")) ";
-
+        
         try {
 			Class.forName(jdbc_name);
 		} catch (ClassNotFoundException e) {
@@ -41,20 +44,27 @@ public class MysqlProjectRepo implements ProjectRepo{
         try {
             connection = DriverManager.getConnection(jdbc_connect);
 
-            pstm = connection.prepareStatement(sql);
+//            pstm = connection.prepareStatement(sql);
+            pstm = (PreparedStatement) connection.prepareStatement(
+            		sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, project.getName());
             
             int res = pstm.executeUpdate();
             if(res > 0 ) {
-                System.out.println("DB입력 성공");
+                System.out.printf("DB입력 성공");
             }else {
                 System.out.println("DB입력 실패");
             }
+            
+            ResultSet rs = pstm.getGeneratedKeys();
+            if(rs.next()) id = rs.getInt(1);
 
             connection.close(); 
         } catch(SQLException e){
             System.err.println(e.getMessage());
         }
+        project.setId(id);
+        return project;
 	}
 
 	@Override
