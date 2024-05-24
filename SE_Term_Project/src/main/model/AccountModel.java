@@ -16,9 +16,9 @@ public class AccountModel extends Model {
 	}
 	
 	public boolean signup(String id, String pw, Authority authority){
-		if(super.systemManager.getUser() == null) return false;  
-		if(super.systemManager.getUser().getAuthority() != Authority.ADMIN) return false;
-		if(this.repo.contains(id)) return false;
+		if(getUser() == null) return false;  
+		if(getUser().getAuthority() != Authority.ADMIN) return false;
+		if(repo.contains(id)) return false;
 		
 		switch(authority) {
 		case PL:

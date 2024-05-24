@@ -19,8 +19,8 @@ public class ProjectListModel extends Model {
 	}
 	
 	public boolean createProject(String name, ProjectLeader pl, List<Dev> devs, List<Tester> testers) {
-		if(super.systemManager.getUser() == null) return false;
-		if(super.systemManager.getUser().getAuthority() != Authority.ADMIN) return false;
+		if(getUser() == null) return false;
+		if(getUser().getAuthority() != Authority.ADMIN) return false;
 		
 		Project project = new Project(name);
 		project = repo.add(project);
@@ -36,11 +36,7 @@ public class ProjectListModel extends Model {
 	}
 	
 	public List<Project> getProjectList() {
-		User user = systemManager.getUser();
+		User user = getUser();
 		return repo.findAll(user);
-	}
-	
-	public User getUser() {
-		return systemManager.getUser();
 	}
 }
