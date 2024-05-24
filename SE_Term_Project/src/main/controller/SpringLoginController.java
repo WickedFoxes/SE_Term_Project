@@ -20,7 +20,8 @@ public class SpringLoginController extends LoginController{
 	
 	@GetMapping("/")
 	public String home() {
-		return "redirect:/login";
+		if(model.getUser() == null) return "redirect:/login";
+		return "redirect:/project";
 	}
 	
 	@GetMapping("/login")

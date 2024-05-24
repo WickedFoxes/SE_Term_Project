@@ -187,9 +187,7 @@ public class MysqlProjectRepo implements ProjectRepo{
         PreparedStatement pstm = null;
         List<Project> projects = new ArrayList<>();
         
-        String sql = "SELECT Project.id, Project.name, Project.created_date"
-        		+ "	FROM Project INNER JOIN ProjectJoin ON Project.id = ProjectJoin.project_id "
-        		+ "	WHERE ProjectJoin.account_id=?";
+        String sql = "SELECT * FROM Project";
         
         try {
 			Class.forName(jdbc_name);
@@ -200,7 +198,7 @@ public class MysqlProjectRepo implements ProjectRepo{
             connection = DriverManager.getConnection(jdbc_connect);
 
             pstm = connection.prepareStatement(sql);
-            pstm.setInt(1, user.getId());
+//            pstm.setInt(1, user.getId());
             
             ResultSet rs = pstm.executeQuery();
             int id;
@@ -213,8 +211,10 @@ public class MysqlProjectRepo implements ProjectRepo{
             	title = rs.getString(2);
             	createdDate = rs.getTimestamp(3);
             	
+            	
             	temp = new Project(id, title, createdDate);
-            	projects.add(temp);
+            	if(user.getAuthority() == Authority.ADMIN) projects.add(temp);
+            	else if(contains(temp, user)) projects.add(temp);
             }
             
             connection.close(); 
