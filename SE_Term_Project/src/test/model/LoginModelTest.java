@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import main.domain.*;
 import main.model.LoginModel;
+import main.model.SystemManager;
 import main.repository.MysqlAccountRepo;
 import test.repository.RepoTest;
 
@@ -16,7 +17,7 @@ public class LoginModelTest {
 	MysqlAccountRepo account_repo = new MysqlAccountRepo();
 	String crateSQL = "create_db.sql";
 	
-	SystemManager sysmanager = new SystemManager(null); 
+	SystemManager sysmanager = new SystemManager(); 
 	LoginModel login_model = new LoginModel(sysmanager, account_repo);
 	
 	Admin admin = new Admin("admin", "admin");

@@ -1,12 +1,16 @@
-package main.domain;
+package main.model;
+
+import main.domain.Issue;
+import main.domain.Project;
+import main.domain.User;
 
 public class SystemManager {
 	private User user;
 	private Project project;
 	private Issue issue;
 	
-	public SystemManager(User user) {
-		this.user = user;
+	public SystemManager() {
+		this.user = null;
 		this.project = null;
 		this.issue = null;
 	}

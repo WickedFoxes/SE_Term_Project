@@ -17,7 +17,7 @@ class AccountModelTest {
 	MysqlAccountRepo account_repo = new MysqlAccountRepo();
 	String crateSQL = "create_db.sql";
 	
-	SystemManager sysmanager = new SystemManager(null); 
+	SystemManager sysmanager = new SystemManager(); 
 	LoginModel login_model = new LoginModel(sysmanager, account_repo);
 	AccountModel account_model = new AccountModel(sysmanager, account_repo);
 	

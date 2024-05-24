@@ -3,7 +3,6 @@ package main.model;
 import main.domain.Dev;
 import main.domain.Project;
 import main.domain.ProjectLeader;
-import main.domain.SystemManager;
 import main.domain.Tester;
 import main.domain.User;
 import main.repository.ProjectRepo;

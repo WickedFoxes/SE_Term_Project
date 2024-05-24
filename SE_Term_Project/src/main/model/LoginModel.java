@@ -1,6 +1,5 @@
 package main.model;
 
-import main.domain.SystemManager;
 import main.domain.User;
 import main.repository.AccountRepo;
 
@@ -15,11 +14,11 @@ public class LoginModel extends Model {
 	public boolean tryLogin(String id, String pw) {
 		if(!repo.contains(id)) return false;
 		User user = repo.find(id);
-		systemManager.setUser(user);
+		setUser(user);
 		return true;
 	}
 	
 	public void logout() {
-		systemManager.setUser(null);
+		setUser(null);
 	}
 }

@@ -1,6 +1,5 @@
 package main.model;
 
-import main.domain.SystemManager;
 import main.repository.ProjectRepo;
 
 public class ProjectModel extends Model {

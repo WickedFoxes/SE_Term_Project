@@ -3,7 +3,6 @@ package main.application;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import main.domain.SystemManager;
 import main.model.*;
 import main.repository.*;
 
@@ -15,7 +14,7 @@ public class SpringConfig {
 	}
 
 	@Bean SystemManager sysmanager() {
-		return new SystemManager(null);
+		return new SystemManager();
 	}
 	
 	@Bean
