@@ -1,9 +1,10 @@
 package main.model;
 
-import main.domain.Dev;
-import main.domain.ProjectLeader;
-import main.domain.Tester;
-import main.domain.enumeration.Authority;
+import java.util.ArrayList;
+import java.util.List;
+
+import main.domain.*;
+import main.domain.enumeration.*;
 import main.repository.AccountRepo;
 
 public class AccountModel extends Model {
@@ -15,9 +16,9 @@ public class AccountModel extends Model {
 	}
 	
 	public boolean signup(String id, String pw, Authority authority){
-		if(getUser() == null) return false;  
-		if(getUser().getAuthority() != Authority.ADMIN) return false;
-		if(repo.contains(id)) return false;
+		if(super.systemManager.getUser() == null) return false;  
+		if(super.systemManager.getUser().getAuthority() != Authority.ADMIN) return false;
+		if(this.repo.contains(id)) return false;
 		
 		switch(authority) {
 		case PL:
@@ -36,5 +37,12 @@ public class AccountModel extends Model {
 			return false;
 		}
 		return true;
+	}
+	
+	public List<User> getAccounts(Authority authority){
+		List<User> accountList = new ArrayList<>();
+		for(User user : repo.findAll(authority))
+			accountList.add(user);
+		return accountList;
 	}
 }

@@ -7,7 +7,7 @@ import main.domain.User;
 import main.domain.enumeration.Authority;
 
 public interface ProjectRepo {
-	public void add(Project project);
+	public Project add(Project project);
 	public void add(Project project, User user);
 	public boolean contains(Project project, User user);
 	public List<User> findAll(Project project, Authority authority);
