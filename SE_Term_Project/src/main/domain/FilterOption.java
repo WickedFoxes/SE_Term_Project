@@ -6,22 +6,18 @@ public class FilterOption {
 	private State state;
 	private Tester reporter;
 	private Dev assignee;
-	public State getState() {
-		return state;
-	}
-	public void setState(State state) {
+	public FilterOption(State state, Tester reporter, Dev assignee) {
 		this.state = state;
+		this.reporter = reporter;
+		this.assignee = assignee;
 	}
 	public Tester getReporter() {
 		return reporter;
 	}
-	public void setReporter(Tester reporter) {
-		this.reporter = reporter;
-	}
 	public Dev getAssignee() {
 		return assignee;
 	}
-	public void setAssignee(Dev assignee) {
-		this.assignee = assignee;
+	public State getState() {
+		return state;
 	} 
 }

@@ -73,7 +73,7 @@ public class MysqlIssueRepo implements IssueRepo{
 	public void add(Project project, Issue issue) {
         Connection connection = null;
         PreparedStatement pstm = null;
-        String sql = "insert into Issue (\"title\", \"description\", \"priority\", \"state\", \"reporter\", \"assignee\", \"fixer\", \"project_id\"  ,\"reportedDate\") "
+        String sql = "insert into Issue (\"title\", \"description\", \"priority\", \"state\", \"reporter\", \"assignee\", \"fixer\", \"project_id\", \"reportedDate\")"
         		+ "values (?, ?, ?, ?, ?, ?, ?, ?, datetime(\"now\")) ";
 
         try {
@@ -142,24 +142,28 @@ public class MysqlIssueRepo implements IssueRepo{
             pstm.setInt(1, project.getId());
             
             ResultSet rs = pstm.executeQuery();
+            int id;
+            String title, description;
+            Priority priority;
+            State state;
+            Timestamp reportedDate;
+            Tester reporter;
+            Dev assignee, fixer;
+            Issue temp;
+            
             while(rs.next()) {
-            	Issue temp = new Issue(rs.getString(2), rs.getString(3));
-            	
-            	temp.setId(rs.getInt(1));
-            	temp.setReportedDate(rs.getTimestamp(4));
-            	temp.setPriority(Priority.valueOf(rs.getString(5)));
-            	temp.setState(State.valueOf(rs.getString(6)));
-            	
-            	Tester reporter = (Tester)getUser(rs.getInt(8));
-            	Dev assignee = (Dev)getUser(rs.getInt(9));
-            	Dev fixer = (Dev)getUser(rs.getInt(10));
-            	
-            	if(reporter != null)
-            		temp.setReporter(reporter);
-            	if(assignee != null)
-            		temp.setAssignee(assignee);
-            	if(fixer != null)
-            		temp.setFixer(fixer);
+            	id = rs.getInt(1);
+            	title = rs.getString(2);
+            	description = rs.getString(3);
+            	reportedDate = rs.getTimestamp(4);
+            	priority = Priority.valueOf(rs.getString(5));
+            	state = State.valueOf(rs.getString(6));
+            	reporter = (Tester)getUser(rs.getInt(8));
+            	assignee = (Dev)getUser(rs.getInt(9));
+            	fixer = (Dev)getUser(rs.getInt(10));
+            			 
+            	temp = new Issue(id, title, description, reportedDate, 
+            			priority, state, reporter, assignee, fixer);
             	
             	// user authority check
             	if(auth == Authority.DEV) {
@@ -208,24 +212,27 @@ public class MysqlIssueRepo implements IssueRepo{
             pstm.setInt(1, project.getId());
             
             ResultSet rs = pstm.executeQuery();
+            int id;
+            String title, description;
+            Priority priority;
+            State state;
+            Timestamp reportedDate;
+            Tester reporter;
+            Dev assignee, fixer;
+            
             while(rs.next()) {
-            	Issue temp = new Issue(rs.getString(2), rs.getString(3));
-            	
-            	temp.setId(rs.getInt(1));
-            	temp.setReportedDate(rs.getTimestamp(4));
-            	temp.setPriority(Priority.valueOf(rs.getString(5)));
-            	temp.setState(State.valueOf(rs.getString(6)));
-            	
-            	Tester reporter = (Tester)getUser(rs.getInt(8));
-            	Dev assignee = (Dev)getUser(rs.getInt(9));
-            	Dev fixer = (Dev)getUser(rs.getInt(10));
-            	
-            	if(reporter != null)
-            		temp.setReporter(reporter);
-            	if(assignee != null)
-            		temp.setAssignee(assignee);
-            	if(fixer != null)
-            		temp.setFixer(fixer);
+            	id = rs.getInt(1);
+            	title = rs.getString(2);
+            	description = rs.getString(3);
+            	reportedDate = rs.getTimestamp(4);
+            	priority = Priority.valueOf(rs.getString(5));
+            	state = State.valueOf(rs.getString(6));
+            	reporter = (Tester)getUser(rs.getInt(8));
+            	assignee = (Dev)getUser(rs.getInt(9));
+            	fixer = (Dev)getUser(rs.getInt(10));
+            			 
+            	Issue temp = new Issue(id, title, description, reportedDate, 
+            			priority, state, reporter, assignee, fixer);
             	
             	// user authority check
             	if(auth == Authority.DEV) {

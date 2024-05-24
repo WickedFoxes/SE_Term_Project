@@ -9,8 +9,15 @@ public class Comment {
 	private Timestamp writtenDate;
 	private User writer;
 	public Comment(String content, User writer) {
-		this.content=content;
-		this.writer=writer;
+		this.content = content;
+		this.writer = writer;
+	}
+	
+	public Comment(int id, String content, Timestamp writtenDate, User writer) {
+		this.id = id;
+		this.content = content;
+		this.writer = writer;
+		this.writtenDate = writtenDate;
 	}
 	
 	public String getContent() {

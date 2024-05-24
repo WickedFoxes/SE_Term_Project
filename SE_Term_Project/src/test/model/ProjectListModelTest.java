@@ -102,6 +102,7 @@ public class ProjectListModelTest {
     	projectList_model.createProject("project1", select_pl1, select_dev, select_tester);
     	projectList_model.createProject("project2", select_pl2, select_dev, select_tester);
     	
+    	login_model.logout();
     	login_model.tryLogin("dev1", "dev1");
     	int dev_test = projectList_model.getProjectList().size();
     	Assertions.assertEquals(2, dev_test);

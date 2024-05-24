@@ -8,8 +8,14 @@ public abstract class User {
 	private String password;
 	
 	public User(String accountID, String password) {
-		this.setAccountID(accountID);
-		this.setPassword(password);
+		this.accountID = accountID;
+		this.password = password;
+	}
+	
+	public User(int id, String accountID, String password) {
+		this.id = id;
+		this.accountID = accountID;
+		this.password = password;
 	}
 
 	
@@ -19,18 +25,12 @@ public abstract class User {
 	public int getId() {
 		return id;
 	}
-
-
 	public void setId(int id) {
 		this.id = id;
 	}
-
-
 	public String getAccountID() {
 		return accountID;
 	}
-
-
 	public void setAccountID(String accountID) {
 		this.accountID = accountID;
 	}

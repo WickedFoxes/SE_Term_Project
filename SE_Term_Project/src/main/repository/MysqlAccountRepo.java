@@ -114,21 +114,22 @@ public class MysqlAccountRepo implements AccountRepo{
             pstm.setString(1, accountID);
             
             ResultSet rs = pstm.executeQuery();
+            int id;
+            String accountId, pw;
             
             if(rs.next()) {
-            	int id = rs.getInt(1);
-                String accountid = rs.getString(2);
-                String pw = rs.getString(3);
+            	id = rs.getInt(1);
+            	accountId = rs.getString(2);
+                pw = rs.getString(3);
                 
                 if(rs.getString(4).equals("PL"))
-                	user = new ProjectLeader(accountid, pw);
+                	user = new ProjectLeader(id, accountId, pw);
                 else if(rs.getString(4).equals("TESTER"))
-                	user = new Tester(accountid, pw);
+                	user = new Tester(id, accountId, pw);
                 else if(rs.getString(4).equals("DEV"))
-                	user = new Dev(accountid, pw);
+                	user = new Dev(id, accountId, pw);
                 else if(rs.getString(4).equals("ADMIN"))
-                	user = new Admin(accountid, pw);
-                user.setId(id);
+                	user = new Admin(id, accountId, pw);
             }
             
             connection.close(); 
@@ -158,22 +159,24 @@ public class MysqlAccountRepo implements AccountRepo{
             pstm.setString(1, authority.name());
             
             ResultSet rs = pstm.executeQuery();
+            int id;
+            String accountId, pw;
+            User temp;
             while(rs.next()) {
-            	User temp = null;
+            	temp = null;
             	
-            	int id = rs.getInt(1);
-                String accountid = rs.getString(2);
-                String pw = rs.getString(3);
+            	id = rs.getInt(1);
+            	accountId = rs.getString(2);
+                pw = rs.getString(3);
                 
                 if(authority == Authority.PL)
-                	temp = new ProjectLeader(accountid, pw);
+                	temp = new ProjectLeader(id, accountId, pw);
                 else if(authority == Authority.TESTER)
-                	temp = new Tester(accountid, pw);
+                	temp = new Tester(id, accountId, pw);
                 else if(authority == Authority.DEV)
-                	temp = new Dev(accountid, pw);
+                	temp = new Dev(id, accountId, pw);
                 else if(authority == Authority.ADMIN)
-                	temp = new Admin(accountid, pw);
-                temp.setId(id);
+                	temp = new Admin(id, accountId, pw);
             	
                 users.add(temp);
             }

@@ -56,15 +56,13 @@ public class MysqlCommentRepo implements CommentRepo{
                 Authority auth = Authority.valueOf(rs.getString(4));
                 
                 if(auth == Authority.PL)
-                	user = new ProjectLeader(accountid, pw);
+                	user = new ProjectLeader(id, accountid, pw);
                 else if(auth == Authority.TESTER)
-                	user = new Tester(accountid, pw);
+                	user = new Tester(id, accountid, pw);
                 else if(auth == Authority.DEV)
-                	user = new Dev(accountid, pw);
+                	user = new Dev(id, accountid, pw);
                 else if(auth == Authority.ADMIN)
-                	user = new Admin(accountid, pw);
-                
-                user.setId(id);
+                	user = new Admin(id, accountid, pw);
             }
             
             connection.close(); 
@@ -131,8 +129,7 @@ public class MysqlCommentRepo implements CommentRepo{
             	Timestamp writtenDate = rs.getTimestamp(3);
             	User tempuser = getUser(rs.getInt(4));
             	int issue_id = rs.getInt(5);
-            	Comment temp = new Comment(content, tempuser);
-            	temp.setWrittenDate(writtenDate);
+            	Comment temp = new Comment(issue_id, content, writtenDate, tempuser);
             	
             	if(issue_id != issue.getId()) continue;
             	

@@ -32,8 +32,8 @@ class MysqlCommentRepoTest {
 	Dev dev3 = new Dev("dev3", "dev3");
 	Project project1 = new Project("proejct1");
 	Project project2 = new Project("proejct2");
-	Issue issue1 = new Issue("issue1", "description1", Priority.MINOR, State.NEW, tester1);
-	Issue issue2 = new Issue("issue2", "description2", Priority.MINOR, State.NEW, tester1);
+	Issue issue1 = new Issue("issue1", "description1", Priority.MINOR, tester1);
+	Issue issue2 = new Issue("issue2", "description2", Priority.MINOR, tester1);
 	Comment comment1 = new Comment("content1", tester1);
 	Comment comment2 = new Comment("content2", tester2);
 	Comment comment3 = new Comment("content3", pl1);

@@ -15,16 +15,25 @@ public class Issue {
 	private Tester reporter;
 	private Dev assignee;
 	private Dev fixer;
-	public Issue(String title, String description) {
-		this.title = title;
-		this.description = description;
-	}
-	public Issue(String title, String description, Priority priority, State state, Tester reporter) {
+	
+	public Issue(String title, String description, Priority priority, Tester reporter) {
 		this.title = title;
 		this.description = description;
 		this.priority = priority;
+		this.reporter = reporter;
+		this.state = State.NEW;
+	}
+	
+	public Issue(int id, String title, String description, Timestamp reportedDate, Priority priority, State state, Tester reporter, Dev assignee, Dev fixer) {
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.reportedDate = reportedDate;
+		this.priority = priority;
 		this.state = state;
 		this.reporter = reporter;
+		this.assignee = assignee;
+		this.fixer = fixer;
 	}
 	public String getTitle() {
 		return title;
@@ -41,9 +50,6 @@ public class Issue {
 	public Timestamp getReportedDate() {
 		return reportedDate;
 	}
-	public void setReportedDate(Timestamp reportedDate) {
-		this.reportedDate = reportedDate;
-	}
 	public Priority getPriority() {
 		return priority;
 	}
@@ -58,9 +64,6 @@ public class Issue {
 	}
 	public Tester getReporter() {
 		return reporter;
-	}
-	public void setReporter(Tester reporter) {
-		this.reporter = reporter;
 	}
 	public Dev getAssignee() {
 		return assignee;

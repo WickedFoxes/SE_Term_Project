@@ -34,8 +34,8 @@ class MysqlIssueRepoTest{
 	Dev dev3 = new Dev("dev3", "dev3");
 	Project project1 = new Project("proejct1");
 	Project project2 = new Project("proejct2");
-	Issue issue1 = new Issue("issue1", "description1", Priority.MINOR, State.NEW, tester1);
-	Issue issue2 = new Issue("issue2", "description2", Priority.MINOR, State.NEW, tester1);
+	Issue issue1 = new Issue("issue1", "description1", Priority.MINOR, tester1);
+	Issue issue2 = new Issue("issue2", "description2", Priority.MINOR, tester1);
 	
     @BeforeEach
     void beforeEach() {
@@ -88,6 +88,11 @@ class MysqlIssueRepoTest{
 		issue_repo.add(project1, issue1);
 		issue_repo.add(project1, issue2);
     }
+    
+    @Test
+    void add() {
+    	issue_repo.add(project1, issue1);
+    }
 	
 	@Test
 	void findAll_PL() {
@@ -123,8 +128,7 @@ class MysqlIssueRepoTest{
 	
 	@Test
 	void findFiltering_NEW() {
-    	FilterOption option = new FilterOption();
-    	option.setState(State.NEW);
+    	FilterOption option = new FilterOption(State.NEW, null, null);
     	
     	List<Issue> pl_issue_list = issue_repo.findAll(project1, pl1, option);
     	Assertions.assertEquals(pl_issue_list.size(), 2);
@@ -135,9 +139,7 @@ class MysqlIssueRepoTest{
 		issue_repo.setAssignee(issue1, dev1);
 		issue_repo.setState(issue1, State.ASSIGNED);
 		
-    	FilterOption option = new FilterOption();
-    	option.setAssignee(dev1);
-    	option.setState(State.ASSIGNED);
+    	FilterOption option = new FilterOption(State.ASSIGNED, null, dev1);
     	
     	List<Issue> pl_issue_list = issue_repo.findAll(project1, pl1, option);
     	Assertions.assertEquals(pl_issue_list.size(), 1);

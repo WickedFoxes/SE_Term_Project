@@ -34,7 +34,7 @@ public class MysqlProjectRepo implements ProjectRepo{
         int id = 0;
         
         String sql = "insert into Project (\"name\", \"created_date\") "
-        		+ "values (?, datetime(\"now\")) ";
+        		+ "values (?, ?) ";
         
         try {
 			Class.forName(jdbc_name);
@@ -48,6 +48,7 @@ public class MysqlProjectRepo implements ProjectRepo{
             pstm = (PreparedStatement) connection.prepareStatement(
             		sql, Statement.RETURN_GENERATED_KEYS);
             pstm.setString(1, project.getName());
+            pstm.setTimestamp(2, project.getCreatedDate());
             
             int res = pstm.executeUpdate();
             if(res > 0 ) {
@@ -202,13 +203,17 @@ public class MysqlProjectRepo implements ProjectRepo{
             pstm.setInt(1, user.getId());
             
             ResultSet rs = pstm.executeQuery();
+            int id;
+            String title;
+            Timestamp createdDate;
+            Project temp;
+            
             while(rs.next()) {
-            	int id = rs.getInt(1);
-            	Project temp = new Project(rs.getString(2));
-            	Timestamp createdDate = rs.getTimestamp(3);
-            	temp.setId(id);
-            	temp.setCreatedDate(createdDate);
+            	id = rs.getInt(1);
+            	title = rs.getString(2);
+            	createdDate = rs.getTimestamp(3);
             	
+            	temp = new Project(id, title, createdDate);
             	projects.add(temp);
             }
             
