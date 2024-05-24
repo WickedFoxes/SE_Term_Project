@@ -2,20 +2,19 @@ package main.model;
 
 import java.util.List;
 
-import main.domain.Dev;
-import main.domain.Project;
-import main.domain.ProjectLeader;
-import main.domain.Tester;
-import main.domain.User;
+import main.domain.*;
 import main.domain.enumeration.Authority;
 import main.repository.ProjectRepo;
+import main.repository.AccountRepo;
 
 public class ProjectListModel extends Model {
-	private ProjectRepo repo;
+	private ProjectRepo project_repo;
+	private AccountRepo account_repo;
 	
-	public ProjectListModel(SystemManager s, ProjectRepo r) {
+	public ProjectListModel(SystemManager s, ProjectRepo p, AccountRepo a) {
 		super(s);
-		this.repo = r;
+		this.project_repo = p;
+		this.account_repo = a;
 	}
 	
 	public boolean tryCreateProject(String name, ProjectLeader pl, List<Dev> devs, List<Tester> testers) {
@@ -23,20 +22,24 @@ public class ProjectListModel extends Model {
 		if(getUser().getAuthority() != Authority.ADMIN) return false;
 		
 		Project project = new Project(name);
-		project = repo.add(project);
+		project = project_repo.add(project);
 		
-		repo.add(project, pl);
+		project_repo.add(project, pl);
 		for(Dev dev : devs) {
-			repo.add(project, dev);
+			project_repo.add(project, dev);
 		}
 		for(Tester tester : testers) {
-			repo.add(project, tester);
+			project_repo.add(project, tester);
 		}
 		return true;
+	}
+
+	public List<User> getAllAcounts(Authority authority) {
+		return account_repo.findAll(authority);
 	}
 	
 	public List<Project> getProjectList() {
 		User user = getUser();
-		return repo.findAll(user);
+		return project_repo.findAll(user);
 	}
 }

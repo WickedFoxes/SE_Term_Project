@@ -23,7 +23,7 @@ public class ProjectListModelTest {
 	SystemManager sysmanager = new SystemManager(); 
 	LoginModel login_model = new LoginModel(sysmanager, account_repo);
 	AccountModel account_model = new AccountModel(sysmanager, account_repo);
-	ProjectListModel projectList_model = new ProjectListModel(sysmanager, project_repo);
+	ProjectListModel projectList_model = new ProjectListModel(sysmanager, project_repo, account_repo);
 	
 	Admin admin = new Admin("admin", "admin");
 	ProjectLeader pl1 = new ProjectLeader("pl1", "pl1");
@@ -106,5 +106,20 @@ public class ProjectListModelTest {
     	login_model.tryLogin("dev1", "dev1");
     	int dev_test = projectList_model.getProjectList().size();
     	Assertions.assertEquals(2, dev_test);
+    }
+    
+    @Test
+    void getAllAccounts() {
+    	login_model.tryLogin("admin", "admin");
+    	List<User> pls = account_model.getAccounts(Authority.PL);
+    	List<User> devs = account_model.getAccounts(Authority.DEV);
+    	List<User> testers = account_model.getAccounts(Authority.TESTER);
+    	
+    	List<User> pls_test = projectList_model.getAllAcounts(Authority.PL);
+    	List<User> devs_test = projectList_model.getAllAcounts(Authority.DEV);
+    	List<User> testers_test = projectList_model.getAllAcounts(Authority.TESTER);
+    	
+    	Assertions.assertEquals(pls.size()+devs.size()+testers.size()
+    	, pls_test.size()+devs_test.size()+testers_test.size());
     }
 }

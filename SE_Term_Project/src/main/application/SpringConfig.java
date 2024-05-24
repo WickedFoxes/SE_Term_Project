@@ -8,11 +8,6 @@ import main.repository.*;
 
 @Configuration
 public class SpringConfig {	
-	@Bean
-	public LoginModel loginModel() {
-		return new LoginModel(sysmanager(), accountRepo());
-	}
-
 	@Bean SystemManager sysmanager() {
 		return new SystemManager();
 	}
@@ -21,9 +16,24 @@ public class SpringConfig {
 	public AccountRepo accountRepo() {
 		return new MysqlAccountRepo();
 	}
+
+	@Bean
+	public ProjectRepo projectRepo() {
+		return new MysqlProjectRepo();
+	}
 	
 	@Bean
-	public AccountModel AccountModel() {
+	public AccountModel accountModel() {
 		return new AccountModel(sysmanager(), accountRepo());
+	}
+	
+	@Bean
+	public LoginModel loginModel() {
+		return new LoginModel(sysmanager(), accountRepo());
+	}
+	
+	@Bean
+	public ProjectListModel projectListModel() {
+		return new ProjectListModel(sysmanager(), projectRepo(), accountRepo());
 	}
 }
