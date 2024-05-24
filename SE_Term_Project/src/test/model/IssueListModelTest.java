@@ -98,7 +98,16 @@ public class IssueListModelTest {
     }
     
     @Test
-    void testCreateIssue() {
+    void createIssue() {
+    	loginModel.logout();
+    	loginModel.tryLogin("tester1", "tester1");
+    	projects = projectListModel.getProjectList();
+    	manager.setProject(projects.get(0));
+    	Assertions.assertTrue(issueListModel.tryCreateIssue("Issue1", "This is test for issue1.", Priority.MAJOR));
+    }
+    
+    @Test
+    void createIssue_complexVer() {
     	
     	//case 1
     	loginModel.logout();
@@ -130,7 +139,19 @@ public class IssueListModelTest {
     }
     
     @Test
-    void testGetIssueList() {
+    void getIssueList() {
+    	loginModel.logout();
+    	loginModel.tryLogin("tester1", "tester1");
+    	projects = projectListModel.getProjectList();
+    	manager.setProject(projects.get(0));
+    	Assertions.assertTrue(issueListModel.tryCreateIssue("Issue1", "This is test for issue1.", Priority.MAJOR));
+    	
+    	List<Issue> issueList = issueRepo.findAll(projects.get(0), testers.get(1));
+    	Assertions.assertEquals(0, issueList.size());
+    }
+    
+    @Test
+    void getIssueList_complexVer() {
     	loginModel.logout();
     	loginModel.tryLogin("tester2", "tester2");
     	projects = projectListModel.getProjectList();
@@ -152,7 +173,40 @@ public class IssueListModelTest {
     }
     
     @Test
-    void testGetIssueListWithFilter() {
+    void getIssueListWithFilter() {
+    	loginModel.logout();
+    	loginModel.tryLogin("tester2", "tester2");
+    	projects = projectListModel.getProjectList();
+    	manager.setProject(projects.get(0));
+    	Assertions.assertTrue(issueListModel.tryCreateIssue("Issue0", "This is test for issue0.", Priority.MAJOR));
+
+    	loginModel.logout();
+    	loginModel.tryLogin("pl1", "pl1");
+    	projects = projectListModel.getProjectList();
+    	manager.setProject(projects.get(0));
+    	
+    	FilterOption option;
+    	List<Issue> issueList;
+    	
+    	option = new FilterOption(State.ASSIGNED, null, null);
+    	issueList = issueRepo.findAll(projects.get(0), pls.get(0), option);
+    	Assertions.assertEquals(0, issueList.size());
+    	
+    	option = new FilterOption(State.NEW, null, null);
+    	issueList = issueRepo.findAll(projects.get(0), pls.get(0), option);
+    	Assertions.assertEquals(1, issueList.size());
+    	
+    	option = new FilterOption(State.NEW, (Tester)testers.get(0), null);
+    	issueList = issueRepo.findAll(projects.get(0), pls.get(0), option);
+    	Assertions.assertEquals(0, issueList.size());
+    	
+    	option = new FilterOption(State.NEW, (Tester)testers.get(1), null);
+    	issueList = issueRepo.findAll(projects.get(0), pls.get(0), option);
+    	Assertions.assertEquals(1, issueList.size());
+    }
+    
+    @Test
+    void getIssueListWithFilter_complexVer() {
     	loginModel.logout();
     	loginModel.tryLogin("tester2", "tester2");
     	projects = projectListModel.getProjectList();
