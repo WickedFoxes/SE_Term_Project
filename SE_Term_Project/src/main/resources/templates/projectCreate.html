@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Creation Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .project-container {
+            background-color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .project-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        .project-container label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .project-container input[type="text"],
+        .project-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .project-container input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        .project-container .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .project-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .project-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="project-container">
+        <h2>Create Project</h2>
+        <form action="/project/create" method="post">
+            <label for="name">Project Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter project name" required>
+            
+            <label for="pl">Project Leader</label>
+            <input type="text" id="pl" name="pl" placeholder="Enter project leader accountid [pl1]" required>
+
+            <label for="dev">Developers</label>
+            <input type="text" id="dev" name="dev" placeholder="Enter dev accountids [dev1 dev2 ..]" required>            
+            
+            <label for="tester">Testers</label>
+            <input type="text" id="tester" name="tester" placeholder="Enter tester accountids [tester1 tester2..]" required>
+            
+            <button type="submit">Create Project</button>
+        </form>
+    </div>
+</body>
+</html>

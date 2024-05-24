@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 0;
+            background-color: #007bff;
+            color: white;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #0056b3;
+        }
+        .header a:hover {
+            background-color: #00408b;
+        }
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin: 20px 0;
+        }
+        .actions button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/logout">Logout</a>
+    </div>
+    <div class="container">
+        <div class="actions">
+            <button th:if="${authority == 'ADMIN'}" onclick="location.href='/signup'">Create Account</button>
+            <button th:if="${authority == 'ADMIN'}" onclick="location.href='/project/create'">Create Project</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Num</th>
+                    <th>Title</th>
+                    <th>Created Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="project : ${projects}" onclick="location.href='/project/" th:attrappend="onclick=${project.id}+'\''">
+                    <td th:text="${project.id}">1</td>
+                    <td th:text="${project.name}">there is no project</td>
+                    <td th:text="${project.createdDate}">????-??-??</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
