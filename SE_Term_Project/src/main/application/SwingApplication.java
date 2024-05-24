@@ -1,23 +1,41 @@
 package main.application;
 
 import main.controller.SwingLoginController;
+import main.controller.SwingProjectListController;
 import main.domain.Admin;
+import main.model.IssueListModel;
+import main.model.IssueModel;
 import main.model.LoginModel;
+import main.model.ProjectListModel;
 import main.model.SystemManager;
+import main.repository.AccountRepo;
+import main.repository.ProjectRepo;
+import main.repository.IssueRepo;
+import main.repository.CommentRepo;
 import main.repository.MysqlAccountRepo;
+import main.repository.MysqlCommentRepo;
+import main.repository.MysqlIssueRepo;
+import main.repository.MysqlProjectRepo;
 import main.view.SwingMainView;
 
 public class SwingApplication implements Application{
 	public void run() {
-		MysqlAccountRepo accountRepo = new MysqlAccountRepo();
-		Admin admin = new Admin("admin", "admin");
-		accountRepo.add(admin);
-		SystemManager systemData = new SystemManager();
-		
 		SwingMainView view = new SwingMainView();
 		
-		LoginModel model = new LoginModel(systemData, accountRepo);
-		SwingLoginController controller = new SwingLoginController(view.getLoginView(), model);
+		SystemManager systemData = new SystemManager();
+		AccountRepo accountRepo = new MysqlAccountRepo();
+		ProjectRepo projectRepo = new MysqlProjectRepo();
+		IssueRepo issueRepo = new MysqlIssueRepo();
+		CommentRepo commentRepo = new MysqlCommentRepo();
+		
+		LoginModel loginModel = new LoginModel(systemData, accountRepo);
+		ProjectListModel projectListModel = new ProjectListModel(systemData, projectRepo);
+		IssueListModel issueListModel = new IssueListModel(systemData, issueRepo);
+		IssueModel issueModel = new IssueModel(systemData, issueRepo);
+		//CommentModel commentModel = new CommentModel(systemData, commentRepo);
+		
+		SwingLoginController loginController = new SwingLoginController(view.getLoginView(), loginModel);
+		SwingProjectListController projectListController = new SwingProjectListController(view.getProjectListView(), projectListModel);
 		
 		//SwingProjectListView view = new SwingProjectListView();
 	}

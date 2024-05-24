@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import main.domain.Project;
 
-public class SwingProjectListView extends SwingView{
+public class SwingProjectListView extends SwingView {
 	JButton logoutButton, createAccountButton, createProjectButton;
 	JPanel projectPanel;
 	List<JButton> projectButtons;
@@ -42,61 +42,43 @@ public class SwingProjectListView extends SwingView{
 		setVisible(true);
 	}
 	
-	private void initProjectButtons(List<Project> projects) {
-		int n = projects.size();
-		String name;
-		
-		for(int i = 0; i < n; i++) {
-			name = projects.get(i).getName();
-			projectButtons.add(new JButton(name));
-		}
-	}
-	
-	private void updateProjectButtons(List<Project> projects) {
+	public void setProjectButtons(List<Project> projects, List<ActionListener> listeners) {
 		int projectSize = projects.size();
-		int buttonSize = projectButtons.size();
 		String name;
 		JButton button;
-		
-		if(projectSize < buttonSize) {
-			for(int i = 0; i < buttonSize - projectSize; i++) {
-				projectButtons.remove(0);
-			}
-		}
-		else if(projectSize > buttonSize) {
-			for(int i = 0; i < projectSize - buttonSize; i++) {
-				projectButtons.add(new JButton());
-			}
-		}
+		projectButtons.clear();
 		
 		for(int i = 0; i < projectSize; i++) {
 			name = projects.get(i).getName();
-			button = projectButtons.get(i);
-			button.setText(name);
-			//button.setaction
+			button = new JButton(name);
+			button.addActionListener(listeners.get(i));
+			projectButtons.add(button);
 		}
-//		
-//		projectButtons.add();
 	}
 	
 	public void setCreateAccountButtonVisible(boolean isVisible) {
 		createAccountButton.setVisible(isVisible);
 	}
-	
 	public void setCreateProjectButtonVisible(boolean isVisible) {
 		createProjectButton.setVisible(isVisible);
 	}
-	
 	public void setLogoutListener(ActionListener listener) {
 		logoutButton.addActionListener(listener);
 	}
-	
 	public void setCreateAccountListener(ActionListener listener) {
 		createAccountButton.addActionListener(listener);
 	}
-	
 	public void setCreateProjectListener(ActionListener listener) {
 		createProjectButton.addActionListener(listener);
 	}
-
+	
+	@Override
+	public List<String> getAccessableViewNames() {
+		List<String> list = new ArrayList<String>();
+		list.add("LoginView");
+		list.add("IssueListView");
+		list.add("ProjectCreationView");
+		list.add("AccountCreationView");
+		return list;
+	}
 }

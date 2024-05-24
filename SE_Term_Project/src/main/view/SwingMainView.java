@@ -3,6 +3,7 @@ package main.view;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -35,7 +36,7 @@ public class SwingMainView extends JFrame implements Mediator{
         
         add(mainPanel);
         
-        showView("LoginView");
+        showView("ProjectListView");
 	}
 	
 	public SwingLoginView getLoginView() {
@@ -48,15 +49,9 @@ public class SwingMainView extends JFrame implements Mediator{
 
 	@Override
 	public void notify(SwingView view, String targetViewName) {
-		if(view instanceof SwingLoginView)
-			if(targetViewName != "ProjectListView") new Exception();
-		else if(view instanceof SwingProjectListView)
-			if(targetViewName != "LoginView" 
-			|| targetViewName != "IssueListView"
-			|| targetViewName != "ProjectCreationView"
-			|| targetViewName != "AccountCreationView") new Exception();
-		
-		showView(targetViewName);
+		List<String> accessableViewNames = view.getAccessableViewNames();
+		if(accessableViewNames.contains(targetViewName)) showView(targetViewName);
+		else new Exception();
 	}
 	
 	private void showView(String viewName) {
