@@ -33,10 +33,6 @@ public class ProjectListModel extends Model {
 		}
 		return true;
 	}
-
-	public List<User> getAllAcounts(Authority authority) {
-		return account_repo.findAll(authority);
-	}
 	
 	public List<Project> getProjectList() {
 		User user = getUser();

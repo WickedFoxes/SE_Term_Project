@@ -19,16 +19,18 @@ import main.domain.User;
 import main.domain.enumeration.Authority;
 import main.domain.enumeration.Priority;
 import main.domain.enumeration.State;
+import main.model.AccountModel;
 import main.model.IssueListModel;
 import main.model.ProjectListModel;
 
 @Controller
 public class SpringIssueListController {
+	private AccountModel account_model;
 	private IssueListModel issuelist_model;
 	private ProjectListModel projectlist_model;
 	public SpringIssueListController(IssueListModel imodel, ProjectListModel pmodel) {
 		this.issuelist_model = imodel; 
-		this.projectlist_model = pmodel; 
+		this.projectlist_model = pmodel;
 	}
 
 	@RequestMapping(value="/issueList/{project_id}", method=RequestMethod.GET)
@@ -71,16 +73,14 @@ public class SpringIssueListController {
 		State state_input = null;
 		Tester reporter_input = null;
 		Dev assignee_input = null;
-		projectlist_model.getAllAcounts(Authority.DEV);
 		
-		
-		for(User d : projectlist_model.getAllAcounts(Authority.DEV)) {
+		for(User d : account_model.getAccounts(Authority.DEV)) {
 			if(d.getAccountID().equals(assignee)) {
 				assignee_input = (Dev)d; break;
 			}
 		}
 		
-		for(User t : projectlist_model.getAllAcounts(Authority.TESTER)) {
+		for(User t : account_model.getAccounts(Authority.TESTER)) {
 			if(t.getAccountID().equals(reporter)) {
 				reporter_input = (Tester)t; break;
 			}
