@@ -64,15 +64,3 @@ public class SwingLoginView extends SwingView{
 		pwTextField.setText("admin");
 	}
 }
-
-//private void addComponent(Component c, int x, int y, int w, int h) {
-//con.weightx = 1;
-//con.weighty = 1;
-//con.gridx = x;
-//con.gridy = y;
-//con.gridwidth = w;
-//con.gridheight = h;
-//con.fill = GridBagConstraints.BOTH;
-//grid.setConstraints(c, con);
-//panel.add(c);
-//}

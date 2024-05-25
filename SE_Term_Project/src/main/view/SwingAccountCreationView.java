@@ -66,6 +66,10 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 		return (Authority)authorityComboBox.getSelectedItem();
 	}
 	
+	public void setOKListener(ActionListener listener) {
+		okButton.addActionListener(listener);
+	}
+	
 	@Override
 	public void setReturnListener(ActionListener listener) {
 		returnButton.addActionListener(listener);
