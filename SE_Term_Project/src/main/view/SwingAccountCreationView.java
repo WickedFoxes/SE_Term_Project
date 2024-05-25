@@ -23,24 +23,25 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 		super(mediator, new Dimension(500, 400));
 		
 		infoLabel = new JLabel("Create Account");
-		infoLabel.setBounds(200, 20, 200, 50);
-        idLabel = new JLabel("ID");
-        idLabel.setBounds(100, 70, 50, 50);
-        pwLabel = new JLabel("PW");
-        pwLabel.setBounds(95, 130, 50, 50);
-        authorityLabel = new JLabel("Authority");
-        authorityLabel.setBounds(80, 190, 100, 50);
-        idTextField = new JTextField();
-        idTextField.setBounds(150, 70, 200, 50);
-        pwTextField = new JTextField();
-        pwTextField.setBounds(150, 130, 200, 50);
-        Authority[] options = {Authority.PL, Authority.DEV, Authority.TESTER};
+		idLabel = new JLabel("ID");
+		pwLabel = new JLabel("PW");
+		authorityLabel = new JLabel("Authority");
+		idTextField = new JTextField();
+		pwTextField = new JTextField();
+		Authority[] options = {Authority.PL, Authority.DEV, Authority.TESTER};
         authorityComboBox = new JComboBox<Authority>(options);
-        authorityComboBox.setBounds(150, 190, 200, 50);
         okButton = new JButton("OK");
-        okButton.setBounds(140, 270, 100, 40);
         returnButton = new JButton("Return");
-        returnButton.setBounds(260, 270, 100, 40);
+        
+        infoLabel.setBounds(200, 20, 200, 50);
+        idLabel.setBounds(100, 70, 50, 50);
+        pwLabel.setBounds(95, 130, 50, 50);
+        authorityLabel.setBounds(80, 190, 100, 50);
+        idTextField.setBounds(150, 70, 200, 50);
+        pwTextField.setBounds(150, 130, 200, 50);
+        authorityComboBox.setBounds(150, 190, 200, 50);
+        okButton.setBounds(140, 260, 100, 40);
+        returnButton.setBounds(260, 260, 100, 40);
     
         add(infoLabel);
         add(idLabel);
@@ -53,10 +54,31 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
         add(returnButton);
 	}
 	
+	public String getID() {
+		return idTextField.getText();
+	}
+	
+	public String getPW() {
+		return pwTextField.getText();
+	}
+	
+	public Authority getAuthority() {
+		return (Authority)authorityComboBox.getSelectedItem();
+	}
+	
 	@Override
 	public void setReturnListener(ActionListener listener) {
 		returnButton.addActionListener(listener);
 	}
+	
+	@Override
+	public String getReturnViewName() { return "ProjectListView"; }
+	
+	@Override
+	public boolean needNullifyProject() { return false; }
+
+	@Override
+	public boolean needNullifyIssue() {	return false; }
 	
 	@Override
 	public List<String> getAccessableViewNames() {
@@ -67,7 +89,8 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 
 	@Override
 	public void refresh() {
-		// TODO Auto-generated method stub
-		
+		idTextField.setText("");
+		pwTextField.setText("");
+		authorityComboBox.setSelectedIndex(-1);
 	}
 }

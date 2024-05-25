@@ -42,7 +42,7 @@ public class SwingMainView extends JFrame implements Mediator{
         
         add(mainPanel);
         
-        showView("AccountCreationView");
+        showView("LoginView");
 	}
 
 	@Override
@@ -67,13 +67,16 @@ public class SwingMainView extends JFrame implements Mediator{
 	public SwingLoginView getLoginView() {
 		return loginView;
 	}
+	
 	public SwingProjectListView getProjectListView() {
 		return projectListView;
 	}
+	
 	public SwingAccountCreationView getAccountCreationView() {
 		return accountCreationView;
 	}
-	public SwingProjectCreationView getSwingProjectCreationView() {
+	
+	public SwingProjectCreationView getProjectCreationView() {
 		return projectCreationView;
 	}
 }

@@ -19,14 +19,15 @@ public class SwingLoginView extends SwingView{
         super(mediator, new Dimension(500, 250));
 
         idLabel = new JLabel("ID");
-        idLabel.setBounds(50, 50, 50, 50);
         pwLabel = new JLabel("PW");
-        pwLabel.setBounds(50, 100, 50, 50);
         idTextField = new JTextField();
-        idTextField.setBounds(100, 50, 170, 50);
         pwTextField = new JTextField();
-        pwTextField.setBounds(100, 100, 170, 50);
         loginButton = new JButton("Login");
+        
+        idLabel.setBounds(50, 50, 50, 50);
+        pwLabel.setBounds(50, 100, 50, 50);
+        idTextField.setBounds(100, 50, 170, 50);
+        pwTextField.setBounds(100, 100, 170, 50);
         loginButton.setBounds(300, 50, 120, 100);
     
         add(idLabel);
@@ -59,8 +60,8 @@ public class SwingLoginView extends SwingView{
 
 	@Override
 	public void refresh() {
-		idTextField.setText("");
-		pwTextField.setText("");
+		idTextField.setText("admin");
+		pwTextField.setText("admin");
 	}
 }
 
