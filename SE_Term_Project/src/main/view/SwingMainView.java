@@ -15,6 +15,7 @@ public class SwingMainView extends JFrame implements Mediator{
 	
 	private SwingLoginView loginView;
 	private SwingProjectListView projectListView;
+	private SwingAccountCreationView accountCreationView;
 	
 	
 	public SwingMainView() {
@@ -30,13 +31,15 @@ public class SwingMainView extends JFrame implements Mediator{
         
         loginView = new SwingLoginView(this);
         projectListView = new SwingProjectListView(this);
+        accountCreationView = new SwingAccountCreationView(this);
         
         mainPanel.add(loginView, "LoginView");
         mainPanel.add(projectListView, "ProjectListView");
+        mainPanel.add(accountCreationView, "AccountCreationtView");
         
         add(mainPanel);
         
-        showView("ProjectListView");
+        showView("LoginView");
 	}
 	
 	public SwingLoginView getLoginView() {
@@ -45,6 +48,10 @@ public class SwingMainView extends JFrame implements Mediator{
 	
 	public SwingProjectListView getProjectListView() {
 		return projectListView;
+	}
+	
+	public SwingAccountCreationView getAccountCreationView() {
+		return accountCreationView;
 	}
 
 	@Override
@@ -55,8 +62,11 @@ public class SwingMainView extends JFrame implements Mediator{
 	}
 	
 	private void showView(String viewName) {
+		SwingView view = loginView;
+		if(viewName == "LoginView") view = loginView;
+		else if(viewName == "ProjectListView") view = projectListView;
+		
+		this.setSize(view.getPreferredSize());
 		cardLayout.show(mainPanel, viewName);
-		if(viewName == "LoginView") this.setSize(loginView.getPreferredSize());
-		else if(viewName == "ProjectListView") this.setSize(projectListView.getPreferredSize());
 	}
 }

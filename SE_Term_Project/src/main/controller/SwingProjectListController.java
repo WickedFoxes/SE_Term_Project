@@ -21,31 +21,31 @@ public class SwingProjectListController extends SwingController {
 	public SwingProjectListController(SwingProjectListView view, ProjectListModel model) {
 		this.model = model;
 		this.view = view;
+		view.setCreateAccountListener(new CreateAccountButtonListener());
+		view.setCreateProjectListener(new CreateProjectButtonListener());
 		
 		setObserver();
-		setCreateButtons();
-		setProjectButtons();
 	}
 	
 	private void setObserver() {
+		System.out.println("setObserver "+ model);
 		model.subscribe(new Observer() {
 			public void update() {
+				System.out.println("update");
 				setProjectButtons();
+				setCreateButtonsVisiblity();
 			}
 		});
 	}
 	
-	private void setCreateButtons() {
-		view.setCreateAccountListener(new CreateAccountButtonListener());
-		view.setCreateProjectListener(new CreateProjectButtonListener());
-		
-		//set visibility
+	private void setCreateButtonsVisiblity() {
 		boolean isAdmin = (model.getUser() instanceof Admin);
+		System.out.println("isAdmin? " + isAdmin);
 		view.setCreateAccountButtonVisible(isAdmin);
 		view.setCreateProjectButtonVisible(isAdmin);
 	}
 	
-	public void setProjectButtons() {
+	private void setProjectButtons() {
 		List<Project> projects = model.getProjectList();
 		List<ActionListener> listeners = new ArrayList<ActionListener>();
 		int n = projects.size();

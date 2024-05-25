@@ -7,7 +7,6 @@ import javax.swing.JOptionPane;
 
 import main.model.LoginModel;
 import main.view.SwingLoginView;
-import main.view.SwingMainView;
 
 public class SwingLoginController extends SwingController{
 	private SwingLoginView view;

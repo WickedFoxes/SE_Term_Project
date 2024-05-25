@@ -31,6 +31,7 @@ public class ProjectListModel extends Model {
 		for(Tester tester : testers) {
 			project_repo.add(project, tester);
 		}
+		notifyObservers();
 		return true;
 	}
 
