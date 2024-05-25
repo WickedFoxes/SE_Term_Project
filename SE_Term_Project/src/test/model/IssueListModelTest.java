@@ -81,9 +81,9 @@ public class IssueListModelTest {
     	loginModel.tryLogin("admin", "admin");
     	
     	//프로젝트 생성
-    	pls = accountModel.getAccounts(Authority.PL);
-    	devs = accountModel.getAccounts(Authority.DEV);
-    	testers = accountModel.getAccounts(Authority.TESTER);
+    	pls = accountModel.getAllAccounts(Authority.PL);
+    	devs = accountModel.getAllAccounts(Authority.DEV);
+    	testers = accountModel.getAllAccounts(Authority.TESTER);
     	
     	ProjectLeader select_pl1 = (ProjectLeader)pls.get(0);
     	ProjectLeader select_pl2 = (ProjectLeader)pls.get(1);

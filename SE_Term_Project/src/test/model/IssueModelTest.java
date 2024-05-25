@@ -82,9 +82,9 @@ public class IssueModelTest {
     	loginModel.tryLogin("admin", "admin");
     	
     	//프로젝트 생성
-    	pls = accountModel.getAccounts(Authority.PL);
-    	devs = accountModel.getAccounts(Authority.DEV);
-    	testers = accountModel.getAccounts(Authority.TESTER);
+    	pls = accountModel.getAllAccounts(Authority.PL);
+    	devs = accountModel.getAllAccounts(Authority.DEV);
+    	testers = accountModel.getAllAccounts(Authority.TESTER);
     	
     	ProjectLeader select_pl1 = (ProjectLeader)pls.get(0);
     	ProjectLeader select_pl2 = (ProjectLeader)pls.get(1);
@@ -107,7 +107,7 @@ public class IssueModelTest {
     @Test
     void setState_PL_NEW() {
     	// account
-    	List<User> devs = accountModel.getAccounts(Authority.DEV);
+    	List<User> devs = accountModel.getAllAccounts(Authority.DEV);
     	
     	// pl1 행동
     	loginModel.tryLogin("pl1", "pl1");
@@ -133,7 +133,7 @@ public class IssueModelTest {
     @Test
     void setState_DEV_ASSIGNED() {
     	// account
-    	List<User> devs = accountModel.getAccounts(Authority.DEV);
+    	List<User> devs = accountModel.getAllAccounts(Authority.DEV);
     	
     	// pl1 행동
     	loginModel.tryLogin("pl1", "pl1");
@@ -162,7 +162,7 @@ public class IssueModelTest {
     @Test
     void setState_TESTER_FIXED() {
     	// account
-    	List<User> devs = accountModel.getAccounts(Authority.DEV);
+    	List<User> devs = accountModel.getAllAccounts(Authority.DEV);
     	
     	// pl1 행동
     	loginModel.tryLogin("pl1", "pl1");
@@ -201,7 +201,7 @@ public class IssueModelTest {
     @Test
     void setState_PL_RESOLVED() {
     	// account
-    	List<User> devs = accountModel.getAccounts(Authority.DEV);
+    	List<User> devs = accountModel.getAllAccounts(Authority.DEV);
     	
     	// pl1 행동
     	loginModel.tryLogin("pl1", "pl1");

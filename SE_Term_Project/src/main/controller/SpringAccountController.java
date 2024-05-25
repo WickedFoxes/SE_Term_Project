@@ -28,7 +28,7 @@ public class SpringAccountController extends AccountController{
 			@RequestParam(value="password") String password,
 			@RequestParam(value="authority") String authority) {
 		if(model.getUser() == null) return "redirect:/login";
-		boolean flag = model.signup(accountID, password, Authority.valueOf(authority));
+		boolean flag = model.trySignup(accountID, password, Authority.valueOf(authority));
 		
 		if(flag) return "redirect:/project";
 		return "redirect:/signup";

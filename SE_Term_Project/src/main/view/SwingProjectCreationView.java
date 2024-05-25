@@ -10,7 +10,10 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 import main.domain.Dev;
 import main.domain.ProjectLeader;
@@ -19,15 +22,14 @@ import main.domain.Tester;
 public class SwingProjectCreationView extends SwingView implements ReturnableView{
 	private JLabel infoLabel, nameLabel, plLabel, devLabel, testerLabel;
     private JTextField nameTextField;
-    private JComboBox<ProjectLeader> plComboBox;
+    private JList<ProjectLeader> plList;
     private JList<Dev> devList;
     private JList<Tester> testerList;
     private JButton createButton, returnButton;
-    private DefaultListModel<Dev> devModel;
-    private DefaultListModel<Tester> testerModel;
+    private JScrollPane plScrollPane, devScrollPane, testerScrollPane; 
     
 	public SwingProjectCreationView(Mediator mediator) {
-		super(mediator, new Dimension(500, 450));
+		super(mediator, new Dimension(500, 550));
 		
 		infoLabel = new JLabel("Create Project");
 		nameLabel = new JLabel("Name");
@@ -35,33 +37,46 @@ public class SwingProjectCreationView extends SwingView implements ReturnableVie
 		devLabel = new JLabel("Devs");
 		testerLabel = new JLabel("Testers");
 		nameTextField = new JTextField();
-		plComboBox = new JComboBox<ProjectLeader>();
+		plList = new JList<ProjectLeader>();
+		plList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		devList = new JList<Dev>();
 		testerList = new JList<Tester>();
         createButton = new JButton("Create");
         returnButton = new JButton("Return");
-		
+        plScrollPane = new JScrollPane();
+        plScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        plScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        plScrollPane.setViewportView(plList);
+        devScrollPane = new JScrollPane();
+        devScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        devScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        devScrollPane.setViewportView(devList);
+        testerScrollPane = new JScrollPane();
+        testerScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        testerScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        testerScrollPane.setViewportView(testerList);
+        
 		infoLabel.setBounds(200, 20, 200, 50);
 		nameLabel.setBounds(100, 70, 50, 50);
 		plLabel.setBounds(100, 130, 50, 50);
 		devLabel.setBounds(100, 190, 50, 50);
 		testerLabel.setBounds(100, 250, 50, 50);
 		nameTextField.setBounds(150, 70, 200, 50);
-		plComboBox.setBounds(150, 130, 200, 50);
-		devList.setBounds(150, 190, 200, 50);
-		testerList.setBounds(150, 250, 200, 50);
-        createButton.setBounds(140, 320, 100, 40);
-        returnButton.setBounds(260, 320, 100, 40);
-    
+		plScrollPane.setBounds(150, 130, 200, 50);
+        devScrollPane.setBounds(150, 190, 200, 100);
+        testerScrollPane.setBounds(150, 300, 200, 100);
+        createButton.setBounds(140, 420, 100, 40);
+        returnButton.setBounds(260, 420, 100, 40);
+
         add(infoLabel);
         add(nameLabel);
-        add(nameTextField);
         add(plLabel);
-        add(plComboBox);
         add(devLabel);
-        add(devList);
         add(testerLabel);
-        add(testerList);
+        add(nameTextField);
+        add(plScrollPane);
+        add(devScrollPane);
+        add(testerScrollPane);
         add(createButton);
         add(returnButton);
 	}
@@ -71,7 +86,7 @@ public class SwingProjectCreationView extends SwingView implements ReturnableVie
 	}
 	
 	public ProjectLeader getPL() {
-		return (ProjectLeader)plComboBox.getSelectedItem();
+		return plList.getSelectedValue();
 	}
 	
 	public List<Dev> getDevs() {
@@ -82,22 +97,26 @@ public class SwingProjectCreationView extends SwingView implements ReturnableVie
 		return testerList.getSelectedValuesList();
 	}
 	 
-	public void setPLComboBox(List<ProjectLeader> pls) {
-		ProjectLeader[] arr = new ProjectLeader[pls.size()];
-		for(int i = 0; i < pls.size(); i++) arr[i] = pls.get(i);
-		plComboBox = new JComboBox<ProjectLeader>(arr);
+	public void setPLList(List<ProjectLeader> pls) {		
+		DefaultListModel<ProjectLeader> plModel = new DefaultListModel<ProjectLeader>();
+		plModel.addAll(pls);
+		plList.setModel(plModel);
 	}
 	
 	public void setDevList(List<Dev> devs) {
-		devModel = new DefaultListModel<Dev>();
+		DefaultListModel<Dev> devModel = new DefaultListModel<Dev>();
 		devModel.addAll(devs);
 		devList.setModel(devModel);
 	}
 	
 	public void setTesterList(List<Tester> testers) {
-		testerModel = new DefaultListModel<Tester>();
+		DefaultListModel<Tester> testerModel = new DefaultListModel<Tester>();
 		testerModel.addAll(testers);
 		testerList.setModel(testerModel);
+	}
+	
+	public void setCreateListener(ActionListener listener) {
+		createButton.addActionListener(listener);
 	}
 	
 	@Override
@@ -124,7 +143,7 @@ public class SwingProjectCreationView extends SwingView implements ReturnableVie
 	@Override
 	public void refresh() {
 		nameTextField.setText("");
-		plComboBox.setSelectedIndex(-1);
+		plList.setSelectedIndex(-1);
 		devList.setSelectedIndex(-1);
 		testerList.setSelectedIndex(-1);
 	}

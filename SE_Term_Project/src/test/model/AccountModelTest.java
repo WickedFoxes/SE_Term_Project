@@ -39,9 +39,9 @@ class AccountModelTest {
     @Test
     void signup() {
     	login_model.tryLogin("admin", "admin");
-    	account_model.signup("pl1", "pl1", Authority.PL);
-    	account_model.signup("dev1", "dev1", Authority.DEV);
-    	account_model.signup("tester1", "tester1", Authority.TESTER);
+    	account_model.trySignup("pl1", "pl1", Authority.PL);
+    	account_model.trySignup("dev1", "dev1", Authority.DEV);
+    	account_model.trySignup("tester1", "tester1", Authority.TESTER);
     	
     	login_model.logout();
     	login_model.tryLogin("dev1", "dev1");

@@ -15,10 +15,12 @@ public class AccountModel extends Model {
 		this.repo = r;
 	}
 	
-	public boolean signup(String id, String pw, Authority authority){
+	public boolean trySignup(String id, String pw, Authority authority){
 		if(getUser() == null) return false;  
 		if(getUser().getAuthority() != Authority.ADMIN) return false;
 		if(repo.contains(id)) return false;
+		if(id == "") return false;
+		if(pw == "") return false;
 		
 		switch(authority) {
 		case PL:
@@ -39,7 +41,7 @@ public class AccountModel extends Model {
 		return true;
 	}
 	
-	public List<User> getAccounts(Authority authority){
+	public List<User> getAllAccounts(Authority authority){
 		return repo.findAll(authority);
 	}
 }

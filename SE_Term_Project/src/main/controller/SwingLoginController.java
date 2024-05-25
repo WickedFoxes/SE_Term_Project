@@ -23,6 +23,7 @@ public class SwingLoginController extends SwingController{
 		public void actionPerformed(ActionEvent e) {
 			String id = view.getID();
 			String pw = view.getPW();
+			
 			Boolean success = model.tryLogin(id, pw);
 			if(success) view.requestChangeView("ProjectListView");
 			else view.showMessagePopup("Login Error", "아이디, 또는 비밀번호를 잘못 입력했습니다.", JOptionPane.ERROR_MESSAGE);

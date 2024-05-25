@@ -37,9 +37,9 @@ public class SpringProjectListController extends ProjectListContorller{
 		if(model.getUser() == null) return "redirect:/login";
 		if(model.getUser().getAuthority() != Authority.ADMIN) return "redirect:/project";
 		
-		input.addAttribute("pls", account_model.getAccounts(Authority.PL));
-		input.addAttribute("devs", account_model.getAccounts(Authority.DEV));
-		input.addAttribute("testers", account_model.getAccounts(Authority.TESTER));
+		input.addAttribute("pls", account_model.getAllAccounts(Authority.PL));
+		input.addAttribute("devs", account_model.getAllAccounts(Authority.DEV));
+		input.addAttribute("testers", account_model.getAllAccounts(Authority.TESTER));
 		return "projectCreate";
 	}
 	
@@ -53,20 +53,20 @@ public class SpringProjectListController extends ProjectListContorller{
 		String[] testers = tester.split(" ");
 		
 		ProjectLeader projectleader = null;
-		for(User user : account_model.getAccounts(Authority.PL)) {
+		for(User user : account_model.getAllAccounts(Authority.PL)) {
 			if(pl.equals(user.getAccountID())) 
 				projectleader = (ProjectLeader)user;
 		}
 		
 		List<Dev> dev_list = new ArrayList<>();
-		for(User user : account_model.getAccounts(Authority.DEV)) {
+		for(User user : account_model.getAllAccounts(Authority.DEV)) {
 			for(String d : devs) {
 				if(d.equals(user.getAccountID())) dev_list.add((Dev)user);
 			}
 		}
 		
 		List<Tester> tester_list = new ArrayList<>();
-		for(User user : account_model.getAccounts(Authority.TESTER)) {
+		for(User user : account_model.getAllAccounts(Authority.TESTER)) {
 			for(String t : testers) {
 				if(t.equals(user.getAccountID())) tester_list.add((Tester)user);
 			}

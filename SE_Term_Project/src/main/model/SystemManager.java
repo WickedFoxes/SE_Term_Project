@@ -37,6 +37,7 @@ public class SystemManager {
 	public void setUser(User user) {
 		this.user = user;
 		notifyObservers();
+		System.out.println("Set User, notifyObservers ("+this.getClass().toString()+")");
 	}
 	public Project getProject() {
 		return project;
@@ -44,6 +45,7 @@ public class SystemManager {
 	public void setProject(Project project) {
 		this.project = project;
 		notifyObservers();
+		System.out.println("Set Project, notifyObservers ("+this.getClass().toString()+")");
 	}
 	public Issue getIssue() {
 		return issue;
@@ -51,5 +53,6 @@ public class SystemManager {
 	public void setIssue(Issue issue) {
 		this.issue = issue;
 		notifyObservers();
+		System.out.println("Set Issue, notifyObservers ("+this.getClass().toString()+")");
 	}
 }

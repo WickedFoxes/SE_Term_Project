@@ -1,7 +1,9 @@
 package main.application;
 
+import main.controller.SwingAccountCreationController;
 import main.controller.SwingLoginController;
 import main.controller.SwingLogoutController;
+import main.controller.SwingProjectCreationController;
 import main.controller.SwingProjectListController;
 import main.controller.SwingReturnController;
 import main.domain.Admin;
@@ -42,6 +44,8 @@ public class SwingApplication implements Application{
 	SwingLogoutController logoutController_projectList, logoutController_issueList;
 	SwingReturnController returnController_accountCreation, returnController_projectCreation, returnController_issueList, returnController_issueCreation, returnController_issueDetail;
 	SwingProjectListController projectListController;
+	SwingAccountCreationController accountCreationController;
+	SwingProjectCreationController projectCreationController;
 	
 	public void run() {
 		//View
@@ -68,5 +72,7 @@ public class SwingApplication implements Application{
 		returnController_accountCreation = new SwingReturnController((ReturnableView)view.getAccountCreationView(), accountModel);
 		returnController_projectCreation = new SwingReturnController((ReturnableView)view.getProjectCreationView(), projectListModel);
 		projectListController = new SwingProjectListController(view.getProjectListView(), projectListModel);
+		accountCreationController = new SwingAccountCreationController(view.getAccountCreationView(), accountModel);
+		projectCreationController = new SwingProjectCreationController(view.getProjectCreationView(), accountModel, projectListModel);
 	}
 }

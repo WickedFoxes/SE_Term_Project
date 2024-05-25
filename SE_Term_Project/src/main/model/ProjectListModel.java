@@ -20,6 +20,7 @@ public class ProjectListModel extends Model {
 	public boolean tryCreateProject(String name, ProjectLeader pl, List<Dev> devs, List<Tester> testers) {
 		if(getUser() == null) return false;
 		if(getUser().getAuthority() != Authority.ADMIN) return false;
+		if(name == "") return false;
 		
 		Project project = new Project(name);
 		project = project_repo.add(project);
@@ -40,7 +41,7 @@ public class ProjectListModel extends Model {
 		return project_repo.findAll(user);
 	}
 	
-	public List<User> getAccount(Authority authority){
+	public List<User> getAllAccountsInProject(Authority authority){
 		return project_repo.findAll(getProject(), authority);
 	}
 }

@@ -95,6 +95,6 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 	public void refresh() {
 		idTextField.setText("");
 		pwTextField.setText("");
-		authorityComboBox.setSelectedIndex(-1);
+		authorityComboBox.setSelectedIndex(2);
 	}
 }

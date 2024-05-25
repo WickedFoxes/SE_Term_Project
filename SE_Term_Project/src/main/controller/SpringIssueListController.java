@@ -76,13 +76,13 @@ public class SpringIssueListController {
 		Tester reporter_input = null;
 		Dev assignee_input = null;
 		
-		for(User d : projectlist_model.getAccount(Authority.DEV)) {
+		for(User d : projectlist_model.getAllAccountsInProject(Authority.DEV)) {
 			if(d.getAccountID().equals(assignee)) {
 				assignee_input = (Dev)d; break;
 			}
 		}
 		
-		for(User t : projectlist_model.getAccount(Authority.TESTER)) {
+		for(User t : projectlist_model.getAllAccountsInProject(Authority.TESTER)) {
 			if(t.getAccountID().equals(reporter)) {
 				reporter_input = (Tester)t; break;
 			}

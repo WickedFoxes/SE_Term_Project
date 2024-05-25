@@ -63,7 +63,7 @@ public class SpringIssueController {
 		input.addAttribute("authority", issue_model.getUser().getAuthority().name());
 		input.addAttribute("issue", issue_model.getIssue());
 		input.addAttribute("comments", comment_model.getCommentList());
-		input.addAttribute("devs", projectlist_model.getAccount(Authority.DEV));
+		input.addAttribute("devs", projectlist_model.getAllAccountsInProject(Authority.DEV));
 		
 		return "issue";
 	}
@@ -88,7 +88,7 @@ public class SpringIssueController {
 		if(state != null && !state.equals("none")) 
 			s = State.valueOf(state);
 		if(assignee != null && !assignee.equals("none")) {
-			for(User user : projectlist_model.getAccount(Authority.DEV)) {
+			for(User user : projectlist_model.getAllAccountsInProject(Authority.DEV)) {
 				if(user.getAccountID().equals(assignee)) {
 					d = (Dev)user; break;
 				}
@@ -112,7 +112,7 @@ public class SpringIssueController {
 		input.addAttribute("authority", issue_model.getUser().getAuthority().name());
 		input.addAttribute("issue", issue_model.getIssue());
 		input.addAttribute("comments", comment_model.getCommentList());
-		input.addAttribute("devs", projectlist_model.getAccount(Authority.DEV));
+		input.addAttribute("devs", projectlist_model.getAllAccountsInProject(Authority.DEV));
 		
 		return "redirect:/issue/" + Integer.toString(issue_id);
 	}

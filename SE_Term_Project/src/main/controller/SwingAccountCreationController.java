@@ -26,13 +26,13 @@ public class SwingAccountCreationController extends SwingController{
 			String pw = view.getPW();
 			Authority authority = view.getAuthority();
 			
-			boolean success = model.signup(id, pw, authority);
+			boolean success = model.trySignup(id, pw, authority);
 			if(success) {
-				view.showMessagePopup("Signup success", "회원 가입이 완료되었습니다.", JOptionPane.OK_OPTION);
+				view.showMessagePopup("Signup success", "계정 생성이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
 				view.requestChangeView("ProjectListView");
 			}
 			else {
-				view.showMessagePopup("Signup Error", "이미 존재하는 아이디입니다.", JOptionPane.ERROR_MESSAGE);
+				view.showMessagePopup("Signup Error", "입력 정보를 확인해주세요.", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

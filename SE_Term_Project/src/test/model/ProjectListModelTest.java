@@ -62,9 +62,9 @@ public class ProjectListModelTest {
     @Test
     void createProject() {
     	login_model.tryLogin("admin", "admin");
-    	List<User> pls = account_model.getAccounts(Authority.PL);
-    	List<User> devs = account_model.getAccounts(Authority.DEV);
-    	List<User> testers = account_model.getAccounts(Authority.TESTER);
+    	List<User> pls = account_model.getAllAccounts(Authority.PL);
+    	List<User> devs = account_model.getAllAccounts(Authority.DEV);
+    	List<User> testers = account_model.getAllAccounts(Authority.TESTER);
     	
     	ProjectLeader select_pl1 = (ProjectLeader)pls.get(0);
     	ProjectLeader select_pl2 = (ProjectLeader)pls.get(1);
@@ -86,9 +86,9 @@ public class ProjectListModelTest {
     @Test
     void getProjectList() {
     	login_model.tryLogin("admin", "admin");
-    	List<User> pls = account_model.getAccounts(Authority.PL);
-    	List<User> devs = account_model.getAccounts(Authority.DEV);
-    	List<User> testers = account_model.getAccounts(Authority.TESTER);
+    	List<User> pls = account_model.getAllAccounts(Authority.PL);
+    	List<User> devs = account_model.getAllAccounts(Authority.DEV);
+    	List<User> testers = account_model.getAllAccounts(Authority.TESTER);
     	
     	ProjectLeader select_pl1 = (ProjectLeader)pls.get(0);
     	ProjectLeader select_pl2 = (ProjectLeader)pls.get(1);
