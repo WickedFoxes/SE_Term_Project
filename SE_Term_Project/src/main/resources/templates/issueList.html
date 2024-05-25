@@ -103,11 +103,13 @@
 </head>
 <body>
     <div class="header">
-        <a href="#">Logout</a>
+        <a href="/logout">Logout</a>
     </div>
     <div class="container">
         <div class="actions">
-            <button th:if="${authority == 'PL'}" onclick="location.href='/issueList/create'">Create Issue</button>
+            <button th:if="${authority == 'TESTER'}" 
+            onclick="location.href='/issueList/"
+            th:attrappend="onclick=${project_id}+'/create\''">Create Issue</button>
             <button onclick="toggleFilterForm();">Filter</button>
         </div>
         <div id="filterForm" class="filter-form">

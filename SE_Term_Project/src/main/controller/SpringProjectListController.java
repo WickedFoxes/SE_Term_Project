@@ -23,6 +23,7 @@ public class SpringProjectListController extends ProjectListContorller{
 	@GetMapping("/project")
 	public String projectPage(Model input) {
 		if(model.getUser() == null) return "redirect:/login";
+		model.setIssue(null);
 		input.addAttribute("projects", model.getProjectList());
 		input.addAttribute("authority", model.getUser().getAuthority().name());
 		return "projectList";
