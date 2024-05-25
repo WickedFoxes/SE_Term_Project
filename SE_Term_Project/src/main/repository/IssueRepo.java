@@ -7,6 +7,7 @@ import main.domain.FilterOption;
 import main.domain.Issue;
 import main.domain.Project;
 import main.domain.User;
+import main.domain.enumeration.Priority;
 import main.domain.enumeration.State;
 
 public interface IssueRepo {
@@ -16,4 +17,5 @@ public interface IssueRepo {
 	List<Issue> findAll(Project project, User user);
 	List<Issue> findAll(Project project, User user, FilterOption option);
 	void setState(Issue issue, State state);
+	void setPriority(Issue issue, Priority priority);
 }
