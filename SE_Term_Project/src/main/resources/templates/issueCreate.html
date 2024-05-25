@@ -57,6 +57,13 @@
         .issue-container button:hover {
             background-color: #0056b3;
         }
+        .issue-container select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -67,7 +74,10 @@
             <input type="text" id="title" name="title" placeholder="Enter issue title" required>
             
             <label for="priority">Priority</label>
-            <input type="text" id="priority" name="priority" placeholder="Enter issue priority" required>
+    		<select name="priority" id="priority" required>
+		        <option th:each="priority : ${priorities}" th:text="${priority}" 
+		        value="" th:attrappend="value=${priority}"></option>
+		    </select>
             
             <label for="description">Description</label>
             <textarea id="description" name="description" placeholder="Enter issue description" required></textarea>

@@ -1,6 +1,8 @@
 package main.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -105,7 +107,13 @@ public class SpringIssueListController {
 		if(projectlist_model.getUser().getAuthority() != Authority.TESTER) 
 			return "redirect:/issueList/"+Integer.toString(project_id);
 		
+		List<String> priorities = new ArrayList<>();
+		for(Priority p :Priority.values()) {
+			priorities.add(p.name());
+		}
+		
 		input.addAttribute("project_id", project_id);
+		input.addAttribute("priorities", priorities);
 		
 		return "issueCreate";
 	}
