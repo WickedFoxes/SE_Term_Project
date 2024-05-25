@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import main.domain.*;
 import main.domain.enumeration.Authority;
+import main.model.AccountModel;
 import main.model.ProjectListModel;
 
 @Controller
 public class SpringProjectListController extends ProjectListContorller{
-	public SpringProjectListController(ProjectListModel model) {
-		super(model);
+	private AccountModel account_model;
+	public SpringProjectListController(ProjectListModel pmodel, AccountModel amodel) {
+		super(pmodel);
+		this.account_model = amodel;
 	}
 
 	@GetMapping("/project")
@@ -34,9 +37,9 @@ public class SpringProjectListController extends ProjectListContorller{
 		if(model.getUser() == null) return "redirect:/login";
 		if(model.getUser().getAuthority() != Authority.ADMIN) return "redirect:/project";
 		
-		input.addAttribute("pls", model.getAllAcounts(Authority.PL));
-		input.addAttribute("devs", model.getAllAcounts(Authority.DEV));
-		input.addAttribute("testers", model.getAllAcounts(Authority.TESTER));
+		input.addAttribute("pls", account_model.getAccounts(Authority.PL));
+		input.addAttribute("devs", account_model.getAccounts(Authority.DEV));
+		input.addAttribute("testers", account_model.getAccounts(Authority.TESTER));
 		return "projectCreate";
 	}
 	
@@ -50,20 +53,20 @@ public class SpringProjectListController extends ProjectListContorller{
 		String[] testers = tester.split(" ");
 		
 		ProjectLeader projectleader = null;
-		for(User user : model.getAllAcounts(Authority.PL)) {
+		for(User user : account_model.getAccounts(Authority.PL)) {
 			if(pl.equals(user.getAccountID())) 
 				projectleader = (ProjectLeader)user;
 		}
 		
 		List<Dev> dev_list = new ArrayList<>();
-		for(User user : model.getAllAcounts(Authority.DEV)) {
+		for(User user : account_model.getAccounts(Authority.DEV)) {
 			for(String d : devs) {
 				if(d.equals(user.getAccountID())) dev_list.add((Dev)user);
 			}
 		}
 		
 		List<Tester> tester_list = new ArrayList<>();
-		for(User user : model.getAllAcounts(Authority.TESTER)) {
+		for(User user : account_model.getAccounts(Authority.TESTER)) {
 			for(String t : testers) {
 				if(t.equals(user.getAccountID())) tester_list.add((Tester)user);
 			}

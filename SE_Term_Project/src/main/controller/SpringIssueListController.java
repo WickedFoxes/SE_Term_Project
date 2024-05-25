@@ -1,6 +1,8 @@
 package main.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +21,18 @@ import main.domain.User;
 import main.domain.enumeration.Authority;
 import main.domain.enumeration.Priority;
 import main.domain.enumeration.State;
+import main.model.AccountModel;
 import main.model.IssueListModel;
 import main.model.ProjectListModel;
 
 @Controller
 public class SpringIssueListController {
+	private AccountModel account_model;
 	private IssueListModel issuelist_model;
 	private ProjectListModel projectlist_model;
 	public SpringIssueListController(IssueListModel imodel, ProjectListModel pmodel) {
 		this.issuelist_model = imodel; 
-		this.projectlist_model = pmodel; 
+		this.projectlist_model = pmodel;
 	}
 
 	@RequestMapping(value="/issueList/{project_id}", method=RequestMethod.GET)
@@ -43,7 +47,7 @@ public class SpringIssueListController {
 			}
 		}
 		
-		if(issuelist_model.getProject() == null) return "projectList"; 
+		if(issuelist_model.getProject() == null) return "redirect:/project";
 		input.addAttribute("issues", issuelist_model.getIssueList());
 		input.addAttribute("authority", projectlist_model.getUser().getAuthority().name());
 		input.addAttribute("project_id", project_id);
@@ -71,16 +75,14 @@ public class SpringIssueListController {
 		State state_input = null;
 		Tester reporter_input = null;
 		Dev assignee_input = null;
-		projectlist_model.getAllAcounts(Authority.DEV);
 		
-		
-		for(User d : projectlist_model.getAllAcounts(Authority.DEV)) {
+		for(User d : projectlist_model.getAccount(Authority.DEV)) {
 			if(d.getAccountID().equals(assignee)) {
 				assignee_input = (Dev)d; break;
 			}
 		}
 		
-		for(User t : projectlist_model.getAllAcounts(Authority.TESTER)) {
+		for(User t : projectlist_model.getAccount(Authority.TESTER)) {
 			if(t.getAccountID().equals(reporter)) {
 				reporter_input = (Tester)t; break;
 			}
@@ -105,7 +107,13 @@ public class SpringIssueListController {
 		if(projectlist_model.getUser().getAuthority() != Authority.TESTER) 
 			return "redirect:/issueList/"+Integer.toString(project_id);
 		
+		List<String> priorities = new ArrayList<>();
+		for(Priority p :Priority.values()) {
+			priorities.add(p.name());
+		}
+		
 		input.addAttribute("project_id", project_id);
+		input.addAttribute("priorities", priorities);
 		
 		return "issueCreate";
 	}

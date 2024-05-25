@@ -40,9 +40,6 @@ public class AccountModel extends Model {
 	}
 	
 	public List<User> getAccounts(Authority authority){
-		List<User> accountList = new ArrayList<>();
-		for(User user : repo.findAll(authority))
-			accountList.add(user);
-		return accountList;
+		return repo.findAll(authority);
 	}
 }

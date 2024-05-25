@@ -161,7 +161,7 @@ public class MysqlIssueRepo implements IssueRepo{
             	reporter = (Tester)getUser(rs.getInt(8));
             	assignee = (Dev)getUser(rs.getInt(9));
             	fixer = (Dev)getUser(rs.getInt(10));
-            			 
+            	
             	temp = new Issue(id, title, description, reportedDate, 
             			priority, state, reporter, assignee, fixer);
             	
@@ -345,8 +345,8 @@ public class MysqlIssueRepo implements IssueRepo{
             connection = DriverManager.getConnection(jdbc_connect);
 
             pstm = connection.prepareStatement(sql);
-            pstm.setInt(1, issue.getId());
-            pstm.setInt(2, fixer.getId());
+            pstm.setInt(1, fixer.getId());
+            pstm.setInt(2, issue.getId());
             
             int res = pstm.executeUpdate();
             if(res > 0 ) {
@@ -360,5 +360,36 @@ public class MysqlIssueRepo implements IssueRepo{
             System.err.println(e.getMessage());
         }
 		
+	}
+
+	@Override
+	public void setPriority(Issue issue, Priority priority) {
+        Connection connection = null;
+        PreparedStatement pstm = null;
+        String sql = "UPDATE Issue SET priority=? WHERE id=?";
+        
+        try {
+			Class.forName(jdbc_name);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+        try {
+            connection = DriverManager.getConnection(jdbc_connect);
+
+            pstm = connection.prepareStatement(sql);
+            pstm.setString(1, priority.name().toString());
+            pstm.setInt(2, issue.getId());
+            
+            int res = pstm.executeUpdate();
+            if(res > 0 ) {
+                System.out.println("DB입력 성공");
+            }else {
+                System.out.println("DB입력 실패");
+            }
+
+            connection.close(); 
+        } catch(SQLException e){
+            System.err.println(e.getMessage());
+        }
 	}
 }

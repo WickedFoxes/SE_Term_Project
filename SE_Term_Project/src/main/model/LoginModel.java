@@ -15,10 +15,14 @@ public class LoginModel extends Model {
 		if(!repo.contains(id)) return false;
 		User user = repo.find(id);
 		setUser(user);
+		setProject(null);
+		setIssue(null);
 		return true;
 	}
 	
 	public void logout() {
 		setUser(null);
+		setProject(null);
+		setIssue(null);
 	}
 }

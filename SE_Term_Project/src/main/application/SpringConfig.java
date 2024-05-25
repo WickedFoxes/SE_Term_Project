@@ -26,6 +26,11 @@ public class SpringConfig {
 	public IssueRepo issueRepo() {
 		return new MysqlIssueRepo();
 	}
+
+	@Bean
+	public CommentRepo commentRepo() {
+		return new MysqlCommentRepo();
+	}
 	
 	@Bean
 	public AccountModel accountModel() {
@@ -45,5 +50,15 @@ public class SpringConfig {
 	@Bean
 	public IssueListModel issueListModel() {
 		return new IssueListModel(sysmanager(), issueRepo());
+	}
+
+	@Bean
+	public IssueModel issueModel() {
+		return new IssueModel(sysmanager(), issueRepo());
+	}
+	
+	@Bean
+	public CommentModel commentModel() {
+		return new CommentModel(sysmanager(), commentRepo());
 	}
 }

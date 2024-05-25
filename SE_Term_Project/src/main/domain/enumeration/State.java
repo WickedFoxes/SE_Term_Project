@@ -1,3 +1,3 @@
 package main.domain.enumeration;
 
-public enum State {NEW, ASSIGNED, RESOLVED, CLOSED, REOPENED}
+public enum State {NEW, ASSIGNED, FIXED, RESOLVED, CLOSED, REOPENED}

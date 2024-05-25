@@ -107,19 +107,4 @@ public class ProjectListModelTest {
     	int dev_test = projectList_model.getProjectList().size();
     	Assertions.assertEquals(2, dev_test);
     }
-    
-    @Test
-    void getAllAccounts() {
-    	login_model.tryLogin("admin", "admin");
-    	List<User> pls = account_model.getAccounts(Authority.PL);
-    	List<User> devs = account_model.getAccounts(Authority.DEV);
-    	List<User> testers = account_model.getAccounts(Authority.TESTER);
-    	
-    	List<User> pls_test = projectList_model.getAllAcounts(Authority.PL);
-    	List<User> devs_test = projectList_model.getAllAcounts(Authority.DEV);
-    	List<User> testers_test = projectList_model.getAllAcounts(Authority.TESTER);
-    	
-    	Assertions.assertEquals(pls.size()+devs.size()+testers.size()
-    	, pls_test.size()+devs_test.size()+testers_test.size());
-    }
 }
