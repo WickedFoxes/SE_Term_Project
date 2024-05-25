@@ -56,6 +56,12 @@ public class SwingLoginView extends SwingView{
 		list.add("ProjectListView");
 		return list;
 	}
+
+	@Override
+	public void refresh() {
+		idTextField.setText("");
+		pwTextField.setText("");
+	}
 }
 
 //private void addComponent(Component c, int x, int y, int w, int h) {

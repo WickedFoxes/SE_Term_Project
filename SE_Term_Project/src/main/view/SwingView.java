@@ -26,8 +26,10 @@ public abstract class SwingView extends JPanel{
 	}
 	
 	public void requestChangeView(String targetViewName) {
+		System.out.println("change to "+targetViewName);
 		mediator.notify(this, targetViewName);
 	}
 	
 	public abstract List<String> getAccessableViewNames();
+	public abstract void refresh();
 }

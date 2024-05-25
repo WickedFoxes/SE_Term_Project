@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 import main.domain.Project;
 
-public class SwingProjectListView extends SwingView {
+public class SwingProjectListView extends SwingView implements LogoutableView {
 	JButton logoutButton, createAccountButton, createProjectButton;
 	JPanel projectPanel;
 	List<JButton> projectButtons;
@@ -38,8 +38,6 @@ public class SwingProjectListView extends SwingView {
 		add(createAccountButton);
 		add(createProjectButton);
 		add(projectPanel);
-		
-		setVisible(true);
 	}
 	
 	public void setProjectButtons(List<Project> projects, List<ActionListener> listeners) {
@@ -62,14 +60,16 @@ public class SwingProjectListView extends SwingView {
 	public void setCreateProjectButtonVisible(boolean isVisible) {
 		createProjectButton.setVisible(isVisible);
 	}
-	public void setLogoutListener(ActionListener listener) {
-		logoutButton.addActionListener(listener);
-	}
 	public void setCreateAccountListener(ActionListener listener) {
 		createAccountButton.addActionListener(listener);
 	}
 	public void setCreateProjectListener(ActionListener listener) {
 		createProjectButton.addActionListener(listener);
+	}
+	
+	@Override
+	public void setLogoutListener(ActionListener listener) {
+		logoutButton.addActionListener(listener);
 	}
 	
 	@Override
@@ -80,5 +80,11 @@ public class SwingProjectListView extends SwingView {
 		list.add("ProjectCreationView");
 		list.add("AccountCreationView");
 		return list;
+	}
+
+	@Override
+	public void refresh() {
+		// TODO Auto-generated method stub
+		
 	}
 }

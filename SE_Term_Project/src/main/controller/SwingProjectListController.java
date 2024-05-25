@@ -28,10 +28,8 @@ public class SwingProjectListController extends SwingController {
 	}
 	
 	private void setObserver() {
-		System.out.println("setObserver "+ model);
 		model.subscribe(new Observer() {
 			public void update() {
-				System.out.println("update");
 				setProjectButtons();
 				setCreateButtonsVisiblity();
 			}
@@ -46,6 +44,7 @@ public class SwingProjectListController extends SwingController {
 	}
 	
 	private void setProjectButtons() {
+		if(model.getUser() == null) return;
 		List<Project> projects = model.getProjectList();
 		List<ActionListener> listeners = new ArrayList<ActionListener>();
 		int n = projects.size();

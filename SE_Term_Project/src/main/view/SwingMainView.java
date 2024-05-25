@@ -16,6 +16,7 @@ public class SwingMainView extends JFrame implements Mediator{
 	private SwingLoginView loginView;
 	private SwingProjectListView projectListView;
 	private SwingAccountCreationView accountCreationView;
+	private SwingProjectCreationView projectCreationView;
 	
 	
 	public SwingMainView() {
@@ -32,26 +33,16 @@ public class SwingMainView extends JFrame implements Mediator{
         loginView = new SwingLoginView(this);
         projectListView = new SwingProjectListView(this);
         accountCreationView = new SwingAccountCreationView(this);
+        projectCreationView = new SwingProjectCreationView(this);
         
         mainPanel.add(loginView, "LoginView");
         mainPanel.add(projectListView, "ProjectListView");
-        mainPanel.add(accountCreationView, "AccountCreationtView");
+        mainPanel.add(accountCreationView, "AccountCreationView");
+        mainPanel.add(projectCreationView, "ProjectCreationView");
         
         add(mainPanel);
         
-        showView("LoginView");
-	}
-	
-	public SwingLoginView getLoginView() {
-		return loginView;
-	}
-	
-	public SwingProjectListView getProjectListView() {
-		return projectListView;
-	}
-	
-	public SwingAccountCreationView getAccountCreationView() {
-		return accountCreationView;
+        showView("AccountCreationView");
 	}
 
 	@Override
@@ -65,8 +56,24 @@ public class SwingMainView extends JFrame implements Mediator{
 		SwingView view = loginView;
 		if(viewName == "LoginView") view = loginView;
 		else if(viewName == "ProjectListView") view = projectListView;
+		else if(viewName == "AccountCreationView") view = accountCreationView;
+		else if(viewName == "ProjectCreationView") view = projectCreationView;
 		
-		this.setSize(view.getPreferredSize());
 		cardLayout.show(mainPanel, viewName);
+		this.setSize(view.getPreferredSize());
+		view.refresh();
+	}
+	
+	public SwingLoginView getLoginView() {
+		return loginView;
+	}
+	public SwingProjectListView getProjectListView() {
+		return projectListView;
+	}
+	public SwingAccountCreationView getAccountCreationView() {
+		return accountCreationView;
+	}
+	public SwingProjectCreationView getSwingProjectCreationView() {
+		return projectCreationView;
 	}
 }
