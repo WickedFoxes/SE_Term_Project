@@ -88,7 +88,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="project : ${projects}" onclick="location.href='/project/" th:attrappend="onclick=${project.id}+'\''">
+                <tr th:each="project : ${projects}" onclick="location.href='/issueList/" th:attrappend="onclick=${project.id}+'\''">
                     <td th:text="${project.id}">1</td>
                     <td th:text="${project.name}">there is no project</td>
                     <td th:text="${project.createdDate}">????-??-??</td>

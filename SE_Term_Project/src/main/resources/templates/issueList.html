@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+        }
+        .header a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #0056b3;
+        }
+        .header a:hover {
+            background-color: #00408b;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+        .actions button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+        .filter-form {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .filter-form label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .filter-form input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f2f2f2;
+        }
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+        <script>
+        function toggleFilterForm() {
+            var filterForm = document.getElementById('filterForm');
+            if (filterForm.style.display === 'none' || filterForm.style.display === '') {
+                filterForm.style.display = 'block';
+            } else {
+                filterForm.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="header">
+        <a href="#">Logout</a>
+    </div>
+    <div class="container">
+        <div class="actions">
+            <button th:if="${authority == 'PL'}" onclick="location.href='/issueList/create'">Create Issue</button>
+            <button onclick="toggleFilterForm();">Filter</button>
+        </div>
+        <div id="filterForm" class="filter-form">
+            <form method="post">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" placeholder="Enter state">
+                
+                <label for="assignee">Assignee</label>
+                <input type="text" id="assignee" name="assignee" placeholder="Enter assignee">
+                
+                <label for="reporter">Reporter</label>
+                <input type="text" id="reporter" name="reporter" placeholder="Enter reporter">
+                
+                <button type="submit">Apply Filters</button>
+            </form>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Num</th>
+                    <th>Title</th>
+                    <th>Priority</th>
+                    <th>State</th>
+                    <th>Reporter</th>
+                    <th>Assignee</th>
+                    <th>Fixer</th>
+                    <th>Reported Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="issue : ${issues}" onclick="location.href='/issueDetail/" th:attrappend="onclick=${issue.id}+'\''">
+                    <td th:text="${issue.id}">1</td>
+                    <td th:text="${issue.title}">Sample Title 1</td>
+                    <td th:text="${issue.priority}">High</td>
+                    <td th:text="${issue.state}">Open</td>
+                    <td th:text="${issue.reporter.accountID}"></td>
+                    <td th:if="${issue.assignee == null}"></td>
+                    <td th:unless="${issue.assignee == null}" th:text="${issue.assignee.accountID}"></td>
+                    <td th:if="${issue.fixer == null}"></td>
+                    <td th:unless="${issue.fixer == null}" th:text="${issue.fixer.accountID}"></td>
+                    <td th:text="${issue.reportedDate}">????-??-??</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

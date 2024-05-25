@@ -23,6 +23,11 @@ public class SpringConfig {
 	}
 	
 	@Bean
+	public IssueRepo issueRepo() {
+		return new MysqlIssueRepo();
+	}
+	
+	@Bean
 	public AccountModel accountModel() {
 		return new AccountModel(sysmanager(), accountRepo());
 	}
@@ -35,5 +40,10 @@ public class SpringConfig {
 	@Bean
 	public ProjectListModel projectListModel() {
 		return new ProjectListModel(sysmanager(), projectRepo(), accountRepo());
+	}
+	
+	@Bean
+	public IssueListModel issueListModel() {
+		return new IssueListModel(sysmanager(), issueRepo());
 	}
 }
