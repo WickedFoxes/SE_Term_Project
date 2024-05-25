@@ -140,7 +140,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="issue : ${issues}" onclick="location.href='/issueDetail/" th:attrappend="onclick=${issue.id}+'\''">
+                <tr th:each="issue : ${issues}" onclick="location.href='/issue/" th:attrappend="onclick=${issue.id}+'\''">
                     <td th:text="${issue.id}">1</td>
                     <td th:text="${issue.title}">Sample Title 1</td>
                     <td th:text="${issue.priority}">High</td>

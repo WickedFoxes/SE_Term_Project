@@ -45,7 +45,7 @@ public class SpringIssueListController {
 			}
 		}
 		
-		if(issuelist_model.getProject() == null) return "projectList"; 
+		if(issuelist_model.getProject() == null) return "redirect:/project";
 		input.addAttribute("issues", issuelist_model.getIssueList());
 		input.addAttribute("authority", projectlist_model.getUser().getAuthority().name());
 		input.addAttribute("project_id", project_id);
@@ -74,13 +74,13 @@ public class SpringIssueListController {
 		Tester reporter_input = null;
 		Dev assignee_input = null;
 		
-		for(User d : account_model.getAccounts(Authority.DEV)) {
+		for(User d : projectlist_model.getAccount(Authority.DEV)) {
 			if(d.getAccountID().equals(assignee)) {
 				assignee_input = (Dev)d; break;
 			}
 		}
 		
-		for(User t : account_model.getAccounts(Authority.TESTER)) {
+		for(User t : projectlist_model.getAccount(Authority.TESTER)) {
 			if(t.getAccountID().equals(reporter)) {
 				reporter_input = (Tester)t; break;
 			}

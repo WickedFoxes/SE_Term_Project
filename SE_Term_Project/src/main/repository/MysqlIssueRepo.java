@@ -161,7 +161,7 @@ public class MysqlIssueRepo implements IssueRepo{
             	reporter = (Tester)getUser(rs.getInt(8));
             	assignee = (Dev)getUser(rs.getInt(9));
             	fixer = (Dev)getUser(rs.getInt(10));
-            			 
+            	
             	temp = new Issue(id, title, description, reportedDate, 
             			priority, state, reporter, assignee, fixer);
             	

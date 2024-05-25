@@ -38,4 +38,8 @@ public class ProjectListModel extends Model {
 		User user = getUser();
 		return project_repo.findAll(user);
 	}
+	
+	public List<User> getAccount(Authority authority){
+		return project_repo.findAll(getProject(), authority);
+	}
 }
