@@ -42,7 +42,7 @@ public class IssueListModelTest {
 	SystemManager manager = new SystemManager(); 
 	LoginModel loginModel = new LoginModel(manager, accountRepo);
 	AccountModel accountModel = new AccountModel(manager, accountRepo);
-	ProjectListModel projectListModel = new ProjectListModel(manager, projectRepo);
+	ProjectListModel projectListModel = new ProjectListModel(manager, projectRepo, accountRepo);
 	IssueListModel issueListModel = new IssueListModel(manager, issueRepo); 
 	
 	Admin admin = new Admin("admin", "admin");

@@ -29,7 +29,7 @@ public class SwingApplication implements Application{
 		CommentRepo commentRepo = new MysqlCommentRepo();
 		
 		LoginModel loginModel = new LoginModel(systemData, accountRepo);
-		ProjectListModel projectListModel = new ProjectListModel(systemData, projectRepo);
+		ProjectListModel projectListModel = new ProjectListModel(systemData, projectRepo, accountRepo);
 		IssueListModel issueListModel = new IssueListModel(systemData, issueRepo);
 		IssueModel issueModel = new IssueModel(systemData, issueRepo);
 		//CommentModel commentModel = new CommentModel(systemData, commentRepo);
