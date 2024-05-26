@@ -1,7 +1,10 @@
 package main.application;
 
+import javax.swing.SwingUtilities;
+
 import main.controller.SwingAccountCreationController;
 import main.controller.SwingIssueCreationController;
+import main.controller.SwingIssueFilterController;
 import main.controller.SwingIssueListController;
 import main.controller.SwingLoginController;
 import main.controller.SwingLogoutController;
@@ -50,6 +53,7 @@ public class SwingApplication implements Application{
 	SwingProjectCreationController projectCreationController;
 	SwingIssueListController issueListController;
 	SwingIssueCreationController issueCreationController;
+	SwingIssueFilterController issueFilterController;
 	
 	public void run() {
 		//View
@@ -88,5 +92,12 @@ public class SwingApplication implements Application{
 		
 		issueCreationController = new SwingIssueCreationController(view.getIssueCreationView(), issueListModel);
 		returnController_issueList = new SwingReturnController((ReturnableView)view.getIssueCreationView(), issueListModel);
+		
+		issueFilterController = new SwingIssueFilterController(view.getIssueFilterView(), projectListModel, issueListModel);
+		
+		
+		SwingUtilities.invokeLater(() -> {
+			view.setVisible(true);
+        });
 	}
 }

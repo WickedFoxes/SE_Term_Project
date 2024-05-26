@@ -30,6 +30,7 @@ public class SwingAccountCreationController extends SwingController{
 			if(success) {
 				view.showMessagePopup("Signup success", "계정 생성이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
 				view.requestChangeView("ProjectListView");
+				model.notifyObservers();
 			}
 			else {
 				view.showMessagePopup("Signup Error", "입력 정보를 확인해주세요.", JOptionPane.ERROR_MESSAGE);

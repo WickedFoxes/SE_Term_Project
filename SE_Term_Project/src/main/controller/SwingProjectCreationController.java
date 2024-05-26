@@ -39,6 +39,8 @@ public class SwingProjectCreationController extends SwingController {
 	}
 	
 	private void setListData() {
+		if(accountModel.getUser() == null) return;
+ 		
 		List<ProjectLeader> pls = new ArrayList<ProjectLeader>(); 
 		List<Dev> devs = new ArrayList<Dev>();
 		List<Tester> testers = new ArrayList<Tester>(); 

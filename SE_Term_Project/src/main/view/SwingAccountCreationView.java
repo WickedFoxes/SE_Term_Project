@@ -18,7 +18,6 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
     private JComboBox<Authority> authorityComboBox;
     private JButton createButton, returnButton;
 
-    
 	public SwingAccountCreationView(Mediator mediator) {
 		super(mediator, new Dimension(500, 400));
 		

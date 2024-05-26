@@ -17,14 +17,11 @@ import main.view.SwingIssueListView;
 
 public class SwingIssueListController extends SwingController {
 	private SwingIssueListView view;
-	private SwingIssueFilterView filterView;
 	private IssueListModel model;
 	
 	public SwingIssueListController(SwingIssueListView view, IssueListModel model) {
 		this.model = model;
 		this.view = view;
-		this.filterView = new SwingIssueFilterView(view);
-		
 		view.setCreateIssueListener(new CreateIssueButtonListener());
 		view.setFilterListener(new FilterButtonListener());
 		setObserver();
@@ -43,7 +40,7 @@ public class SwingIssueListController extends SwingController {
 		if(model.getUser() == null) return;
 		if(model.getProject() == null) return;
 		
-		FilterOption filterOption = filterView.getFilterOption();
+		FilterOption filterOption = model.getFilterOption();
 		List<Issue> issues = model.getIssueList(filterOption);
 		List<ActionListener> listeners = new ArrayList<ActionListener>();
 		int n = issues.size();
@@ -71,7 +68,8 @@ public class SwingIssueListController extends SwingController {
 	private class FilterButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			filterView.showPopup();
+			view.requestChangeView("IssueFilterView");
+			model.notifyObservers();
 		}
 	}
 	
@@ -87,4 +85,6 @@ public class SwingIssueListController extends SwingController {
 			view.requestChangeView("IssueDetailView");
 		}
 	}
+
+	
 }

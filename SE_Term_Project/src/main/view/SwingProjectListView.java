@@ -66,7 +66,11 @@ public class SwingProjectListView extends SwingView implements LogoutableView {
 		String name;
 		JButton button;
 		
-		for(JButton btn : projectButtons) projectPanel.remove(btn);
+		for(JButton btn : projectButtons) {
+			projectPanel.remove(btn);
+			projectPanel.revalidate();
+			projectPanel.repaint();
+		}
 		projectButtons.clear();
 		
 		for(int i = 0; i < projectSize; i++) {
@@ -88,6 +92,8 @@ public class SwingProjectListView extends SwingView implements LogoutableView {
 		contstraints.weighty = weighty;
 		grid.setConstraints(c, contstraints);
 		projectPanel.add(c);
+		projectPanel.revalidate();
+		projectPanel.repaint();
 	}
 	
 	public void setCreateAccountButtonVisible(boolean isVisible) {

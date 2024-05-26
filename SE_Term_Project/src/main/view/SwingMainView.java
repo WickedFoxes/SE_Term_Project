@@ -3,8 +3,10 @@ package main.view;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,11 +22,11 @@ public class SwingMainView extends JFrame implements Mediator{
 	private SwingIssueListView issueListView;
 	private SwingIssueCreationView issueCreationView;
 	private SwingIssueDetailView issueDetailView;
-	
+	private SwingIssueFilterView issueFilterView;
+	private SwingIssueFilterPopup issueFilterPopup;
 	
 	public SwingMainView() {
 		super("Issue Handle System");
-		setVisible(true);
 		setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,6 +38,8 @@ public class SwingMainView extends JFrame implements Mediator{
     	issueListView = new SwingIssueListView(this);
     	issueCreationView = new SwingIssueCreationView(this);
     	issueDetailView = new SwingIssueDetailView(this);
+    	issueFilterView = new SwingIssueFilterView(this);
+    	issueFilterPopup = new SwingIssueFilterPopup(this, issueFilterView);
         
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -60,6 +64,7 @@ public class SwingMainView extends JFrame implements Mediator{
 	
 	private void showView(String viewName) {
 		SwingView view = loginView;
+		
 		if(viewName == "LoginView") view = loginView;
 		else if(viewName == "ProjectListView") view = projectListView;
 		else if(viewName == "AccountCreationView") view = accountCreationView;
@@ -67,11 +72,15 @@ public class SwingMainView extends JFrame implements Mediator{
 		else if(viewName == "IssueListView") view = issueListView;
 		else if(viewName == "IssueCreationView") view = issueCreationView;
 		else if(viewName == "IssueDetailView") view = issueDetailView;
+		else if(viewName == "IssueFilterView") {
+			issueFilterPopup.showPopup();
+			return;
+		}
 		else System.out.println("Error: invalid viewName ("+this.getClass().toString()+")");
 		
 		cardLayout.show(mainPanel, viewName);
 		this.setSize(view.getPreferredSize());
-		view.refresh();
+		view.refresh();		
 	}
 	
 	public SwingLoginView getLoginView() {
@@ -100,5 +109,9 @@ public class SwingMainView extends JFrame implements Mediator{
 	
 	public SwingIssueDetailView getIssueDetailView() {
 		return issueDetailView;
+	}
+	
+	public SwingIssueFilterView getIssueFilterView() {
+		return issueFilterView;
 	}
 }

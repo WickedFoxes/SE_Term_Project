@@ -13,10 +13,12 @@ import main.repository.IssueRepo;
 
 public class IssueListModel extends Model {
 	private IssueRepo repo;
+	private FilterOption filterOption;
 		
 	public IssueListModel(SystemManager s, IssueRepo r) {
 		super(s);
 		this.repo = r;
+		this.filterOption = new FilterOption(null, null, null);
 	}
 
 	public boolean tryCreateIssue(String title, String description, Priority priority) {
@@ -41,5 +43,13 @@ public class IssueListModel extends Model {
 		User user = getUser();
 		List<Issue> issueList = repo.findAll(project, user, option);
 		return issueList;
+	}
+	
+	public void setFilterOption(FilterOption filterOption) {
+		this.filterOption = filterOption;
+	}
+	
+	public FilterOption getFilterOption() {
+		return this.filterOption;
 	}
 }

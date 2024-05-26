@@ -112,12 +112,15 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		int issueSize = issues.size();
 		IssueButtonPanel button;
 		
-		for(IssueButtonPanel btn : issueButtons) issuePanel.remove(btn);
+		for(IssueButtonPanel btn : issueButtons) {
+			issuePanel.remove(btn);
+			issuePanel.revalidate();
+			issuePanel.repaint();
+		}
 		issueButtons.clear();
 		
 		for(int i = 0; i < issueSize; i++) {
 			button = new IssueButtonPanel(issues.get(i), listeners.get(i));
-			//issuePanel.add(new JButton(i + ""));
 			addGrid(button, 0, i, 1, 1, 1, 0);
 			issueButtons.add(button);
 		}
@@ -132,6 +135,8 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		contstraints.weighty = weighty;
 		grid.setConstraints(c, contstraints);
 		issuePanel.add(c);
+		issuePanel.revalidate();
+		issuePanel.repaint();
 	}
 	
 	public void setCreateIssueButtonVisibility(boolean isVisible) {
@@ -172,6 +177,7 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		list.add("ProjectListView");
 		list.add("IssueDetailView");
 		list.add("IssueCreationView");
+		list.add("IssueFilterView");
 		return list;
 	}
 
