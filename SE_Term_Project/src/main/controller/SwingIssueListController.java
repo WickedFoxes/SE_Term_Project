@@ -30,13 +30,13 @@ public class SwingIssueListController extends SwingController {
 	private void setObserver() {
 		model.subscribe(new Observer() {
 			public void update() {
-				setIssueButtons();
-				setCreateIssueButtonVisibility();
+				updateIssueButtons();
+				updateCreateIssueButtonVisibility();
 			}
 		});
 	}
 	
-	private void setIssueButtons() {
+	private void updateIssueButtons() {
 		if(model.getUser() == null) return;
 		if(model.getProject() == null) return;
 		
@@ -50,12 +50,12 @@ public class SwingIssueListController extends SwingController {
 			issue = issues.get(i);
 			listeners.add(new IssueButtonListener(issue));
 		}
-		view.setIssueButtons(issues, listeners);
+		view.updateIssueButtons(issues, listeners);
 	}
 	
-	private void setCreateIssueButtonVisibility() {
+	private void updateCreateIssueButtonVisibility() {
 		boolean isTester = (model.getUser() instanceof Tester);
-		view.setCreateIssueButtonVisibility(isTester);
+		view.updateCreateIssueButtonVisibility(isTester);
 	}
 	
 	private class CreateIssueButtonListener implements ActionListener{

@@ -68,47 +68,7 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		add(scrollPane);
 	}
 	
-	private class IssueButtonPanel extends JPanel {
-		private JButton button;
-		private JComboBox<State> stateComboBox;
-		private JComboBox<Priority> priorityComboBox;
-		private JComboBox<User> reporterComboBox, assigneeComboBox, fixerComboBox;
-		public IssueButtonPanel(Issue issue, ActionListener listener) {
-			super();
-			setPreferredSize(new Dimension(500, 40));
-			setLayout(null);
-			
-			button = new JButton(issue.getTitle());
-			button.addActionListener(listener);
-			stateComboBox = new JComboBox<State>(new State[] { issue.getState() });
-			stateComboBox.setEnabled(false);
-			priorityComboBox = new JComboBox<Priority>(new Priority[] { issue.getPriority() });
-			priorityComboBox.setEnabled(false);
-			reporterComboBox = new JComboBox<User>(new User[] { issue.getReporter() });
-			reporterComboBox.setEnabled(false);
-			assigneeComboBox = new JComboBox<User>(new User[] { issue.getAssignee() });
-			assigneeComboBox.setEnabled(false);
-			fixerComboBox = new JComboBox<User>(new User[] { issue.getFixer() });
-			fixerComboBox.setEnabled(false);
-
-			button.setBounds(0, 0, 150, 40);
-			stateComboBox.setBounds(155, 0, 70, 40);
-			priorityComboBox.setBounds(230, 0, 70, 40);
-			reporterComboBox.setBounds(305, 0, 70, 40);
-			assigneeComboBox.setBounds(380, 0, 70, 40);
-			fixerComboBox.setBounds(455, 0, 70, 40);
-			
-			add(button);
-			add(stateComboBox);
-			add(priorityComboBox);
-			add(reporterComboBox);
-			add(assigneeComboBox);
-			add(fixerComboBox);
-		}
-	}
-	
-	public void setIssueButtons(List<Issue> issues, List<ActionListener> listeners) {
-		System.out.println("set issue buttons, num: " +issues.size() + " ("+this.getClass().toString()+")");
+	public void updateIssueButtons(List<Issue> issues, List<ActionListener> listeners) {
 		int issueSize = issues.size();
 		IssueButtonPanel button;
 		
@@ -139,7 +99,7 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		issuePanel.repaint();
 	}
 	
-	public void setCreateIssueButtonVisibility(boolean isVisible) {
+	public void updateCreateIssueButtonVisibility(boolean isVisible) {
 		createIssueButton.setVisible(isVisible);
 	}
 
@@ -184,4 +144,43 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 	@Override
 	public void refresh() { }
 
+	private class IssueButtonPanel extends JPanel {
+		private JButton button;
+		private JComboBox<State> stateComboBox;
+		private JComboBox<Priority> priorityComboBox;
+		private JComboBox<User> reporterComboBox, assigneeComboBox, fixerComboBox;
+		
+		public IssueButtonPanel(Issue issue, ActionListener listener) {
+			super();
+			setPreferredSize(new Dimension(500, 40));
+			setLayout(null);
+			
+			button = new JButton(issue.getTitle());
+			button.addActionListener(listener);
+			stateComboBox = new JComboBox<State>(new State[] { issue.getState() });
+			stateComboBox.setEnabled(false);
+			priorityComboBox = new JComboBox<Priority>(new Priority[] { issue.getPriority() });
+			priorityComboBox.setEnabled(false);
+			reporterComboBox = new JComboBox<User>(new User[] { issue.getReporter() });
+			reporterComboBox.setEnabled(false);
+			assigneeComboBox = new JComboBox<User>(new User[] { issue.getAssignee() });
+			assigneeComboBox.setEnabled(false);
+			fixerComboBox = new JComboBox<User>(new User[] { issue.getFixer() });
+			fixerComboBox.setEnabled(false);
+
+			button.setBounds(0, 0, 150, 40);
+			stateComboBox.setBounds(155, 0, 70, 40);
+			priorityComboBox.setBounds(230, 0, 70, 40);
+			reporterComboBox.setBounds(305, 0, 70, 40);
+			assigneeComboBox.setBounds(380, 0, 70, 40);
+			fixerComboBox.setBounds(455, 0, 70, 40);
+			
+			add(button);
+			add(stateComboBox);
+			add(priorityComboBox);
+			add(reporterComboBox);
+			add(assigneeComboBox);
+			add(fixerComboBox);
+		}
+	}
 }

@@ -23,7 +23,7 @@ public class SwingMainView extends JFrame implements Mediator{
 	private SwingIssueCreationView issueCreationView;
 	private SwingIssueDetailView issueDetailView;
 	private SwingIssueFilterView issueFilterView;
-	private SwingIssueFilterPopup issueFilterPopup;
+	private IssueFilterPopup issueFilterPopup;
 	
 	public SwingMainView() {
 		super("Issue Handle System");
@@ -39,7 +39,7 @@ public class SwingMainView extends JFrame implements Mediator{
     	issueCreationView = new SwingIssueCreationView(this);
     	issueDetailView = new SwingIssueDetailView(this);
     	issueFilterView = new SwingIssueFilterView(this);
-    	issueFilterPopup = new SwingIssueFilterPopup(this, issueFilterView);
+    	issueFilterPopup = new IssueFilterPopup(this, issueFilterView);
         
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -73,7 +73,7 @@ public class SwingMainView extends JFrame implements Mediator{
 		else if(viewName == "IssueCreationView") view = issueCreationView;
 		else if(viewName == "IssueDetailView") view = issueDetailView;
 		else if(viewName == "IssueFilterView") {
-			issueFilterPopup.showPopup();
+			issueFilterPopup.setVisible(true);
 			return;
 		}
 		else System.out.println("Error: invalid viewName ("+this.getClass().toString()+")");
@@ -113,5 +113,16 @@ public class SwingMainView extends JFrame implements Mediator{
 	
 	public SwingIssueFilterView getIssueFilterView() {
 		return issueFilterView;
+	}
+	
+	private class IssueFilterPopup extends JFrame {
+		private SwingIssueFilterView viewPanel;
+		public IssueFilterPopup(SwingMainView mainView, SwingIssueFilterView view) {
+			this.viewPanel = view;
+			setLocationRelativeTo(mainView);
+	        setResizable(false);
+	        setSize(viewPanel.getPreferredSize());
+			add(viewPanel);
+		}
 	}
 }

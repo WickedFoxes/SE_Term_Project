@@ -30,19 +30,19 @@ public class SwingProjectListController extends SwingController {
 	private void setObserver() {
 		model.subscribe(new Observer() {
 			public void update() {
-				setProjectButtons();
-				setCreateButtonsVisiblity();
+				updateProjectButtons();
+				updateCreateButtonsVisiblity();
 			}
 		});
 	}
 	
-	private void setCreateButtonsVisiblity() {
+	private void updateCreateButtonsVisiblity() {
 		boolean isAdmin = (model.getUser() instanceof Admin);
-		view.setCreateAccountButtonVisible(isAdmin);
-		view.setCreateProjectButtonVisible(isAdmin);
+		view.updateCreateAccountButtonVisible(isAdmin);
+		view.updateCreateProjectButtonVisible(isAdmin);
 	}
 	
-	private void setProjectButtons() {
+	private void updateProjectButtons() {
 		if(model.getUser() == null) return;
 		
 		List<Project> projects = model.getProjectList();
@@ -54,7 +54,7 @@ public class SwingProjectListController extends SwingController {
 			project = projects.get(i);
 			listeners.add(new ProjectButtonListener(project));
 		}
-		view.setProjectButtons(projects, listeners);
+		view.updateProjectButtons(projects, listeners);
 	}
 	
 	private class CreateAccountButtonListener implements ActionListener{

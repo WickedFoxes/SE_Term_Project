@@ -60,8 +60,7 @@ public class SwingProjectListView extends SwingView implements LogoutableView {
 		add(scrollPane);
 	}
 	
-	public void setProjectButtons(List<Project> projects, List<ActionListener> listeners) {
-		//System.out.println("set project buttons, num: " +projects.size() + " ("+this.getClass().toString()+")");
+	public void updateProjectButtons(List<Project> projects, List<ActionListener> listeners) {
 		int projectSize = projects.size();
 		String name;
 		JButton button;
@@ -96,11 +95,11 @@ public class SwingProjectListView extends SwingView implements LogoutableView {
 		projectPanel.repaint();
 	}
 	
-	public void setCreateAccountButtonVisible(boolean isVisible) {
+	public void updateCreateAccountButtonVisible(boolean isVisible) {
 		createAccountButton.setVisible(isVisible);
 	}
 	
-	public void setCreateProjectButtonVisible(boolean isVisible) {
+	public void updateCreateProjectButtonVisible(boolean isVisible) {
 		createProjectButton.setVisible(isVisible);
 	}
 	

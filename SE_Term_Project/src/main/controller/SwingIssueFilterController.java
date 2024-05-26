@@ -17,7 +17,6 @@ import main.domain.enumeration.Authority;
 import main.model.IssueListModel;
 import main.model.Observer;
 import main.model.ProjectListModel;
-import main.view.SwingIssueFilterPopup;
 import main.view.SwingIssueFilterView;
 
 public class SwingIssueFilterController extends SwingController {
@@ -38,13 +37,13 @@ public class SwingIssueFilterController extends SwingController {
 		issueListModel.subscribe(new Observer() {
 			public void update() {
 				FilterOption option = issueListModel.getFilterOption();
-				view.setCurrentFilterOptionSelection(option);
-				setListData();
+				view.updateFilterOptionSelection(option);
+				updateComboBoxs();
 			}
 		});
 	}
 	
-	private void setListData() {
+	private void updateComboBoxs() {
 		if(projectListModel.getUser() == null) return;
 		if(projectListModel.getProject() == null) return;
 		
@@ -54,8 +53,8 @@ public class SwingIssueFilterController extends SwingController {
 		for(User dev : projectListModel.getAllAccountsInProject(Authority.DEV)) devs.add((Dev)dev);
 		for(User tester : projectListModel.getAllAccountsInProject(Authority.TESTER)) testers.add((Tester)tester);
 		
-		view.setAssigneeList(devs);
-		view.setReporterList(testers);
+		view.updateAssigneeComboBox(devs);
+		view.updateReporterComboBox(testers);
 	}
 	
 	private class ApplyButtonListener implements ActionListener{
@@ -67,8 +66,8 @@ public class SwingIssueFilterController extends SwingController {
 			issueListModel.notifyObservers();
 			
 			Window window = SwingUtilities.getWindowAncestor(view);
-	        if (window instanceof SwingIssueFilterPopup) {
-	            ((SwingIssueFilterPopup)window).closePopup();
+	        if (window instanceof JFrame) {
+	            ((JFrame)window).setVisible(false);
 	        }
 		}
 	}

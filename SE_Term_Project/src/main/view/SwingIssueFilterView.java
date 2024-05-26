@@ -24,10 +24,9 @@ import main.domain.enumeration.State;
 public class SwingIssueFilterView extends SwingView {
 	private JLabel infoLabel, stateLabel, assigneeLabel, reporterLabel;
 	private JComboBox<State> stateComboBox;
-    private JList<Dev> assigneeList;
-    private JList<Tester> reporterList;
+    private JComboBox<Dev> assigneeComboBox;
+    private JComboBox<Tester> reporterComboBox;
 	private JButton applyButton;
-	private JScrollPane assigneeScrollPane, reporterScrollPane;
 	
 	public SwingIssueFilterView(Mediator mediator) {
         super(mediator, new Dimension(500, 450));
@@ -38,18 +37,8 @@ public class SwingIssueFilterView extends SwingView {
         reporterLabel  = new JLabel("Reporter");
         stateComboBox = new JComboBox<State>(new State[] { State.NEW, State.ASSIGNED, State.FIXED, State.RESOLVED, State.CLOSED, State.REOPENED });
         stateComboBox.insertItemAt(null, 0);
-        assigneeList = new JList<Dev>();
-        assigneeList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        reporterList = new JList<Tester>();
-        reporterList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		assigneeScrollPane = new JScrollPane();
-		assigneeScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		assigneeScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        assigneeScrollPane.setViewportView(assigneeList);
-        reporterScrollPane = new JScrollPane();
-        reporterScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        reporterScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        reporterScrollPane.setViewportView(reporterList);
+        assigneeComboBox = new JComboBox<Dev>();
+        reporterComboBox = new JComboBox<Tester>();
         applyButton = new JButton("Apply");
         
         infoLabel.setBounds(200, 20, 200, 40);
@@ -57,10 +46,10 @@ public class SwingIssueFilterView extends SwingView {
         stateComboBox.setBounds(130, 80, 200, 50);
         
         reporterLabel.setBounds(130, 130, 50, 40);
-        reporterScrollPane.setBounds(130, 160, 200, 50);
+        reporterComboBox.setBounds(130, 160, 200, 50);
         
         assigneeLabel.setBounds(130, 210, 100, 40);
-        assigneeScrollPane.setBounds(130, 240, 200, 50);
+        assigneeComboBox.setBounds(130, 240, 200, 50);
         applyButton.setBounds(130, 310, 200, 50);
         
         add(infoLabel);
@@ -68,21 +57,21 @@ public class SwingIssueFilterView extends SwingView {
         add(assigneeLabel);
         add(reporterLabel);
         add(stateComboBox);
-        add(assigneeScrollPane);
-        add(reporterScrollPane);
+        add(assigneeComboBox);
+        add(reporterComboBox);
         add(applyButton);
 	}
 	
-	public void setCurrentFilterOptionSelection(FilterOption option) {
+	public void updateFilterOptionSelection(FilterOption option) {
 		stateComboBox.setSelectedItem(option.getState());
-		assigneeList.setSelectedValue(option.getAssignee(), false);
-		reporterList.setSelectedValue(option.getReporter(), false);
+		assigneeComboBox.setSelectedItem(option.getAssignee());
+		reporterComboBox.setSelectedItem(option.getReporter());
 	}
 	
 	public FilterOption getFilterOption() {
 		State state = (stateComboBox.getSelectedIndex() >= 0)? (State)stateComboBox.getSelectedItem(): null;
-		Tester tester = (assigneeList.getSelectedIndex() >= 0)? (Tester)reporterList.getSelectedValue(): null;
-		Dev dev = (assigneeList.getSelectedIndex() >= 0)? (Dev)assigneeList.getSelectedValue(): null;
+		Tester tester = (reporterComboBox.getSelectedIndex() >= 0)? (Tester)reporterComboBox.getSelectedItem(): null;
+		Dev dev = (assigneeComboBox.getSelectedIndex() >= 0)? (Dev)assigneeComboBox.getSelectedItem(): null;
 		return new FilterOption(state, tester, dev);
 	}
 	
@@ -90,16 +79,16 @@ public class SwingIssueFilterView extends SwingView {
 		applyButton.addActionListener(listener);
 	}
 	
-	public void setAssigneeList(List<Dev> devs) {
-		DefaultListModel<Dev> devModel = new DefaultListModel<Dev>();
-		devModel.addAll(devs);
-		assigneeList.setModel(devModel);
+	public void updateAssigneeComboBox(List<Dev> devs) {
+		assigneeComboBox.removeAllItems();
+		assigneeComboBox.addItem(null);
+		for(Dev dev : devs) assigneeComboBox.addItem(dev); 
 	}
 	
-	public void setReporterList(List<Tester> testers) {
-		DefaultListModel<Tester> testerModel = new DefaultListModel<Tester>();
-		testerModel.addAll(testers);
-		reporterList.setModel(testerModel);
+	public void updateReporterComboBox(List<Tester> testers) {
+		reporterComboBox.removeAllItems();
+		reporterComboBox.addItem(null);
+		for(Tester tester : testers) reporterComboBox.addItem(tester); 
 	}
 
 	@Override

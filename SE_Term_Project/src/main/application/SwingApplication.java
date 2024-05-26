@@ -4,6 +4,7 @@ import javax.swing.SwingUtilities;
 
 import main.controller.SwingAccountCreationController;
 import main.controller.SwingIssueCreationController;
+import main.controller.SwingIssueDetailController;
 import main.controller.SwingIssueFilterController;
 import main.controller.SwingIssueListController;
 import main.controller.SwingLoginController;
@@ -54,6 +55,7 @@ public class SwingApplication implements Application{
 	SwingIssueListController issueListController;
 	SwingIssueCreationController issueCreationController;
 	SwingIssueFilterController issueFilterController;
+	SwingIssueDetailController issueDetailController;
 	
 	public void run() {
 		//View
@@ -95,6 +97,8 @@ public class SwingApplication implements Application{
 		
 		issueFilterController = new SwingIssueFilterController(view.getIssueFilterView(), projectListModel, issueListModel);
 		
+		issueDetailController = new SwingIssueDetailController(view.getIssueDetailView(), issueModel);
+		returnController_issueDetail = new SwingReturnController((ReturnableView)view.getIssueDetailView(), issueModel);
 		
 		SwingUtilities.invokeLater(() -> {
 			view.setVisible(true);
