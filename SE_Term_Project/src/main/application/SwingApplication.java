@@ -1,6 +1,8 @@
 package main.application;
 
 import main.controller.SwingAccountCreationController;
+import main.controller.SwingIssueCreationController;
+import main.controller.SwingIssueListController;
 import main.controller.SwingLoginController;
 import main.controller.SwingLogoutController;
 import main.controller.SwingProjectCreationController;
@@ -46,6 +48,8 @@ public class SwingApplication implements Application{
 	SwingProjectListController projectListController;
 	SwingAccountCreationController accountCreationController;
 	SwingProjectCreationController projectCreationController;
+	SwingIssueListController issueListController;
+	SwingIssueCreationController issueCreationController;
 	
 	public void run() {
 		//View
@@ -68,11 +72,21 @@ public class SwingApplication implements Application{
 		
 		//Controller
 		loginController = new SwingLoginController(view.getLoginView(), loginModel);
-		logoutController_projectList = new SwingLogoutController((LogoutableView)view.getProjectListView(), loginModel);
-		returnController_accountCreation = new SwingReturnController((ReturnableView)view.getAccountCreationView(), accountModel);
-		returnController_projectCreation = new SwingReturnController((ReturnableView)view.getProjectCreationView(), projectListModel);
+		
 		projectListController = new SwingProjectListController(view.getProjectListView(), projectListModel);
+		logoutController_projectList = new SwingLogoutController((LogoutableView)view.getProjectListView(), loginModel);
+		
 		accountCreationController = new SwingAccountCreationController(view.getAccountCreationView(), accountModel);
+		returnController_accountCreation = new SwingReturnController((ReturnableView)view.getAccountCreationView(), accountModel);
+		
 		projectCreationController = new SwingProjectCreationController(view.getProjectCreationView(), accountModel, projectListModel);
+		returnController_projectCreation = new SwingReturnController((ReturnableView)view.getProjectCreationView(), projectListModel);
+		
+		issueListController = new SwingIssueListController(view.getIssueListView(), issueListModel);
+		logoutController_issueList = new SwingLogoutController((LogoutableView)view.getIssueListView(), loginModel);
+		returnController_issueList = new SwingReturnController((ReturnableView)view.getIssueListView(), issueListModel);
+		
+		issueCreationController = new SwingIssueCreationController(view.getIssueCreationView(), issueListModel);
+		returnController_issueList = new SwingReturnController((ReturnableView)view.getIssueCreationView(), issueListModel);
 	}
 }

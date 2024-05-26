@@ -16,7 +16,7 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 	private JLabel infoLabel, idLabel, pwLabel, authorityLabel;
     private JTextField idTextField, pwTextField;
     private JComboBox<Authority> authorityComboBox;
-    private JButton okButton, returnButton;
+    private JButton createButton, returnButton;
 
     
 	public SwingAccountCreationView(Mediator mediator) {
@@ -28,9 +28,8 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 		authorityLabel = new JLabel("Authority");
 		idTextField = new JTextField();
 		pwTextField = new JTextField();
-		Authority[] options = {Authority.PL, Authority.DEV, Authority.TESTER};
-        authorityComboBox = new JComboBox<Authority>(options);
-        okButton = new JButton("OK");
+        authorityComboBox = new JComboBox<Authority>(new Authority[] {Authority.PL, Authority.DEV, Authority.TESTER});
+        createButton = new JButton("Create");
         returnButton = new JButton("Return");
         
         infoLabel.setBounds(200, 20, 200, 50);
@@ -40,8 +39,8 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
         idTextField.setBounds(150, 70, 200, 50);
         pwTextField.setBounds(150, 130, 200, 50);
         authorityComboBox.setBounds(150, 190, 200, 50);
-        okButton.setBounds(140, 260, 100, 40);
-        returnButton.setBounds(260, 260, 100, 40);
+        createButton.setBounds(260, 260, 100, 40);
+        returnButton.setBounds(140, 260, 100, 40);
     
         add(infoLabel);
         add(idLabel);
@@ -50,7 +49,7 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
         add(idTextField);
         add(pwTextField);
         add(authorityComboBox);
-        add(okButton);
+        add(createButton);
         add(returnButton);
 	}
 	
@@ -66,8 +65,8 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 		return (Authority)authorityComboBox.getSelectedItem();
 	}
 	
-	public void setOKListener(ActionListener listener) {
-		okButton.addActionListener(listener);
+	public void setCreateListener(ActionListener listener) {
+		createButton.addActionListener(listener);
 	}
 	
 	@Override

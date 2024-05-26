@@ -16,10 +16,10 @@ public class SwingAccountCreationController extends SwingController{
 	public SwingAccountCreationController(SwingAccountCreationView view, AccountModel model) {
 		this.model = model;
 		this.view = view;
-		this.view.setOKListener(new OKButtonListener());
+		this.view.setCreateListener(new CreateButtonListener());
 	}
 	
-	private class OKButtonListener implements ActionListener{
+	private class CreateButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String id = view.getID();

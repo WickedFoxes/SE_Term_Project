@@ -57,16 +57,16 @@ public class SwingProjectCreationView extends SwingView implements ReturnableVie
         testerScrollPane.setViewportView(testerList);
         
 		infoLabel.setBounds(200, 20, 200, 50);
-		nameLabel.setBounds(100, 70, 50, 50);
-		plLabel.setBounds(100, 130, 50, 50);
-		devLabel.setBounds(100, 190, 50, 50);
-		testerLabel.setBounds(100, 250, 50, 50);
+		nameLabel.setBounds(90, 70, 50, 50);
+		plLabel.setBounds(90, 130, 50, 50);
+		devLabel.setBounds(90, 190, 50, 50);
+		testerLabel.setBounds(90, 300, 50, 50);
 		nameTextField.setBounds(150, 70, 200, 50);
 		plScrollPane.setBounds(150, 130, 200, 50);
         devScrollPane.setBounds(150, 190, 200, 100);
         testerScrollPane.setBounds(150, 300, 200, 100);
-        createButton.setBounds(140, 420, 100, 40);
-        returnButton.setBounds(260, 420, 100, 40);
+        createButton.setBounds(260, 420, 100, 40);
+        returnButton.setBounds(140, 420, 100, 40);
 
         add(infoLabel);
         add(nameLabel);
