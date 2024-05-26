@@ -6,23 +6,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.domain.Admin;
+import main.domain.FilterOption;
 import main.domain.Issue;
 import main.domain.Project;
 import main.domain.Tester;
 import main.model.IssueListModel;
 import main.model.Observer;
+import main.view.SwingIssueFilterView;
 import main.view.SwingIssueListView;
 
 public class SwingIssueListController extends SwingController {
 	private SwingIssueListView view;
+	private SwingIssueFilterView filterView;
 	private IssueListModel model;
 	
 	public SwingIssueListController(SwingIssueListView view, IssueListModel model) {
 		this.model = model;
 		this.view = view;
+		this.filterView = new SwingIssueFilterView(view);
+		
 		view.setCreateIssueListener(new CreateIssueButtonListener());
 		view.setFilterListener(new FilterButtonListener());
-		
 		setObserver();
 	}
 	
@@ -36,11 +40,11 @@ public class SwingIssueListController extends SwingController {
 	}
 	
 	private void setIssueButtons() {
-		System.out.println("Set Issue Button-user:"+model.getUser() +", project:"+model.getProject());
 		if(model.getUser() == null) return;
 		if(model.getProject() == null) return;
 		
-		List<Issue> issues = model.getIssueList();
+		FilterOption filterOption = filterView.getFilterOption();
+		List<Issue> issues = model.getIssueList(filterOption);
 		List<ActionListener> listeners = new ArrayList<ActionListener>();
 		int n = issues.size();
 		Issue issue;
@@ -67,7 +71,7 @@ public class SwingIssueListController extends SwingController {
 	private class FilterButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			//view.requestChangeView("");
+			filterView.showPopup();
 		}
 	}
 	

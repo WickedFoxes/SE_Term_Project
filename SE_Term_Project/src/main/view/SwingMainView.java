@@ -19,7 +19,6 @@ public class SwingMainView extends JFrame implements Mediator{
 	private SwingProjectCreationView projectCreationView;
 	private SwingIssueListView issueListView;
 	private SwingIssueCreationView issueCreationView;
-	private SwingIssueFilterView issueFilterView;
 	private SwingIssueDetailView issueDetailView;
 	
 	
@@ -36,7 +35,6 @@ public class SwingMainView extends JFrame implements Mediator{
         projectCreationView = new SwingProjectCreationView(this);
     	issueListView = new SwingIssueListView(this);
     	issueCreationView = new SwingIssueCreationView(this);
-    	issueFilterView = new SwingIssueFilterView(this);
     	issueDetailView = new SwingIssueDetailView(this);
         
         cardLayout = new CardLayout();
@@ -98,10 +96,6 @@ public class SwingMainView extends JFrame implements Mediator{
 	
 	public SwingIssueCreationView getIssueCreationView() {
 		return issueCreationView;
-	}
-	
-	public SwingIssueFilterView getIssueFilterView() {
-		return issueFilterView;
 	}
 	
 	public SwingIssueDetailView getIssueDetailView() {

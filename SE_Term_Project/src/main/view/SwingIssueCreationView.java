@@ -37,7 +37,7 @@ public class SwingIssueCreationView extends SwingView implements ReturnableView 
 		createButton = new JButton("Create");
 		returnButton = new JButton("Return");
 		
-		infoLabel.setBounds(200, 20, 200, 50);
+		infoLabel.setBounds(200, 20, 200, 40);
 		
 		titleLabel.setBounds(110, 60, 50, 40);
 		titleTextField.setBounds(110, 90, 270, 40);

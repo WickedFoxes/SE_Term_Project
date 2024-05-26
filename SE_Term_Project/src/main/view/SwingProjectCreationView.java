@@ -143,8 +143,8 @@ public class SwingProjectCreationView extends SwingView implements ReturnableVie
 	@Override
 	public void refresh() {
 		nameTextField.setText("");
-		plList.setSelectedIndex(-1);
-		devList.setSelectedIndex(-1);
-		testerList.setSelectedIndex(-1);
+		plList.clearSelection();
+		devList.clearSelection();
+		testerList.clearSelection();
 	}
 }
