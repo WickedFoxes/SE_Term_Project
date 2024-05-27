@@ -30,16 +30,15 @@ public class SwingIssueListController extends SwingController {
 	private void setObserver() {
 		model.subscribe(new Observer() {
 			public void update() {
+				if(!view.getAccessableViewNames().contains(view.requestGetCurrentViewName())) return;
 				updateIssueButtons();
 				updateCreateIssueButtonVisibility();
 			}
 		});
 	}
 	
-	private void updateIssueButtons() {
-		if(model.getUser() == null) return;
+	private void updateIssueButtons() {	
 		if(model.getProject() == null) return;
-		
 		FilterOption filterOption = model.getFilterOption();
 		List<Issue> issues = model.getIssueList(filterOption);
 		List<ActionListener> listeners = new ArrayList<ActionListener>();
@@ -54,6 +53,7 @@ public class SwingIssueListController extends SwingController {
 	}
 	
 	private void updateCreateIssueButtonVisibility() {
+		if(model.getProject() == null) return;
 		boolean isTester = (model.getUser() instanceof Tester);
 		view.updateCreateIssueButtonVisibility(isTester);
 	}
@@ -82,6 +82,7 @@ public class SwingIssueListController extends SwingController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.setIssue(issue);
+			model.notifyObservers();
 			view.requestChangeView("IssueDetailView");
 		}
 	}

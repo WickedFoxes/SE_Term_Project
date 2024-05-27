@@ -47,5 +47,12 @@ public abstract class User {
 		return accountID;
 	}
 	
+	@Override
+    public boolean equals(Object obj) {
+		if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        return accountID.equals(((User)obj).accountID);
+    }
+	
 	public abstract Authority getAuthority();
 }

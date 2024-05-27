@@ -21,8 +21,9 @@ public class SwingLogoutController extends SwingController {
 	private class LogoutButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			model.logout();
 			view.requestChangeView("LoginView");
+			model.logout();
+			model.notifyObservers();
 		}
 	}
 }

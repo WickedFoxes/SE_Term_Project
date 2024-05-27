@@ -36,39 +36,44 @@ public class SwingIssueFilterController extends SwingController {
 	private void setObserver() {
 		issueListModel.subscribe(new Observer() {
 			public void update() {
-				FilterOption option = issueListModel.getFilterOption();
-				view.updateFilterOptionSelection(option);
+				if(!view.getAccessableViewNames().contains(view.requestGetCurrentViewName())) return;
+				updateFilterOptionSelection();
 				updateComboBoxs();
 			}
 		});
 	}
 	
+	private void updateFilterOptionSelection() {
+		if(issueListModel.getProject() == null) return;
+		FilterOption option = issueListModel.getFilterOption();
+		view.updateFilterOptionSelection(option);
+	}
+	
 	private void updateComboBoxs() {
-		if(projectListModel.getUser() == null) return;
 		if(projectListModel.getProject() == null) return;
-		
 		List<Dev> devs = new ArrayList<Dev>();
 		List<Tester> testers = new ArrayList<Tester>(); 
 		
 		for(User dev : projectListModel.getAllAccountsInProject(Authority.DEV)) devs.add((Dev)dev);
 		for(User tester : projectListModel.getAllAccountsInProject(Authority.TESTER)) testers.add((Tester)tester);
 		
-		view.updateAssigneeComboBox(devs);
-		view.updateReporterComboBox(testers);
+		view.updateComboBoxs(devs, testers);
 	}
 	
 	private class ApplyButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			FilterOption option = view.getFilterOption();
-			System.out.println("Filter Applied :" + option.getState() +", "+option.getAssignee() +", "+option.getReporter() );
 			issueListModel.setFilterOption(option);
 			issueListModel.notifyObservers();
+			view.requestChangeView("IssueListView");
 			
 			Window window = SwingUtilities.getWindowAncestor(view);
 	        if (window instanceof JFrame) {
 	            ((JFrame)window).setVisible(false);
 	        }
+	        
+	        System.out.println("Filter Applied :" + option.getState() +", "+option.getAssignee() +", "+option.getReporter() );
 		}
 	}
 }

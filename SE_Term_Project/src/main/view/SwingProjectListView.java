@@ -121,6 +121,7 @@ public class SwingProjectListView extends SwingView implements LogoutableView {
 		List<String> list = new ArrayList<String>();
 		list.add("LoginView");
 		list.add("IssueListView");
+		list.add("ProjectListView");
 		list.add("ProjectCreationView");
 		list.add("AccountCreationView");
 		return list;

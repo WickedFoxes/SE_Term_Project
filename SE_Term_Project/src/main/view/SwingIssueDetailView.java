@@ -1,18 +1,28 @@
 package main.view;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
+import main.domain.Comment;
 import main.domain.Dev;
 import main.domain.Issue;
+import main.domain.Project;
 import main.domain.Tester;
 import main.domain.enumeration.Priority;
 import main.domain.enumeration.State;
@@ -28,7 +38,7 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
     private CommentPanel commentPanel;
 	
 	public SwingIssueDetailView(Mediator mediator) {
-		super(mediator,  new Dimension(700, 800));
+		super(mediator,  new Dimension(700, 850));
 		
 		stateLabel = new JLabel("State");
 		priorityLabel = new JLabel("Priority");
@@ -60,21 +70,21 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		priorityComboBox.setBounds(340, 100, 160, 40);
 		
 		descriptionLabel.setBounds(180, 140, 100, 40);
-		descriptionTextField.setBounds(180, 170, 320, 90);
+		descriptionTextField.setBounds(180, 170, 320, 70);
 		
-		reportedDateLabel.setBounds(180, 260, 100, 40);
-		reportedDateTextField.setBounds(180, 290, 320, 40);
+		reportedDateLabel.setBounds(180, 240, 100, 40);
+		reportedDateTextField.setBounds(180, 270, 320, 40);
 		
-		reporterLabel.setBounds(180, 330, 100, 40);
-		reporterComboBox.setBounds(180, 360, 320, 40);
+		reporterLabel.setBounds(180, 310, 100, 40);
+		reporterComboBox.setBounds(180, 340, 320, 40);
 		
-		assigneeLabel.setBounds(180, 400, 100, 40);
-		assigneeComboBox.setBounds(180, 430, 320, 40);
+		assigneeLabel.setBounds(180, 380, 100, 40);
+		assigneeComboBox.setBounds(180, 410, 320, 40);
 		
-		fixerLabel.setBounds(180, 470, 100, 40);
-		fixerComboBox.setBounds(180, 500, 320, 40);
-		commentLabel.setBounds(180, 540, 100, 40);
-		commentPanel.setBounds(180, 570, 320, 200);
+		fixerLabel.setBounds(180, 450, 100, 40);
+		fixerComboBox.setBounds(180, 480, 320, 40);
+		commentLabel.setBounds(180, 520, 100, 40);
+		commentPanel.setBounds(180, 550, 320, 200);
 		
 		returnButton.setBounds(50, 30, 100, 40);
 		saveButton.setBounds(50, 80, 100, 40);
@@ -100,6 +110,41 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		add(saveButton);
 	}
 	
+	public Priority getPriority() {
+		return (Priority)priorityComboBox.getSelectedItem();
+	}
+	
+	public State getState() {
+		return (State)stateComboBox.getSelectedItem();
+	}
+	
+	public Dev getAssignee() {
+		return (Dev)assigneeComboBox.getSelectedItem();
+	}
+	
+	public String getCommentContent() {
+		return commentPanel.getCommentContent();
+	}
+	
+	public void clearCommentTextField() {
+		commentPanel.clearCommentTextField();
+	}
+	
+	public void updateComboBoxs(List<Dev> devs, List<Tester> testers) {
+		reporterComboBox.removeAllItems();
+		reporterComboBox.addItem(null);
+		for(Tester tester : testers) reporterComboBox.addItem(tester); 
+		
+		assigneeComboBox.removeAllItems();
+		assigneeComboBox.addItem(null);
+		fixerComboBox.removeAllItems();
+		fixerComboBox.addItem(null);
+		for(Dev dev : devs) {
+			assigneeComboBox.addItem(dev);
+			fixerComboBox.addItem(dev); 
+		}
+	}
+	
 	public void updateIssueData(Issue issue) {
 		titleTextField.setText(issue.getTitle());
 		descriptionTextField.setText(issue.getDescription());
@@ -111,16 +156,12 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		fixerComboBox.setSelectedItem(issue.getFixer());
 	}
 	
-	public Priority getPriority() {
-		return (Priority)priorityComboBox.getSelectedItem();
+	public void updateComments(List<Comment> comments) {
+		commentPanel.updateComments(comments);
 	}
 	
-	public State getState() {
-		return (State)stateComboBox.getSelectedItem();
-	}
-	
-	public Dev getAssignee() {
-		return (Dev)assigneeComboBox.getSelectedItem();
+	public void setWriteListener(ActionListener listener) {
+		commentPanel.setWriteListener(listener);
 	}
 
 	public void setSaveListener(ActionListener listener) {
@@ -144,6 +185,7 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 	@Override
 	public List<String> getAccessableViewNames() { 
 		List<String> list = new ArrayList<String>();
+		list.add("IssueDetailView");
 		list.add("IssueListView");
 		return list;
 	}
@@ -152,6 +194,87 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 	public void refresh() { }
 	
 	private class CommentPanel extends JPanel {
+		private JPanel panel;
+		private JTextField commentTextField;
+		private JButton writeButton;
+	    private JScrollPane scrollPane;
+	    
+		private GridBagLayout grid;
+		private GridBagConstraints contstraints;
+		private List<JLabel> commentLabels;
 		
+		public CommentPanel() {
+			setLayout(null);
+			setVisible(true);
+		
+			panel = new JPanel();
+			commentTextField = new JTextField();
+			writeButton = new JButton("←");
+			commentLabels = new ArrayList<JLabel>();
+			grid = new GridBagLayout();
+			contstraints = new GridBagConstraints();
+			contstraints.fill = GridBagConstraints.HORIZONTAL;
+			contstraints.anchor = GridBagConstraints.PAGE_START;
+			contstraints.insets = new Insets(5, 5, 5, 5);
+			panel.setLayout(grid);
+			scrollPane = new JScrollPane();
+			scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPane.setViewportView(panel);
+
+			scrollPane.setBounds(0, 0, 320, 150);
+			commentTextField.setBounds(0, 160, 250, 40);
+			writeButton.setBounds(270, 160, 50, 40);
+			
+			add(scrollPane);
+			add(commentTextField);
+			add(writeButton);
+		}
+		
+		public String getCommentContent() {
+			return commentTextField.getText();
+		}
+		
+		public void clearCommentTextField() {
+			commentTextField.setText("");
+		}
+		
+		public void updateComments(List<Comment> comments) {
+			JLabel commentLabel;
+			String content;
+			for(JLabel label : commentLabels) {
+				remove(label);
+				revalidate();
+				repaint();
+			}
+			commentLabels.clear();
+			
+			for(int i = 0; i < comments.size(); i++) {
+				content = comments.get(i).getContent() + " @" + comments.get(i).getWriter();
+				commentLabel = new JLabel(content);
+				commentLabel.setPreferredSize(new Dimension(280, 40));
+				commentLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+				addGrid(commentLabel, 0, i, 1, 1, 1, 0);
+				commentLabels.add(commentLabel);
+			}
+			clearCommentTextField();
+		}
+		
+		public void setWriteListener(ActionListener listener) {
+			writeButton.addActionListener(listener);
+		}
+		
+		private void addGrid(Component c, int gridx, int gridy, int gridwidth, int gridheight, int weightx, int weighty) {
+			contstraints.gridx = gridx;
+			contstraints.gridy = gridy;
+			contstraints.gridwidth = gridwidth;
+			contstraints.gridheight = gridheight;
+			contstraints.weightx = weightx;
+			contstraints.weighty = weighty;
+			grid.setConstraints(c, contstraints);
+			panel.add(c);
+			panel.revalidate();
+			panel.repaint();
+		}
 	}
 }

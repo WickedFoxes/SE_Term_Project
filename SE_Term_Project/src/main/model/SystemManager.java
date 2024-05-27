@@ -24,9 +24,11 @@ public class SystemManager {
 	public void subscribe(Observer o) {
 		observers.add(o);
 	}
+	
 	public void unsubscribe(Observer o) {
 		observers.remove(o);
 	}
+	
 	public void notifyObservers() {
 		for(Observer o : observers) o.update();
 	}
@@ -34,25 +36,24 @@ public class SystemManager {
 	public User getUser() {
 		return user;
 	}
+	
 	public void setUser(User user) {
 		this.user = user;
-		notifyObservers();
-		//System.out.println("Set User, notifyObservers ("+this.getClass().toString()+")");
 	}
+	
 	public Project getProject() {
 		return project;
 	}
+	
 	public void setProject(Project project) {
 		this.project = project;
-		notifyObservers();
-		//System.out.println("Set Project, notifyObservers ("+this.getClass().toString()+")");
 	}
+	
 	public Issue getIssue() {
 		return issue;
 	}
+	
 	public void setIssue(Issue issue) {
 		this.issue = issue;
-		notifyObservers();
-		//System.out.println("Set Issue, notifyObservers ("+this.getClass().toString()+")");
 	}
 }

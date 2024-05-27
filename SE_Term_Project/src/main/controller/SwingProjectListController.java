@@ -30,6 +30,7 @@ public class SwingProjectListController extends SwingController {
 	private void setObserver() {
 		model.subscribe(new Observer() {
 			public void update() {
+				if(!view.getAccessableViewNames().contains(view.requestGetCurrentViewName())) return;
 				updateProjectButtons();
 				updateCreateButtonsVisiblity();
 			}
@@ -37,6 +38,7 @@ public class SwingProjectListController extends SwingController {
 	}
 	
 	private void updateCreateButtonsVisiblity() {
+		if(model.getUser() == null) return;
 		boolean isAdmin = (model.getUser() instanceof Admin);
 		view.updateCreateAccountButtonVisible(isAdmin);
 		view.updateCreateProjectButtonVisible(isAdmin);
@@ -44,7 +46,6 @@ public class SwingProjectListController extends SwingController {
 	
 	private void updateProjectButtons() {
 		if(model.getUser() == null) return;
-		
 		List<Project> projects = model.getProjectList();
 		List<ActionListener> listeners = new ArrayList<ActionListener>();
 		int n = projects.size();
@@ -80,6 +81,7 @@ public class SwingProjectListController extends SwingController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.setProject(project);
+			model.notifyObservers();
 			view.requestChangeView("IssueListView");
 		}
 	}

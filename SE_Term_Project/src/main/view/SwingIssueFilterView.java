@@ -75,25 +75,24 @@ public class SwingIssueFilterView extends SwingView {
 		return new FilterOption(state, tester, dev);
 	}
 	
-	public void setApplyListener(ActionListener listener) {
-		applyButton.addActionListener(listener);
-	}
-	
-	public void updateAssigneeComboBox(List<Dev> devs) {
+	public void updateComboBoxs(List<Dev> devs, List<Tester> testers) {
 		assigneeComboBox.removeAllItems();
 		assigneeComboBox.addItem(null);
 		for(Dev dev : devs) assigneeComboBox.addItem(dev); 
-	}
-	
-	public void updateReporterComboBox(List<Tester> testers) {
+		
 		reporterComboBox.removeAllItems();
 		reporterComboBox.addItem(null);
 		for(Tester tester : testers) reporterComboBox.addItem(tester); 
+	}
+	
+	public void setApplyListener(ActionListener listener) {
+		applyButton.addActionListener(listener);
 	}
 
 	@Override
 	public List<String> getAccessableViewNames() {
 		List<String> list = new ArrayList<String>();
+		list.add("IssueFilterView");
 		list.add("IssueListView");
 		return list;
 	}

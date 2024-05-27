@@ -99,6 +99,7 @@ public class SwingIssueCreationView extends SwingView implements ReturnableView 
 	@Override
 	public List<String> getAccessableViewNames() {
 		List<String> list = new ArrayList<String>();
+		list.add("IssueCreationView");
 		list.add("IssueListView");
 		return list;
 	}

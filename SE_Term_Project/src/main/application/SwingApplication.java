@@ -3,6 +3,7 @@ package main.application;
 import javax.swing.SwingUtilities;
 
 import main.controller.SwingAccountCreationController;
+import main.controller.SwingCommentController;
 import main.controller.SwingIssueCreationController;
 import main.controller.SwingIssueDetailController;
 import main.controller.SwingIssueFilterController;
@@ -14,6 +15,7 @@ import main.controller.SwingProjectListController;
 import main.controller.SwingReturnController;
 import main.domain.Admin;
 import main.model.AccountModel;
+import main.model.CommentModel;
 import main.model.IssueListModel;
 import main.model.IssueModel;
 import main.model.LoginModel;
@@ -44,7 +46,7 @@ public class SwingApplication implements Application{
 	ProjectListModel projectListModel;
 	IssueListModel issueListModel;
 	IssueModel issueModel;
-	//CommentModel commentModel;
+	CommentModel commentModel;
 	
 	SwingLoginController loginController;
 	SwingLogoutController logoutController_projectList, logoutController_issueList;
@@ -56,6 +58,7 @@ public class SwingApplication implements Application{
 	SwingIssueCreationController issueCreationController;
 	SwingIssueFilterController issueFilterController;
 	SwingIssueDetailController issueDetailController;
+	SwingCommentController commentController;
 	
 	public void run() {
 		//View
@@ -74,7 +77,7 @@ public class SwingApplication implements Application{
 		projectListModel = new ProjectListModel(systemData, projectRepo, accountRepo);
 		issueListModel = new IssueListModel(systemData, issueRepo);
 		issueModel = new IssueModel(systemData, issueRepo);
-		//CommentModel commentModel = new CommentModel(systemData, commentRepo);
+		CommentModel commentModel = new CommentModel(systemData, commentRepo);
 		
 		//Controller
 		loginController = new SwingLoginController(view.getLoginView(), loginModel);
@@ -97,8 +100,9 @@ public class SwingApplication implements Application{
 		
 		issueFilterController = new SwingIssueFilterController(view.getIssueFilterView(), projectListModel, issueListModel);
 		
-		issueDetailController = new SwingIssueDetailController(view.getIssueDetailView(), issueModel);
+		issueDetailController = new SwingIssueDetailController(view.getIssueDetailView(), projectListModel, issueModel);
 		returnController_issueDetail = new SwingReturnController((ReturnableView)view.getIssueDetailView(), issueModel);
+		commentController = new SwingCommentController(view.getIssueDetailView(), commentModel);
 		
 		SwingUtilities.invokeLater(() -> {
 			view.setVisible(true);

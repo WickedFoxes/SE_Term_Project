@@ -135,6 +135,7 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		List<String> list = new ArrayList<String>();
 		list.add("LoginView");
 		list.add("ProjectListView");
+		list.add("IssueListView");
 		list.add("IssueDetailView");
 		list.add("IssueCreationView");
 		list.add("IssueFilterView");

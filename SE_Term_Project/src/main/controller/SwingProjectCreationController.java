@@ -33,6 +33,7 @@ public class SwingProjectCreationController extends SwingController {
 	private void setObserver() {
 		accountModel.subscribe(new Observer() {
 			public void update() {
+				if(!view.getAccessableViewNames().contains(view.requestGetCurrentViewName())) return;
 				updateLists();
 			}
 		});
@@ -40,7 +41,6 @@ public class SwingProjectCreationController extends SwingController {
 	
 	private void updateLists() {
 		if(accountModel.getUser() == null) return;
- 		
 		List<ProjectLeader> pls = new ArrayList<ProjectLeader>(); 
 		List<Dev> devs = new ArrayList<Dev>();
 		List<Tester> testers = new ArrayList<Tester>(); 

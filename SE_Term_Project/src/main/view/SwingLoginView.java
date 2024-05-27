@@ -54,6 +54,7 @@ public class SwingLoginView extends SwingView{
 	@Override
 	public List<String> getAccessableViewNames() {
 		List<String> list = new ArrayList<String>();
+		list.add("LoginView");
 		list.add("ProjectListView");
 		return list;
 	}

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 public class SwingMainView extends JFrame implements Mediator{
 	private CardLayout cardLayout;
 	private JPanel mainPanel;
+	private String currentViewName;
 	
 	private SwingLoginView loginView;
 	private SwingProjectListView projectListView;
@@ -56,10 +57,15 @@ public class SwingMainView extends JFrame implements Mediator{
 	}
 
 	@Override
-	public void notify(SwingView view, String targetViewName) {
+	public void changeView(SwingView view, String targetViewName) {
 		List<String> accessableViewNames = view.getAccessableViewNames();
 		if(accessableViewNames.contains(targetViewName)) showView(targetViewName);
 		else System.out.println("Error: cannot access View ("+this.getClass().toString()+")");
+	}
+	
+	@Override
+	public String getCurrentViewName() {
+		return currentViewName;
 	}
 	
 	private void showView(String viewName) {
@@ -80,7 +86,8 @@ public class SwingMainView extends JFrame implements Mediator{
 		
 		cardLayout.show(mainPanel, viewName);
 		this.setSize(view.getPreferredSize());
-		view.refresh();		
+		view.refresh();
+		currentViewName = viewName;
 	}
 	
 	public SwingLoginView getLoginView() {

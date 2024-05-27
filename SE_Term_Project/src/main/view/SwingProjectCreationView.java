@@ -135,6 +135,7 @@ public class SwingProjectCreationView extends SwingView implements ReturnableVie
 	@Override
 	public List<String> getAccessableViewNames() {
 		List<String> list = new ArrayList<String>();
+		list.add("ProjectCreationView");
 		list.add("ProjectListView");
 		return list;
 	}

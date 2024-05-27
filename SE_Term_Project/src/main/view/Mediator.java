@@ -1,5 +1,6 @@
 package main.view;
 
 public interface Mediator {
-	public void notify(SwingView view, String targetViewName);
+	public void changeView(SwingView view, String targetViewName);
+	public String getCurrentViewName();
 }

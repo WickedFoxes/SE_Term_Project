@@ -85,6 +85,7 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 	@Override
 	public List<String> getAccessableViewNames() {
 		List<String> list = new ArrayList<String>();
+		list.add("AccountCreationView");
 		list.add("ProjectListView");
 		return list;
 	}
