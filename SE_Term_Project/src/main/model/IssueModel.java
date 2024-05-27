@@ -33,7 +33,7 @@ public class IssueModel extends Model {
 		}
 	}
 	
-	//Return true if actual modify occurred (if new properties are NULL, then return false)
+	//Return true if acceptable(valid) modify occurred (if new properties are NULL, then return true)
 	public boolean tryModify(Issue currentIssue, Priority newPriorty, State newState, Dev newAssignee) {
 		if(getUser().getAuthority() == Authority.PL) return tryModify_PL(currentIssue, newPriorty, newState, newAssignee);
 		else if(getUser().getAuthority() == Authority.DEV) return tryModify_Dev(currentIssue, newPriorty, newState, newAssignee);
@@ -45,7 +45,8 @@ public class IssueModel extends Model {
 		if(newPriorty != null) repo.setPriority(currentIssue, newPriorty);
 		
 		if(newState != null) {
-			if(currentIssue.getState() == State.RESOLVED && newState == State.CLOSED) { //PL set State [RESOLVED -> CLOSED]
+			//PL set State [RESOLVED -> CLOSED]
+			if(currentIssue.getState() == State.RESOLVED && newState == State.CLOSED) {
 				repo.setState(currentIssue, newState);
 				return true;
 			}
@@ -53,31 +54,31 @@ public class IssueModel extends Model {
 		}
 		
 		if(newAssignee != null) {
-			if(currentIssue.getState() == State.NEW) { //PL set Assignee [NEW -> ASSIGNED]
+			//PL set Assignee [NEW -> ASSIGNED]
+			if(currentIssue.getState() == State.NEW) { 
 				repo.setState(currentIssue, State.ASSIGNED);
 				repo.setAssignee(currentIssue, newAssignee);
 				return true;
 			}
 			else return false; //If state is not NEW, assignee change should not be accepted
 		}
-		
-		return (newPriorty != null);
+		return true;
 	}
 	
 	private boolean tryModify_Dev(Issue currentIssue, Priority newPriorty, State newState, Dev newAssignee) {
-		if(currentIssue.getState() == State.ASSIGNED && newState == State.FIXED) { //Dev set State [ASSIGNED -> FIXED]
-			repo.setState(currentIssue, newState);
-			repo.setFixer(currentIssue, (Dev)getUser());
-			return true;
-		}
-		return false; //Any other change should not be accepted
+		if(currentIssue.getState() != State.ASSIGNED || newState != State.FIXED) return false;
+		
+		//Dev set State [ASSIGNED -> FIXED]
+		repo.setState(currentIssue, newState);
+		repo.setFixer(currentIssue, (Dev)getUser());
+		return true;
 	}
 	
 	private boolean tryModify_Tester(Issue currentIssue, Priority newPriorty, State newState, Dev newAssignee) {
-		if(currentIssue.getState() == State.FIXED && newState == State.RESOLVED) { //Tester set State [FIXED -> RESOLVED]
-			repo.setState(currentIssue, newState);
-			return true;
-		}
-		return false; //Any other change should not be accepted
+		if(currentIssue.getState() != State.FIXED || newState != State.RESOLVED) return false;
+		
+		//Tester set State [FIXED -> RESOLVED]
+		repo.setState(currentIssue, newState);
+		return true;
 	}
 }
