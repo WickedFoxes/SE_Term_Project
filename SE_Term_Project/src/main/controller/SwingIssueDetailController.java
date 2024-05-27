@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import main.domain.Dev;
 import main.domain.Issue;
 import main.domain.Tester;
@@ -68,8 +70,10 @@ public class SwingIssueDetailController extends SwingController {
 			issue.setState(state);
 			issue.setAssignee(assignee);
 			issueModel.setIssue(issue);
-			issueModel.modify(issue, priority, state, assignee);
+			
+			issueModel.tryModify(issue, priority, state, assignee);
 			issueModel.notifyObservers();
+			view.showMessagePopup("Save Complete", "저장이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }

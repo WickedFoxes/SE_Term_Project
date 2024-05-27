@@ -1,15 +1,10 @@
 package main.controller;
 
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import main.domain.Comment;
-import main.domain.FilterOption;
 import main.domain.User;
 import main.model.CommentModel;
 import main.model.Observer;
@@ -38,7 +33,6 @@ public class SwingCommentController extends SwingController {
 	private void updateComments() {
 		if(model.getIssue() == null) return;
 		List<Comment> comments = model.getCommentList();
-		System.out.println("num comments: "+comments.size());
 		view.updateComments(comments);
 	}
 	
