@@ -58,7 +58,7 @@ public class SwingProjectListController extends SwingController {
 		List<ActionListener> listeners = new ArrayList<ActionListener>();
 		int n = projects.size();
 		Project project;
-		
+
 		for(int i = 0; i < n; i++) {
 			project = projects.get(i);
 			listeners.add(new ProjectButtonListener(project));

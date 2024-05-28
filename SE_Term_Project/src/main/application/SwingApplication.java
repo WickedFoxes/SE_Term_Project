@@ -114,7 +114,7 @@ public class SwingApplication implements Application{
 			
 			//For Debug
 			RepoTest repoTest = new RepoTest();
-			JButton button = new JButton("ClearDB");
+			JButton button = new JButton("initDB");
 			button.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -125,8 +125,6 @@ public class SwingApplication implements Application{
 			});
 			button.setBounds(390, 180, 80, 20);
 			mainFrame.getLoginView().add(button);
-			
-
         });
 	}
 }

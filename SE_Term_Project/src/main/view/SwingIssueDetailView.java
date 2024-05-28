@@ -75,6 +75,9 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
                 	stateComboBox.setSelectedItem(lastSelected);
                     return;
                 }
+                if(selected == State.FIXED) {
+                	
+                }
                 lastSelected = selected;
 			}
         });
@@ -178,6 +181,10 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		return commentPanel.getCommentContent();
 	}
 	
+	public void updateFixer(Dev fixer) {
+		fixerComboBox.setSelectedItem(fixer);
+	}
+	
 	public void updateComboBoxs(List<Dev> devs, List<Tester> testers) {
 		reporterComboBox.removeAllItems();
 		reporterComboBox.addItem(null);
@@ -273,6 +280,10 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 	public void setWriteListener(ActionListener listener) {
 		commentPanel.setWriteListener(listener);
 	}
+	
+	public void setStateComboBoxListener(ActionListener listener) {
+		stateComboBox.addActionListener(listener);
+	}
 
 	public void setSaveListener(ActionListener listener) {
 		saveButton.addActionListener(listener);
@@ -362,7 +373,7 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 			commentLabels.clear();
 			
 			for(int i = 0; i < comments.size(); i++) {
-				content = comments.get(i).getContent() + " @" + comments.get(i).getWriter();
+				content = comments.get(i).getContent() + "[@" + comments.get(i).getWriter() + ", "+comments.get(i).getWrittenDate().toGMTString() + "]";
 				commentLabel = new JLabel(content);
 				commentLabel.setPreferredSize(new Dimension(280, 40));
 				commentLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));

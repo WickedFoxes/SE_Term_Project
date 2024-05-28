@@ -15,6 +15,7 @@ import main.domain.Project;
 import main.domain.ProjectLeader;
 import main.domain.Tester;
 import main.domain.User;
+import main.domain.enumeration.Authority;
 import main.repository.AccountRepo;
 import main.repository.ProjectRepo;
 
@@ -89,24 +90,24 @@ public class RepoTest {
 	}
 	
 	public void initUsers(AccountRepo repo, ProjectRepo projectRepo) {
-		Admin admin = new Admin("admin", "admin");
-		ProjectLeader pl1 = new ProjectLeader("pl1", "pl1");
-		ProjectLeader pl2 = new ProjectLeader("pl2", "pl2");
-		Tester tester1 = new Tester("tester1", "tester1");
-		Tester tester2 = new Tester("tester2", "tester2");
-		Tester tester3 = new Tester("tester3", "tester3");
-		Tester tester4 = new Tester("tester4", "tester4");
-		Tester tester5 = new Tester("tester5", "tester5");
-		Dev dev1 = new Dev("dev1", "dev1");
-		Dev dev2 = new Dev("dev2", "dev2");
-		Dev dev3 = new Dev("dev3", "dev3");
-		Dev dev4 = new Dev("dev4", "dev4");
-		Dev dev5 = new Dev("dev5", "dev5");
-		Dev dev6 = new Dev("dev6", "dev6");
-		Dev dev7 = new Dev("dev7", "dev7");
-		Dev dev8 = new Dev("dev8", "dev8");
-		Dev dev9 = new Dev("dev9", "dev9");
-		Dev dev10 = new Dev("dev10", "dev10");
+		Admin admin = new Admin("admin", "123");
+		ProjectLeader pl1 = new ProjectLeader("pl1", "123");
+		ProjectLeader pl2 = new ProjectLeader("pl2", "123");
+		Tester tester1 = new Tester("tester1", "123");
+		Tester tester2 = new Tester("tester2", "123");
+		Tester tester3 = new Tester("tester3", "123");
+		Tester tester4 = new Tester("tester4", "123");
+		Tester tester5 = new Tester("tester5", "123");
+		Dev dev1 = new Dev("dev1", "123");
+		Dev dev2 = new Dev("dev2", "123");
+		Dev dev3 = new Dev("dev3", "123");
+		Dev dev4 = new Dev("dev4", "123");
+		Dev dev5 = new Dev("dev5", "123");
+		Dev dev6 = new Dev("dev6", "123");
+		Dev dev7 = new Dev("dev7", "123");
+		Dev dev8 = new Dev("dev8", "123");
+		Dev dev9 = new Dev("dev9", "123");
+		Dev dev10 = new Dev("dev10", "123");
 		
 		admin.setId(0);
 		pl1.setId(1);
@@ -149,14 +150,18 @@ public class RepoTest {
 		Project project1 = new Project("proejct1");
 		
 		projectRepo.add(project1);
-		projectRepo.add(project1, tester1);
-		projectRepo.add(project1, tester2);
-		projectRepo.add(project1, tester3);
-		projectRepo.add(project1, dev1);
-		projectRepo.add(project1, dev2);
-		projectRepo.add(project1, dev3);
-		projectRepo.add(project1, dev4);
-		projectRepo.add(project1, dev5);
-		projectRepo.add(project1, dev6);
+
+		projectRepo.add(project1, repo.findAll(Authority.PL).get(0));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(0));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(1));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(2));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(3));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(4));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(5));
+		projectRepo.add(project1, repo.findAll(Authority.TESTER).get(0));
+		projectRepo.add(project1, repo.findAll(Authority.TESTER).get(1));
+		projectRepo.add(project1, repo.findAll(Authority.TESTER).get(2));
+		
+		System.out.println(projectRepo.findAll(pl1).size());
 	}
 }
