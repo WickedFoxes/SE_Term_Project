@@ -18,25 +18,27 @@ public class SwingIssueCreationController extends SwingController{
 	public SwingIssueCreationController(SwingIssueCreationView view, IssueListModel model) {
 		this.model = model;
 		this.view = view;
-		this.view.setCreateListener(new CreateButtonListener());
+		this.view.setCreateListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tryCreateIssue();
+			}
+		});
 	}
 	
-	private class CreateButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String title = view.getTitle();
-			String description = view.getDescription();
-			Priority priority = view.getPriority();
-			
-			boolean success = model.tryCreateIssue(title, description, priority);
-			if(success) {
-				view.showMessagePopup("Issue Creation success", "이슈 생성이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
-				view.requestChangeView("IssueListView");
-				model.notifyObservers();
-			}
-			else {
-				view.showMessagePopup("Issue Creation Error", "입력 정보를 확인해주세요.", JOptionPane.ERROR_MESSAGE);
-			}
+	private void tryCreateIssue() {
+		String title = view.getTitle();
+		String description = view.getDescription();
+		Priority priority = view.getPriority();
+		
+		boolean success = model.tryCreateIssue(title, description, priority);
+		if(success) {
+			view.showMessagePopup("Issue Creation success", "이슈 생성이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
+			view.requestChangeView("IssueListView");
+			model.notifyObservers();
+		}
+		else {
+			view.showMessagePopup("Issue Creation Error", "입력 정보를 확인해주세요.", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

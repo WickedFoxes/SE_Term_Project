@@ -26,7 +26,12 @@ public class SwingProjectCreationController extends SwingController {
 		this.accountModel = accountModel;
 		this.projectListModel = projectListModel;
 		this.view = view;
-		this.view.setCreateListener(new CreateButtonListener());
+		this.view.setCreateListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tryCreateProject();
+			}
+		});
 		setObserver();
 	}
 	
@@ -52,22 +57,19 @@ public class SwingProjectCreationController extends SwingController {
 		view.updateList(pls, devs, testers);
 	}
 	
-	private class CreateButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String name = view.getName();
-			ProjectLeader pl = view.getPL();
-			List<Dev> devs = view.getDevs();
-			List<Tester> testers = view.getTesters();
-			
-			boolean success = projectListModel.tryCreateProject(name, pl, devs, testers);
-			if(success) {
-				view.showMessagePopup("Project Creation success", "프로젝트 생성이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
-				view.requestChangeView("ProjectListView");
-			}
-			else {
-				view.showMessagePopup("Project Creation Error", "입력 정보를 확인해주세요.", JOptionPane.ERROR_MESSAGE);
-			}
+	private void tryCreateProject() {
+		String name = view.getName();
+		ProjectLeader pl = view.getPL();
+		List<Dev> devs = view.getDevs();
+		List<Tester> testers = view.getTesters();
+		
+		boolean success = projectListModel.tryCreateProject(name, pl, devs, testers);
+		if(success) {
+			view.showMessagePopup("Project Creation success", "프로젝트 생성이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
+			view.requestChangeView("ProjectListView");
+		}
+		else {
+			view.showMessagePopup("Project Creation Error", "입력 정보를 확인해주세요.", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

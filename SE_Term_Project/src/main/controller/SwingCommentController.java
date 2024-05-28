@@ -16,8 +16,13 @@ public class SwingCommentController extends SwingController {
 	
 	public SwingCommentController(SwingIssueDetailView view, CommentModel model) {
 		this.view = view;
-		this.view.setWriteListener(new WriteButtonListener());
 		this.model = model;
+		this.view.setWriteListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				writeComment();
+			}
+		});
 		setObserver();
 	}
 	
@@ -36,14 +41,11 @@ public class SwingCommentController extends SwingController {
 		view.updateComments(comments);
 	}
 	
-	private class WriteButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			String content = view.getCommentContent();
-			User user = model.getUser();
-			model.createComment(new Comment(content, user));
-			model.notifyObservers();
-			view.refresh();
-		}
+	private void writeComment() {
+		String content = view.getCommentContent();
+		User user = model.getUser();
+		model.createComment(new Comment(content, user));
+		model.notifyObservers();
+		view.refresh();
 	}
 }

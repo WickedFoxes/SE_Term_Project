@@ -23,9 +23,14 @@ public class SwingReturnController extends SwingController {
 		}
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(view.needNullifyIssue()) model.setIssue(null);
-			if(view.needNullifyProject()) model.setProject(null);
-			view.requestChangeView(returnViewName);
+			returnToView(returnViewName);
 		}
 	}
+	
+	private void returnToView(String returnViewName) {
+		if(view.needNullifyIssue()) model.setIssue(null);
+		if(view.needNullifyProject()) model.setProject(null);
+		view.requestChangeView(returnViewName);
+	}
+	
 }

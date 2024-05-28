@@ -22,8 +22,19 @@ public class SwingIssueListController extends SwingController {
 	public SwingIssueListController(SwingIssueListView view, IssueListModel model) {
 		this.model = model;
 		this.view = view;
-		view.setCreateIssueListener(new CreateIssueButtonListener());
-		view.setFilterListener(new FilterButtonListener());
+		view.setCreateIssueListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.requestChangeView("IssueCreationView");
+			}
+		});
+		view.setFilterListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.requestChangeView("IssueFilterView");
+				model.notifyObservers();
+			}
+		});
 		setObserver();
 	}
 	
@@ -58,27 +69,11 @@ public class SwingIssueListController extends SwingController {
 		view.updateButtonVisibility(isTester);
 	}
 	
-	private class CreateIssueButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			view.requestChangeView("IssueCreationView");
-		}
-	}
-	
-	private class FilterButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			view.requestChangeView("IssueFilterView");
-			model.notifyObservers();
-		}
-	}
-	
 	private class IssueButtonListener implements ActionListener{
 		private Issue issue;
 		public IssueButtonListener(Issue issue) {
 			this.issue = issue;
 		}
-		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			model.setIssue(issue);
@@ -86,6 +81,4 @@ public class SwingIssueListController extends SwingController {
 			view.requestChangeView("IssueDetailView");
 		}
 	}
-
-	
 }

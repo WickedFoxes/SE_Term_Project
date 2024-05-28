@@ -21,9 +21,18 @@ public class SwingProjectListController extends SwingController {
 	public SwingProjectListController(SwingProjectListView view, ProjectListModel model) {
 		this.model = model;
 		this.view = view;
-		view.setCreateAccountListener(new CreateAccountButtonListener());
-		view.setCreateProjectListener(new CreateProjectButtonListener());
-		
+		view.setCreateAccountListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.requestChangeView("AccountCreationView");
+			}
+		});
+		view.setCreateProjectListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				view.requestChangeView("ProjectCreationView");
+			}
+		});
 		setObserver();
 	}
 	
@@ -32,12 +41,12 @@ public class SwingProjectListController extends SwingController {
 			public void update() {
 				if(!view.getAccessableViewNames().contains(view.requestGetCurrentViewName())) return;
 				updateProjectButtons();
-				updateCreateButtonsVisiblity();
+				updateButtonVisiblities();
 			}
 		});
 	}
 	
-	private void updateCreateButtonsVisiblity() {
+	private void updateButtonVisiblities() {
 		if(model.getUser() == null) return;
 		boolean isAdmin = (model.getUser() instanceof Admin);
 		view.updateButtonVisibilities(isAdmin);
@@ -55,20 +64,6 @@ public class SwingProjectListController extends SwingController {
 			listeners.add(new ProjectButtonListener(project));
 		}
 		view.updateProjectButtons(projects, listeners);
-	}
-	
-	private class CreateAccountButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			view.requestChangeView("AccountCreationView");
-		}
-	}
-	
-	private class CreateProjectButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			view.requestChangeView("ProjectCreationView");
-		}
 	}
 	
 	private class ProjectButtonListener implements ActionListener{

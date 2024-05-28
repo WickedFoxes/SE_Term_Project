@@ -28,7 +28,12 @@ public class SwingIssueDetailController extends SwingController {
 		this.view = view;
 		this.projectListModel = projectListModel;
 		this.issueModel = issueModel;
-		view.setSaveListener(new SaveButtonListener());
+		view.setSaveListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				saveIssue();
+			}
+		});
 		setObserver();
 	}
 	
@@ -58,26 +63,22 @@ public class SwingIssueDetailController extends SwingController {
 		view.updateIssueData(issueModel.getIssue(), issueModel.getUser().getAuthority());
 	}
 	
-	private class SaveButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Issue currentIssue = issueModel.getIssue();	
-			Priority priority = view.getPriority();
-			State state = view.getState();
-			Dev assignee = view.getAssignee();
-						
-			boolean sucess = issueModel.tryModify(currentIssue, priority, state, assignee);
-			if(sucess) {
-				currentIssue.setPriority(priority);
-				currentIssue.setState(state);
-				currentIssue.setAssignee(assignee);
-				issueModel.setIssue(currentIssue);
-				issueModel.notifyObservers();
-				
-				view.showMessagePopup("Save Complete", "저장이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
-			}
-			else view.showMessagePopup("Save Error", "저장에 실패했습니다.", JOptionPane.ERROR_MESSAGE);
+	private void saveIssue() {
+		Issue currentIssue = issueModel.getIssue();	
+		Priority priority = view.getPriority();
+		State state = view.getState();
+		Dev assignee = view.getAssignee();
+					
+		boolean sucess = issueModel.tryModify(currentIssue, priority, state, assignee);
+		if(sucess) {
+			currentIssue.setPriority(priority);
+			currentIssue.setState(state);
+			currentIssue.setAssignee(assignee);
+			issueModel.setIssue(currentIssue);
+			issueModel.notifyObservers();
 			
+			view.showMessagePopup("Save Complete", "저장이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
 		}
+		else view.showMessagePopup("Save Error", "저장에 실패했습니다.", JOptionPane.ERROR_MESSAGE);
 	}
 }

@@ -24,12 +24,16 @@ public class SwingIssueFilterController extends SwingController {
 	private ProjectListModel projectListModel;
 	private IssueListModel issueListModel;
 	
-	
 	public SwingIssueFilterController(SwingIssueFilterView view, ProjectListModel projectListModel, IssueListModel issueListModel) {
 		this.projectListModel = projectListModel;
 		this.issueListModel = issueListModel;
 		this.view = view;
-		this.view.setApplyListener(new ApplyButtonListener());
+		this.view.setApplyListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				applyFilter();
+			}
+		});
 		setObserver();
 	}
 	
@@ -60,20 +64,16 @@ public class SwingIssueFilterController extends SwingController {
 		view.updateComboBoxs(devs, testers);
 	}
 	
-	private class ApplyButtonListener implements ActionListener{
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			FilterOption option = view.getFilterOption();
-			issueListModel.setFilterOption(option);
-			issueListModel.notifyObservers();
-			view.requestChangeView("IssueListView");
-			
-			Window window = SwingUtilities.getWindowAncestor(view);
-	        if (window instanceof JFrame) {
-	            ((JFrame)window).setVisible(false);
-	        }
-	        
-	        System.out.println("Filter Applied :" + option.getState() +", "+option.getAssignee() +", "+option.getReporter() );
-		}
+	private void applyFilter() {
+		FilterOption option = view.getFilterOption();
+		issueListModel.setFilterOption(option);
+		issueListModel.notifyObservers();
+		view.requestChangeView("IssueListView");
+		
+		Window window = SwingUtilities.getWindowAncestor(view);
+        if (window instanceof JFrame) {
+            ((JFrame)window).setVisible(false);
+        }
+        //System.out.println("Filter Applied :" + option.getState() +", "+option.getAssignee() +", "+option.getReporter() );
 	}
 }
