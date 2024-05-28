@@ -42,27 +42,20 @@ public class IssueModel extends Model {
 	}
 	
 	private boolean tryModify_PL(Issue currentIssue, Priority newPriorty, State newState, Dev newAssignee) {
-		if(newPriorty != null) repo.setPriority(currentIssue, newPriorty);
+		repo.setPriority(currentIssue, newPriorty);
 		
-		if(newState != null) {
-			//PL set State [RESOLVED -> CLOSED]
-			if(currentIssue.getState() == State.RESOLVED && newState == State.CLOSED) {
-				repo.setState(currentIssue, newState);
-				return true;
-			}
-			else return false; //Any other state change should not be accepted
+		//PL set State [RESOLVED -> CLOSED]
+		if(currentIssue.getState() == State.RESOLVED && newState == State.CLOSED) {
+			repo.setState(currentIssue, newState);
+			return true;
 		}
-		
-		if(newAssignee != null) {
-			//PL set Assignee [NEW -> ASSIGNED]
-			if(currentIssue.getState() == State.NEW) { 
-				repo.setState(currentIssue, State.ASSIGNED);
-				repo.setAssignee(currentIssue, newAssignee);
-				return true;
-			}
-			else return false; //If state is not NEW, assignee change should not be accepted
+		//PL set Assignee [NEW -> ASSIGNED]
+		else if (currentIssue.getState() == State.NEW  && newState == State.ASSIGNED) { 
+			repo.setState(currentIssue, newState);
+			repo.setAssignee(currentIssue, newAssignee);
+			return true;
 		}
-		return true;
+		else return (currentIssue.getPriority() != newPriorty);
 	}
 	
 	private boolean tryModify_Dev(Issue currentIssue, Priority newPriorty, State newState, Dev newAssignee) {

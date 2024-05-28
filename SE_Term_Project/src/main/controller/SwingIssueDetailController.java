@@ -55,25 +55,29 @@ public class SwingIssueDetailController extends SwingController {
 	
 	private void updateIssueData() {
 		if(issueModel.getIssue() == null) return;
-		view.updateIssueData(issueModel.getIssue());
+		view.updateIssueData(issueModel.getIssue(), issueModel.getUser().getAuthority());
 	}
 	
 	private class SaveButtonListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			Issue issue = issueModel.getIssue();	
+			Issue currentIssue = issueModel.getIssue();	
 			Priority priority = view.getPriority();
 			State state = view.getState();
 			Dev assignee = view.getAssignee();
+						
+			boolean sucess = issueModel.tryModify(currentIssue, priority, state, assignee);
+			if(sucess) {
+				currentIssue.setPriority(priority);
+				currentIssue.setState(state);
+				currentIssue.setAssignee(assignee);
+				issueModel.setIssue(currentIssue);
+				issueModel.notifyObservers();
+				
+				view.showMessagePopup("Save Complete", "저장이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
+			}
+			else view.showMessagePopup("Save Error", "저장에 실패했습니다.", JOptionPane.ERROR_MESSAGE);
 			
-			issue.setPriority(priority);
-			issue.setState(state);
-			issue.setAssignee(assignee);
-			issueModel.setIssue(issue);
-			
-			issueModel.tryModify(issue, priority, state, assignee);
-			issueModel.notifyObservers();
-			view.showMessagePopup("Save Complete", "저장이 완료되었습니다.", JOptionPane.INFORMATION_MESSAGE);
 		}
 	}
 }

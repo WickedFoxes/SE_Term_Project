@@ -30,7 +30,6 @@ public class SystemManager {
 	}
 	
 	public void notifyObservers() {
-		System.out.println("notifyObservers");
 		for(Observer o : observers) o.update();
 	}
 	

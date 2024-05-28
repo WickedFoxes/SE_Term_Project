@@ -6,7 +6,10 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +26,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 
 import main.domain.Comment;
 import main.domain.Dev;
@@ -43,9 +47,10 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
     private JButton returnButton, saveButton;
     private CommentPanel commentPanel;
     
-    private DisabledItemComboBoxModel<State> stateModel;
+    private State[] states = new State[] { State.NEW, State.ASSIGNED, State.FIXED, State.RESOLVED, State.CLOSED, State.REOPENED };
+    private DisabledItemComboBoxModel<State> stateModel_PL, stateModel_Dev, stateModel_Tester;
+    private DefaultComboBoxModel<State> defaultStateModel;
     
-	
 	public SwingIssueDetailView(Mediator mediator) {
 		super(mediator,  new Dimension(700, 850));
 		
@@ -58,17 +63,47 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		fixerLabel = new JLabel("Fixer");
 		commentLabel = new JLabel("Comment");
 		
-		reporterComboBox = new JComboBox<Tester>();
-		reporterComboBox.setEnabled(false);
-		fixerComboBox = new JComboBox<Dev>();
-		fixerComboBox.setEnabled(false);
-		stateComboBox = new JComboBox<State>(new State[] { State.NEW, State.ASSIGNED, State.FIXED, State.RESOLVED, State.CLOSED, State.REOPENED });
+		stateComboBox = new JComboBox<State>(states);
 		stateComboBox.setEnabled(false);
+		stateComboBox.addActionListener(new ActionListener() {
+			private State lastSelected = (State)stateComboBox.getItemAt(-1);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+            	if(!(stateComboBox.getModel() instanceof DisabledItemComboBoxModel<State>)) return;
+            	State selected = (State) stateComboBox.getSelectedItem();
+                if (((DisabledItemComboBoxModel<State>)stateComboBox.getModel()).isDisabled(selected)) {
+                	stateComboBox.setSelectedItem(lastSelected);
+                    return;
+                }
+                lastSelected = selected;
+			}
+        });
+		defaultStateModel = new DefaultComboBoxModel<State>(states);
+		stateModel_PL = new DisabledItemComboBoxModel<State>(states, new State[] { State.NEW, State.ASSIGNED, State.FIXED, State.REOPENED });
+		stateModel_Dev = new DisabledItemComboBoxModel<State>(states, new State[] { State.NEW, State.RESOLVED, State.CLOSED, State.REOPENED });
+		stateModel_Tester = new DisabledItemComboBoxModel<State>(states, new State[] { State.NEW, State.ASSIGNED, State.CLOSED, State.REOPENED });
+		
 		priorityComboBox = new JComboBox<Priority>(new Priority[] {Priority.BLOCKER, Priority.CRITICAL, Priority.MAJOR, Priority.MINOR, Priority.TRIVAL});
 		priorityComboBox.setEnabled(false);
+		reporterComboBox = new JComboBox<Tester>();
+		reporterComboBox.setEnabled(false);
 		assigneeComboBox = new JComboBox<Dev>();
 		assigneeComboBox.setEnabled(false);
-		
+		assigneeComboBox.addActionListener(new ActionListener() {
+			private Dev lastSelected = (Dev)assigneeComboBox.getItemAt(-1);
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	Dev selected = (Dev) assigneeComboBox.getSelectedItem();
+                if (selected != null) {
+                	stateComboBox.setSelectedItem(State.ASSIGNED);
+                    lastSelected = selected;
+                    return;
+                }
+            }
+        });
+		fixerComboBox = new JComboBox<Dev>();
+		fixerComboBox.setEnabled(false);
+
 		titleTextField = new JTextField(); 
 		titleTextField.setEnabled(false);
 		descriptionTextField = new JTextField();
@@ -147,41 +182,6 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		commentPanel.clearCommentTextField();
 	}
 	
-	public void updateComboBoxsSelectablility(Issue issue, Authority authority) {
-		if(authority == Authority.PL) updateComboBoxsSelectablility_PL(issue);
-		else if(authority == Authority.DEV) updateComboBoxsSelectablility_Dev(issue);
-		else if(authority == Authority.TESTER) updateComboBoxsSelectablility_Tester(issue);
-	}
-	
-	private void updateComboBoxsSelectablility_PL(Issue issue) {
-		priorityComboBox.setEnabled(true);
-		if(issue.getState() == State.NEW) {
-			stateComboBox.setEnabled(true);
-			assigneeComboBox.setEnabled(true);
-		}
-		else if(issue.getState() == State.RESOLVED) {
-			stateComboBox.setEnabled(false);
-			assigneeComboBox.setEnabled(true);
-		}
-		else {
-			stateComboBox.setEnabled(false);
-			assigneeComboBox.setEnabled(false);
-		}
-	}
-	
-	private void updateComboBoxsSelectablility_Dev(Issue issue) {
-			
-	}
-	
-	private void updateComboBoxsSelectablility_Tester(Issue issue) {
-		
-	}
-	
-	
-	private <T> void setSelectable(JComboBox<T> comboBox, T[] items) {
-		
-	}
-	
 	public void updateComboBoxs(List<Dev> devs, List<Tester> testers) {
 		reporterComboBox.removeAllItems();
 		reporterComboBox.addItem(null);
@@ -197,17 +197,80 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		}
 	}
 	
-	public void updateIssueData(Issue issue) {
-		titleTextField.setText(issue.getTitle());
-		descriptionTextField.setText(issue.getDescription());
-		reportedDateTextField.setText(issue.getReportedDate().toGMTString());
-		stateComboBox.setSelectedItem(issue.getState());
-		priorityComboBox.setSelectedItem(issue.getPriority());
-		reporterComboBox.setSelectedItem(issue.getReporter());
-		assigneeComboBox.setSelectedItem(issue.getAssignee());
-		fixerComboBox.setSelectedItem(issue.getFixer());
+	public void updateIssueData(Issue issue, Authority authority) {
+ 		titleTextField.setText(issue.getTitle());
+ 		descriptionTextField.setText(issue.getDescription());
+ 		reportedDateTextField.setText(issue.getReportedDate().toGMTString());
+ 		priorityComboBox.setSelectedItem(issue.getPriority());
+ 		reporterComboBox.setSelectedItem(issue.getReporter());
+ 		assigneeComboBox.setSelectedItem(issue.getAssignee());
+ 		fixerComboBox.setSelectedItem(issue.getFixer());
+ 		stateComboBox.setSelectedItem(issue.getState());
+ 		updateComboBoxsSelectablility(issue, authority);
 	}
 	
+	private void updateComboBoxsSelectablility(Issue issue, Authority authority) {
+		State currentSelectedState = (State) stateComboBox.getSelectedItem();
+		if(authority == Authority.PL) updateComboBoxsSelectablility_PL(issue);
+		else if(authority == Authority.DEV) updateComboBoxsSelectablility_Dev(issue);
+		else if(authority == Authority.TESTER) updateComboBoxsSelectablility_Tester(issue);
+		stateComboBox.setSelectedItem(currentSelectedState);
+	}
+	
+	private void updateComboBoxsSelectablility_PL(Issue issue) {
+		priorityComboBox.setEnabled(true);
+
+		if(issue.getState() == State.NEW) {
+			stateComboBox.setEnabled(false);
+			assigneeComboBox.setEnabled(true);
+		}
+		else if(issue.getState() == State.RESOLVED) {
+			stateComboBox.setModel(stateModel_PL);
+			stateComboBox.setRenderer(new DisabledItemComboBoxRenderer(stateModel_PL));
+			stateComboBox.setEnabled(true);
+			assigneeComboBox.setEnabled(false);
+		}
+		else {
+			stateComboBox.setModel(defaultStateModel);
+			stateComboBox.setRenderer(new DefaultListCellRenderer());
+			stateComboBox.setEnabled(false);
+			assigneeComboBox.setEnabled(false);
+		}
+	}
+	
+	private void updateComboBoxsSelectablility_Dev(Issue issue) {
+		priorityComboBox.setEnabled(false);
+		assigneeComboBox.setEnabled(false);
+		
+		if(issue.getState() == State.ASSIGNED) {
+			stateComboBox.setModel(stateModel_Dev);
+			stateComboBox.setRenderer(new DisabledItemComboBoxRenderer(stateModel_Dev));
+			stateComboBox.setEnabled(true);
+		}
+		else {
+			stateComboBox.setModel(defaultStateModel);
+			stateComboBox.setRenderer(new DefaultListCellRenderer());
+			stateComboBox.setEnabled(false);
+		}
+	}
+	
+	private void updateComboBoxsSelectablility_Tester(Issue issue) {
+		priorityComboBox.setEnabled(false);
+		assigneeComboBox.setEnabled(false);
+		
+		if(issue.getState() == State.FIXED) {
+			stateComboBox.setModel(stateModel_Tester);
+			stateComboBox.setRenderer(new DisabledItemComboBoxRenderer(stateModel_Tester));
+			stateComboBox.setEnabled(true);
+		}
+		else {
+			stateComboBox.setModel(defaultStateModel);
+			stateComboBox.setRenderer(new DefaultListCellRenderer());
+			stateComboBox.setEnabled(false);
+		}
+
+	}
+	 
 	public void updateComments(List<Comment> comments) {
 		commentPanel.updateComments(comments);
 	}
@@ -332,13 +395,10 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 
 	private class DisabledItemComboBoxModel<E> extends DefaultComboBoxModel<E> {
 	    private Set<E> disabledItems = new HashSet<>();
-
-	    public DisabledItemComboBoxModel(E[] items) {
+	    
+	    public DisabledItemComboBoxModel(E[] items, E[] disableds) {
 	        super(items);
-	    }
-
-	    public void setDisabledItem(E item) {
-	        disabledItems.add(item);
+	        for(E e : disableds) disabledItems.add(e);
 	    }
 
 	    public boolean isDisabled(Object value) {

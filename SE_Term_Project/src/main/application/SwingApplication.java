@@ -32,7 +32,7 @@ import main.repository.MysqlProjectRepo;
 import main.view.LogoutableView;
 import main.view.ReturnableView;
 import main.view.SwingAccountCreationView;
-import main.view.SwingMainView;
+import main.view.SwingMainFrame;
 
 public class SwingApplication implements Application{
 	SystemManager systemData;
@@ -61,51 +61,51 @@ public class SwingApplication implements Application{
 	SwingCommentController commentController;
 	
 	public void run() {
-		//View
-		SwingMainView view = new SwingMainView();
-		
-		//Repo
-		systemData = new SystemManager();
-		accountRepo = new MysqlAccountRepo();
-		projectRepo = new MysqlProjectRepo();
-		issueRepo = new MysqlIssueRepo();
-		commentRepo = new MysqlCommentRepo();
-		
-		//Model
-		loginModel = new LoginModel(systemData, accountRepo);
-		accountModel = new AccountModel(systemData, accountRepo);
-		projectListModel = new ProjectListModel(systemData, projectRepo, accountRepo);
-		issueListModel = new IssueListModel(systemData, issueRepo);
-		issueModel = new IssueModel(systemData, issueRepo);
-		CommentModel commentModel = new CommentModel(systemData, commentRepo);
-		
-		//Controller
-		loginController = new SwingLoginController(view.getLoginView(), loginModel);
-		
-		projectListController = new SwingProjectListController(view.getProjectListView(), projectListModel);
-		logoutController_projectList = new SwingLogoutController((LogoutableView)view.getProjectListView(), loginModel);
-		
-		accountCreationController = new SwingAccountCreationController(view.getAccountCreationView(), accountModel);
-		returnController_accountCreation = new SwingReturnController((ReturnableView)view.getAccountCreationView(), accountModel);
-		
-		projectCreationController = new SwingProjectCreationController(view.getProjectCreationView(), accountModel, projectListModel);
-		returnController_projectCreation = new SwingReturnController((ReturnableView)view.getProjectCreationView(), projectListModel);
-		
-		issueListController = new SwingIssueListController(view.getIssueListView(), issueListModel);
-		logoutController_issueList = new SwingLogoutController((LogoutableView)view.getIssueListView(), loginModel);
-		returnController_issueList = new SwingReturnController((ReturnableView)view.getIssueListView(), issueListModel);
-		
-		issueCreationController = new SwingIssueCreationController(view.getIssueCreationView(), issueListModel);
-		returnController_issueList = new SwingReturnController((ReturnableView)view.getIssueCreationView(), issueListModel);
-		
-		issueFilterController = new SwingIssueFilterController(view.getIssueFilterView(), projectListModel, issueListModel);
-		
-		issueDetailController = new SwingIssueDetailController(view.getIssueDetailView(), projectListModel, issueModel);
-		returnController_issueDetail = new SwingReturnController((ReturnableView)view.getIssueDetailView(), issueModel);
-		commentController = new SwingCommentController(view.getIssueDetailView(), commentModel);
-		
 		SwingUtilities.invokeLater(() -> {
-			view.setVisible(true);
+			//View
+			SwingMainFrame mainFrame = new SwingMainFrame();
+			
+			//Repo
+			systemData = new SystemManager();
+			accountRepo = new MysqlAccountRepo();
+			projectRepo = new MysqlProjectRepo();
+			issueRepo = new MysqlIssueRepo();
+			commentRepo = new MysqlCommentRepo();
+			
+			//Model
+			loginModel = new LoginModel(systemData, accountRepo);
+			accountModel = new AccountModel(systemData, accountRepo);
+			projectListModel = new ProjectListModel(systemData, projectRepo, accountRepo);
+			issueListModel = new IssueListModel(systemData, issueRepo);
+			issueModel = new IssueModel(systemData, issueRepo);
+			CommentModel commentModel = new CommentModel(systemData, commentRepo);
+			
+			//Controller
+			loginController = new SwingLoginController(mainFrame.getLoginView(), loginModel);
+			
+			projectListController = new SwingProjectListController(mainFrame.getProjectListView(), projectListModel);
+			logoutController_projectList = new SwingLogoutController((LogoutableView)mainFrame.getProjectListView(), loginModel);
+			
+			accountCreationController = new SwingAccountCreationController(mainFrame.getAccountCreationView(), accountModel);
+			returnController_accountCreation = new SwingReturnController((ReturnableView)mainFrame.getAccountCreationView(), accountModel);
+			
+			projectCreationController = new SwingProjectCreationController(mainFrame.getProjectCreationView(), accountModel, projectListModel);
+			returnController_projectCreation = new SwingReturnController((ReturnableView)mainFrame.getProjectCreationView(), projectListModel);
+			
+			issueListController = new SwingIssueListController(mainFrame.getIssueListView(), issueListModel);
+			logoutController_issueList = new SwingLogoutController((LogoutableView)mainFrame.getIssueListView(), loginModel);
+			returnController_issueList = new SwingReturnController((ReturnableView)mainFrame.getIssueListView(), issueListModel);
+			
+			issueCreationController = new SwingIssueCreationController(mainFrame.getIssueCreationView(), issueListModel);
+			returnController_issueList = new SwingReturnController((ReturnableView)mainFrame.getIssueCreationView(), issueListModel);
+			
+			issueFilterController = new SwingIssueFilterController(mainFrame.getIssueFilterView(), projectListModel, issueListModel);
+			
+			issueDetailController = new SwingIssueDetailController(mainFrame.getIssueDetailView(), projectListModel, issueModel);
+			returnController_issueDetail = new SwingReturnController((ReturnableView)mainFrame.getIssueDetailView(), issueModel);
+			commentController = new SwingCommentController(mainFrame.getIssueDetailView(), commentModel);
+
+			mainFrame.setVisible(true);
         });
 	}
 }

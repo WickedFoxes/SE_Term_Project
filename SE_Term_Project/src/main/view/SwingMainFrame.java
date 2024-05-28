@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -11,7 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class SwingMainView extends JFrame implements Mediator{
+public class SwingMainFrame extends JFrame implements Mediator{
 	private CardLayout cardLayout;
 	private JPanel mainPanel;
 	private String currentViewName;
@@ -26,9 +27,13 @@ public class SwingMainView extends JFrame implements Mediator{
 	private SwingIssueFilterView issueFilterView;
 	private IssueFilterPopup issueFilterPopup;
 	
-	public SwingMainView() {
+	public SwingMainFrame() {
 		super("Issue Handle System");
-		setLocationRelativeTo(null);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = getSize();
+        int x = (int) ((screenSize.getWidth() - frameSize.getWidth()) / 3);
+        int y = (int) ((screenSize.getHeight() - frameSize.getHeight()) / 4);
+        setLocation(x, y);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -124,9 +129,9 @@ public class SwingMainView extends JFrame implements Mediator{
 	
 	private class IssueFilterPopup extends JFrame {
 		private SwingIssueFilterView viewPanel;
-		public IssueFilterPopup(SwingMainView mainView, SwingIssueFilterView view) {
+		public IssueFilterPopup(SwingMainFrame mainFrame, SwingIssueFilterView view) {
 			this.viewPanel = view;
-			setLocationRelativeTo(mainView);
+			setLocationRelativeTo(mainFrame);
 	        setResizable(false);
 	        setSize(viewPanel.getPreferredSize());
 			add(viewPanel);
