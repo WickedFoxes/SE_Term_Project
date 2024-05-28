@@ -49,9 +49,7 @@ public class SwingProjectCreationController extends SwingController {
 		for(User dev : accountModel.getAllAccounts(Authority.DEV)) devs.add((Dev)dev);
 		for(User tester : accountModel.getAllAccounts(Authority.TESTER)) testers.add((Tester)tester);
 		
-		view.updatePLList(pls);
-		view.updateDevList(devs);
-		view.updateTesterList(testers);
+		view.updateList(pls, devs, testers);
 	}
 	
 	private class CreateButtonListener implements ActionListener{

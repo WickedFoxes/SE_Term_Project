@@ -62,17 +62,17 @@ public class SwingIssueFilterView extends SwingView {
         add(applyButton);
 	}
 	
-	public void updateFilterOptionSelection(FilterOption option) {
-		stateComboBox.setSelectedItem(option.getState());
-		assigneeComboBox.setSelectedItem(option.getAssignee());
-		reporterComboBox.setSelectedItem(option.getReporter());
-	}
-	
 	public FilterOption getFilterOption() {
 		State state = (stateComboBox.getSelectedIndex() >= 0)? (State)stateComboBox.getSelectedItem(): null;
 		Tester tester = (reporterComboBox.getSelectedIndex() >= 0)? (Tester)reporterComboBox.getSelectedItem(): null;
 		Dev dev = (assigneeComboBox.getSelectedIndex() >= 0)? (Dev)assigneeComboBox.getSelectedItem(): null;
 		return new FilterOption(state, tester, dev);
+	}
+	
+	public void updateFilterOptionSelection(FilterOption option) {
+		stateComboBox.setSelectedItem(option.getState());
+		assigneeComboBox.setSelectedItem(option.getAssignee());
+		reporterComboBox.setSelectedItem(option.getReporter());
 	}
 	
 	public void updateComboBoxs(List<Dev> devs, List<Tester> testers) {

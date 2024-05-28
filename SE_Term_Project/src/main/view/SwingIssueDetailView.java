@@ -178,10 +178,6 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		return commentPanel.getCommentContent();
 	}
 	
-	public void clearCommentTextField() {
-		commentPanel.clearCommentTextField();
-	}
-	
 	public void updateComboBoxs(List<Dev> devs, List<Tester> testers) {
 		reporterComboBox.removeAllItems();
 		reporterComboBox.addItem(null);
@@ -268,7 +264,6 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 			stateComboBox.setRenderer(new DefaultListCellRenderer());
 			stateComboBox.setEnabled(false);
 		}
-
 	}
 	 
 	public void updateComments(List<Comment> comments) {
@@ -306,7 +301,9 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 	}
 
 	@Override
-	public void refresh() { }
+	public void refresh() {
+		commentPanel.clearCommentTextField();
+	}
 	
 	private class CommentPanel extends JPanel {
 		private JPanel panel;

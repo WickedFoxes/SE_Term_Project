@@ -32,7 +32,7 @@ public class SwingIssueListController extends SwingController {
 			public void update() {
 				if(!view.getAccessableViewNames().contains(view.requestGetCurrentViewName())) return;
 				updateIssueButtons();
-				updateCreateIssueButtonVisibility();
+				updateButtonVisibility();
 			}
 		});
 	}
@@ -52,10 +52,10 @@ public class SwingIssueListController extends SwingController {
 		view.updateIssueButtons(issues, listeners);
 	}
 	
-	private void updateCreateIssueButtonVisibility() {
+	private void updateButtonVisibility() {
 		if(model.getProject() == null) return;
 		boolean isTester = (model.getUser() instanceof Tester);
-		view.updateCreateIssueButtonVisibility(isTester);
+		view.updateButtonVisibility(isTester);
 	}
 	
 	private class CreateIssueButtonListener implements ActionListener{

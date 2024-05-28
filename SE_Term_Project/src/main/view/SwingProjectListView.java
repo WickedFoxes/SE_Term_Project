@@ -95,11 +95,8 @@ public class SwingProjectListView extends SwingView implements LogoutableView {
 		projectPanel.repaint();
 	}
 	
-	public void updateCreateAccountButtonVisible(boolean isVisible) {
+	public void updateButtonVisibilities(boolean isVisible) {
 		createAccountButton.setVisible(isVisible);
-	}
-	
-	public void updateCreateProjectButtonVisible(boolean isVisible) {
 		createProjectButton.setVisible(isVisible);
 	}
 	
@@ -126,7 +123,4 @@ public class SwingProjectListView extends SwingView implements LogoutableView {
 		list.add("AccountCreationView");
 		return list;
 	}
-
-	@Override
-	public void refresh() { }
 }

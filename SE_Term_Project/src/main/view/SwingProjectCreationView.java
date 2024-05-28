@@ -96,19 +96,15 @@ public class SwingProjectCreationView extends SwingView implements ReturnableVie
 		return testerList.getSelectedValuesList();
 	}
 	 
-	public void updatePLList(List<ProjectLeader> pls) {		
+	public void updateList(List<ProjectLeader> pls, List<Dev> devs, List<Tester> testers) {		
 		DefaultListModel<ProjectLeader> plModel = new DefaultListModel<ProjectLeader>();
 		plModel.addAll(pls);
 		plList.setModel(plModel);
-	}
-	
-	public void updateDevList(List<Dev> devs) {
+		
 		DefaultListModel<Dev> devModel = new DefaultListModel<Dev>();
 		devModel.addAll(devs);
 		devList.setModel(devModel);
-	}
-	
-	public void updateTesterList(List<Tester> testers) {
+		
 		DefaultListModel<Tester> testerModel = new DefaultListModel<Tester>();
 		testerModel.addAll(testers);
 		testerList.setModel(testerModel);

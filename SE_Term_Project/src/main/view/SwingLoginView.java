@@ -60,7 +60,7 @@ public class SwingLoginView extends SwingView{
 	}
 
 	@Override
-	public void refresh() {
+	protected void refresh() {
 		idTextField.setText("tester1");
 		pwTextField.setText("tester1");
 	}

@@ -99,7 +99,7 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		issuePanel.repaint();
 	}
 	
-	public void updateCreateIssueButtonVisibility(boolean isVisible) {
+	public void updateButtonVisibility(boolean isVisible) {
 		createIssueButton.setVisible(isVisible);
 	}
 

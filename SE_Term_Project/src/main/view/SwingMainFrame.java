@@ -24,8 +24,7 @@ public class SwingMainFrame extends JFrame implements Mediator{
 	private SwingIssueListView issueListView;
 	private SwingIssueCreationView issueCreationView;
 	private SwingIssueDetailView issueDetailView;
-	private SwingIssueFilterView issueFilterView;
-	private IssueFilterPopup issueFilterPopup;
+	private IssueFilterFrame issueFilterFrame;
 	
 	public SwingMainFrame() {
 		super("Issue Handle System");
@@ -44,8 +43,7 @@ public class SwingMainFrame extends JFrame implements Mediator{
     	issueListView = new SwingIssueListView(this);
     	issueCreationView = new SwingIssueCreationView(this);
     	issueDetailView = new SwingIssueDetailView(this);
-    	issueFilterView = new SwingIssueFilterView(this);
-    	issueFilterPopup = new IssueFilterPopup(this, issueFilterView);
+    	issueFilterFrame = new IssueFilterFrame(this, new SwingIssueFilterView(this));
         
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
@@ -84,7 +82,7 @@ public class SwingMainFrame extends JFrame implements Mediator{
 		else if(viewName == "IssueCreationView") view = issueCreationView;
 		else if(viewName == "IssueDetailView") view = issueDetailView;
 		else if(viewName == "IssueFilterView") {
-			issueFilterPopup.setVisible(true);
+			issueFilterFrame.setVisible(true);
 			return;
 		}
 		else System.out.println("Error: invalid viewName ("+this.getClass().toString()+")");
@@ -124,17 +122,21 @@ public class SwingMainFrame extends JFrame implements Mediator{
 	}
 	
 	public SwingIssueFilterView getIssueFilterView() {
-		return issueFilterView;
+		return issueFilterFrame.getIssueFilterView();
 	}
 	
-	private class IssueFilterPopup extends JFrame {
+	private class IssueFilterFrame extends JFrame {
 		private SwingIssueFilterView viewPanel;
-		public IssueFilterPopup(SwingMainFrame mainFrame, SwingIssueFilterView view) {
+		public IssueFilterFrame(SwingMainFrame mainFrame, SwingIssueFilterView view) {
 			this.viewPanel = view;
 			setLocationRelativeTo(mainFrame);
 	        setResizable(false);
 	        setSize(viewPanel.getPreferredSize());
 			add(viewPanel);
+		}
+		
+		public SwingIssueFilterView getIssueFilterView() {
+			return viewPanel;
 		}
 	}
 }

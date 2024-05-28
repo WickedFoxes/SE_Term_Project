@@ -43,7 +43,7 @@ public class SwingCommentController extends SwingController {
 			User user = model.getUser();
 			model.createComment(new Comment(content, user));
 			model.notifyObservers();
-			view.clearCommentTextField();
+			view.refresh();
 		}
 	}
 }

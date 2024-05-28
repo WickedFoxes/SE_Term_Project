@@ -40,8 +40,7 @@ public class SwingProjectListController extends SwingController {
 	private void updateCreateButtonsVisiblity() {
 		if(model.getUser() == null) return;
 		boolean isAdmin = (model.getUser() instanceof Admin);
-		view.updateCreateAccountButtonVisible(isAdmin);
-		view.updateCreateProjectButtonVisible(isAdmin);
+		view.updateButtonVisibilities(isAdmin);
 	}
 	
 	private void updateProjectButtons() {

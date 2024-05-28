@@ -91,7 +91,7 @@ public class SwingAccountCreationView extends SwingView implements ReturnableVie
 	}
 
 	@Override
-	public void refresh() {
+	protected void refresh() {
 		idTextField.setText("");
 		pwTextField.setText("");
 		authorityComboBox.setSelectedIndex(2);
