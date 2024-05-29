@@ -34,6 +34,14 @@ public class SwingIssueDetailController extends SwingController {
 				saveIssue();
 			}
 		});
+		view.setStateComboBoxListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(issueModel.getUser().getAuthority() == Authority.DEV && view.getState() == State.FIXED) {
+					view.updateFixer((Dev)issueModel.getUser());
+				}
+			}
+		});
 		setObserver();
 	}
 	

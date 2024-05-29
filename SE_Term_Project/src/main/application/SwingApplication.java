@@ -1,5 +1,9 @@
 package main.application;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
 import main.controller.SwingAccountCreationController;
@@ -33,6 +37,7 @@ import main.view.LogoutableView;
 import main.view.ReturnableView;
 import main.view.SwingAccountCreationView;
 import main.view.SwingMainFrame;
+import test.repository.RepoTest;
 
 public class SwingApplication implements Application{
 	SystemManager systemData;
@@ -106,6 +111,20 @@ public class SwingApplication implements Application{
 			commentController = new SwingCommentController(mainFrame.getIssueDetailView(), commentModel);
 
 			mainFrame.setVisible(true);
+			
+			//For Debug
+			RepoTest repoTest = new RepoTest();
+			JButton button = new JButton("initDB");
+			button.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					repoTest.clearDB();
+					repoTest.createDB("create_db.sql");
+					repoTest.initUsers(accountRepo, projectRepo);
+				}				
+			});
+			button.setBounds(390, 180, 80, 20);
+			mainFrame.getLoginView().add(button);
         });
 	}
 }

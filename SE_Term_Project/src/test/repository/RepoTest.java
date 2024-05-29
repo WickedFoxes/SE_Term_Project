@@ -9,7 +9,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import main.domain.Admin;
+import main.domain.Dev;
+import main.domain.Project;
+import main.domain.ProjectLeader;
+import main.domain.Tester;
 import main.domain.User;
+import main.domain.enumeration.Authority;
+import main.repository.AccountRepo;
+import main.repository.ProjectRepo;
 
 public class RepoTest {
 	private String jdbc_name = "org.sqlite.JDBC";
@@ -79,5 +87,81 @@ public class RepoTest {
         } catch(SQLException e){
             System.err.println(e.getMessage());
         }
+	}
+	
+	public void initUsers(AccountRepo repo, ProjectRepo projectRepo) {
+		Admin admin = new Admin("admin", "123");
+		ProjectLeader pl1 = new ProjectLeader("pl1", "123");
+		ProjectLeader pl2 = new ProjectLeader("pl2", "123");
+		Tester tester1 = new Tester("tester1", "123");
+		Tester tester2 = new Tester("tester2", "123");
+		Tester tester3 = new Tester("tester3", "123");
+		Tester tester4 = new Tester("tester4", "123");
+		Tester tester5 = new Tester("tester5", "123");
+		Dev dev1 = new Dev("dev1", "123");
+		Dev dev2 = new Dev("dev2", "123");
+		Dev dev3 = new Dev("dev3", "123");
+		Dev dev4 = new Dev("dev4", "123");
+		Dev dev5 = new Dev("dev5", "123");
+		Dev dev6 = new Dev("dev6", "123");
+		Dev dev7 = new Dev("dev7", "123");
+		Dev dev8 = new Dev("dev8", "123");
+		Dev dev9 = new Dev("dev9", "123");
+		Dev dev10 = new Dev("dev10", "123");
+		
+		admin.setId(0);
+		pl1.setId(1);
+		pl2.setId(2);
+		tester1.setId(3);
+		tester2.setId(4);
+		tester3.setId(5);
+		tester4.setId(6);
+		tester5.setId(7);
+		dev1.setId(8);
+		dev2.setId(9);
+		dev3.setId(10);
+		dev4.setId(11);
+		dev5.setId(12);
+		dev6.setId(13);
+		dev7.setId(14);
+		dev8.setId(15);
+		dev9.setId(16);
+		dev10.setId(17);
+		
+		repo.add(admin);
+		repo.add(pl1);
+		repo.add(pl2);
+		repo.add(tester1);
+		repo.add(tester2);
+		repo.add(tester3);
+		repo.add(tester4);
+		repo.add(tester5);
+		repo.add(dev1);
+		repo.add(dev2);
+		repo.add(dev3);
+		repo.add(dev4);
+		repo.add(dev5);
+		repo.add(dev6);
+		repo.add(dev7);
+		repo.add(dev8);
+		repo.add(dev9);
+		repo.add(dev10);
+		
+		Project project1 = new Project("proejct1");
+		
+		projectRepo.add(project1);
+
+		projectRepo.add(project1, repo.findAll(Authority.PL).get(0));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(0));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(1));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(2));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(3));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(4));
+		projectRepo.add(project1, repo.findAll(Authority.DEV).get(5));
+		projectRepo.add(project1, repo.findAll(Authority.TESTER).get(0));
+		projectRepo.add(project1, repo.findAll(Authority.TESTER).get(1));
+		projectRepo.add(project1, repo.findAll(Authority.TESTER).get(2));
+		
+		System.out.println(projectRepo.findAll(pl1).size());
 	}
 }
