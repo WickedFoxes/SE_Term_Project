@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import main.domain.Admin;
 import main.domain.FilterOption;
 import main.domain.Issue;
@@ -33,6 +35,12 @@ public class SwingIssueListController extends SwingController {
 			public void actionPerformed(ActionEvent e) {
 				view.requestChangeView("IssueFilterView");
 				model.notifyObservers();
+			}
+		});
+		view.setReportListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				reportIssueTrends();
 			}
 		});
 		setObserver();
@@ -67,6 +75,15 @@ public class SwingIssueListController extends SwingController {
 		if(model.getProject() == null) return;
 		boolean isTester = (model.getUser() instanceof Tester);
 		view.updateButtonVisibility(isTester);
+	}
+	
+	private void reportIssueTrends() {
+		List<Issue> createdIssues = model.getIssuesCreatedWithinLastWeek();
+		List<Issue> resolvedIssues = model.getIssuesResolvedWithinLastWeek();
+		String content = "<HTML><body><center>일주일동안..."+
+				"<br>생성된 이슈는 "+createdIssues.size() +"개입니다."+
+				"<br>해결된 이슈는 "+resolvedIssues.size() +"개입니다.</center></body></HTML>";
+		view.showMessagePopup("Issue Report", content, JOptionPane.INFORMATION_MESSAGE);
 	}
 	
 	private class IssueButtonListener implements ActionListener{

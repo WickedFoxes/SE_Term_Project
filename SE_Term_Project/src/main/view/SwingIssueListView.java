@@ -24,7 +24,7 @@ import main.domain.enumeration.Priority;
 import main.domain.enumeration.State;
 
 public class SwingIssueListView extends SwingView implements ReturnableView, LogoutableView {
-	private JButton logoutButton, createIssueButton, filterButton, returnButton;
+	private JButton logoutButton, createIssueButton, filterButton, returnButton, reportButton;
 	private JLabel infoLabel;
 	private JScrollPane scrollPane;
 	private JPanel issuePanel;
@@ -39,6 +39,7 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		createIssueButton = new JButton("<HTML><body><center>Create<br>Issue</center></body></HTML>");
 		filterButton = new JButton("Filter");
 		returnButton = new JButton("Return");
+		reportButton = new JButton("Report");
 		
 		grid = new GridBagLayout();
 		contstraints = new GridBagConstraints();
@@ -56,15 +57,17 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 		scrollPane.setViewportView(issuePanel);
 		
 		logoutButton.setBounds(550, 30, 100, 40);
-		createIssueButton.setBounds(310, 30, 100, 40);
-		filterButton.setBounds(430, 30, 100, 40);
+		createIssueButton.setBounds(330, 30, 100, 40);
+		filterButton.setBounds(440, 30, 100, 40);
 		returnButton.setBounds(50, 30, 100, 40);
+		reportButton.setBounds(160, 30, 100, 40);
 		scrollPane.setBounds(80, 90, 540, 430);
 		
 		add(logoutButton);
 		add(createIssueButton);
 		add(filterButton);
 		add(returnButton);
+		add(reportButton);
 		add(scrollPane);
 	}
 	
@@ -110,6 +113,11 @@ public class SwingIssueListView extends SwingView implements ReturnableView, Log
 	public void setFilterListener(ActionListener listener) {
 		filterButton.addActionListener(listener);
 	}
+	
+	public void setReportListener(ActionListener listener) {
+		reportButton.addActionListener(listener);
+	}
+
 	
 	@Override
 	public void setLogoutListener(ActionListener listener) {

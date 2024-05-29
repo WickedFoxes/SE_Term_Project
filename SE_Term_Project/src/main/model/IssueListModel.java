@@ -57,7 +57,7 @@ public class IssueListModel extends Model {
         for (Issue issue : issues) {
             if (issue.getReportedDate().after(oneWeekAgo)) recentIssues.add(issue);
         }
-		return issues;
+		return recentIssues;
 	}
 	
 	public List<Issue> getIssuesResolvedWithinLastWeek() {
@@ -71,7 +71,7 @@ public class IssueListModel extends Model {
         	if(issue.getResolvedDate() == null) continue;
             if (issue.getResolvedDate().after(oneWeekAgo)) recentIssues.add(issue);
         }
-		return issues;
+		return recentIssues;
 	}
 	
 	public void setFilterOption(FilterOption filterOption) {
