@@ -21,4 +21,5 @@ public interface IssueRepo {
 	void setState(Issue issue, State state);
 	void setPriority(Issue issue, Priority priority);
 	void setResolvedDate(Issue issue);
+	List<User> sortByRecommendScore(List<User> users);
 }

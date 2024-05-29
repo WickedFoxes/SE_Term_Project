@@ -10,16 +10,20 @@ import main.domain.Issue;
 import main.domain.Project;
 import main.domain.Tester;
 import main.domain.User;
+import main.domain.enumeration.Authority;
 import main.domain.enumeration.Priority;
 import main.repository.IssueRepo;
+import main.repository.ProjectRepo;
 
 public class IssueListModel extends Model {
-	private IssueRepo repo;
+	private IssueRepo issue_repo;
+	private ProjectRepo project_repo;
 	private FilterOption filterOption;
 		
-	public IssueListModel(SystemManager s, IssueRepo r) {
+	public IssueListModel(SystemManager s, IssueRepo r, ProjectRepo p) {
 		super(s);
-		this.repo = r;
+		this.issue_repo = r;
+		this.project_repo = p;
 		this.filterOption = new FilterOption(null, null, null);
 	}
 
@@ -29,26 +33,26 @@ public class IssueListModel extends Model {
 		
 		Project project = getProject();
 		Issue issue = new Issue(title, description, priority, (Tester)user);
-		repo.add(project, issue);
+		issue_repo.add(project, issue);
 		return true;
 	}
 	
 	public List<Issue> getIssueList(){
 		Project project = getProject();
 		User user = getUser();
-		List<Issue> issueList = repo.findAll(project, user);
+		List<Issue> issueList = issue_repo.findAll(project, user);
 		return issueList;
 	}
 	
 	public List<Issue> getIssueList(FilterOption option){
 		Project project = getProject();
 		User user = getUser();
-		List<Issue> issueList = repo.findAll(project, user, option);
+		List<Issue> issueList = issue_repo.findAll(project, user, option);
 		return issueList;
 	}
 	
 	public List<Issue> getIssuesCreatedWithinLastWeek() {
-		List<Issue> issues = repo.findAll(getProject());
+		List<Issue> issues = issue_repo.findAll(getProject());
 		List<Issue> recentIssues = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -7);
@@ -61,7 +65,7 @@ public class IssueListModel extends Model {
 	}
 	
 	public List<Issue> getIssuesResolvedWithinLastWeek() {
-		List<Issue> issues = repo.findAll(getProject());
+		List<Issue> issues = issue_repo.findAll(getProject());
 		List<Issue> recentIssues = new ArrayList<>();
 		Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_YEAR, -7);
@@ -80,5 +84,10 @@ public class IssueListModel extends Model {
 	
 	public FilterOption getFilterOption() {
 		return this.filterOption;
+	}
+	
+	public List<User> getRecommedAssignee(){
+		List<User> devs = project_repo.findAll(getProject(), Authority.DEV);
+		return issue_repo.sortByRecommendScore(devs);
 	}
 }

@@ -2,6 +2,7 @@ package main.repository;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import main.domain.Admin;
@@ -482,5 +483,105 @@ public class MysqlIssueRepo implements IssueRepo{
         } catch(SQLException e){
             System.err.println(e.getMessage());
         }
+	}
+
+	@Override
+	public List<User> sortByRecommendScore(List<User> users) {
+        Connection connection = null;
+        PreparedStatement pstm = null;
+        
+        String sql = "SELECT COUNT(id) FROM Issue WHERE assignee = ? AND Issue.state = ?;";
+        List<User> temp = new ArrayList<>();
+        int[][] recommendScore = new int[users.size()][2];
+        for(int i=0; i<recommendScore.length; i++)
+        	recommendScore[i][0] = i; 
+        
+        try {
+			Class.forName(jdbc_name);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+        
+        int index = 0;
+        for(User user : users) {
+            // closed
+            try {
+                connection = DriverManager.getConnection(jdbc_connect);
+
+                pstm = connection.prepareStatement(sql);
+                pstm.setInt(1, user.getId());
+                pstm.setString(2, State.CLOSED.name());
+                
+                ResultSet rs = pstm.executeQuery();
+                if(rs.next()) {
+                	recommendScore[index][1] += 2*rs.getInt(1);
+                }
+                connection.close(); 
+            } catch(SQLException e){
+                System.err.println(e.getMessage());
+            }
+            
+            // resolved
+            try {
+                connection = DriverManager.getConnection(jdbc_connect);
+
+                pstm = connection.prepareStatement(sql);
+                pstm.setInt(1, user.getId());
+                pstm.setString(2, State.RESOLVED.name());
+                
+                ResultSet rs = pstm.executeQuery();
+                if(rs.next()) {
+                	recommendScore[index][1] += rs.getInt(1);
+                }
+                connection.close(); 
+            } catch(SQLException e){
+                System.err.println(e.getMessage());
+            }
+            
+            // fixed
+            try {
+                connection = DriverManager.getConnection(jdbc_connect);
+
+                pstm = connection.prepareStatement(sql);
+                pstm.setInt(1, user.getId());
+                pstm.setString(2, State.FIXED.name());
+                
+                ResultSet rs = pstm.executeQuery();
+                if(rs.next()) {
+                	recommendScore[index][1] -= rs.getInt(1);
+                }
+                connection.close(); 
+            } catch(SQLException e){
+                System.err.println(e.getMessage());
+            }
+
+            // assigned
+            try {
+                connection = DriverManager.getConnection(jdbc_connect);
+
+                pstm = connection.prepareStatement(sql);
+                pstm.setInt(1, user.getId());
+                pstm.setString(2, State.ASSIGNED.name());
+                
+                ResultSet rs = pstm.executeQuery();
+                if(rs.next()) {
+                	recommendScore[index][1] -= 2*rs.getInt(1);
+                }
+                connection.close(); 
+            } catch(SQLException e){
+                System.err.println(e.getMessage());
+            }
+        	index += 1;
+        }
+        
+        Arrays.sort(recommendScore, (arr1, arr2) -> {
+        	return arr2[1] - arr1[1]; 
+        });
+        
+        for(int[] score : recommendScore) {
+        	temp.add(users.get(score[0]));
+        }
+        
+		return temp;
 	}
 }

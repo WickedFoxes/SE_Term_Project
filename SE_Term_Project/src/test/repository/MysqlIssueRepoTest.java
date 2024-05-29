@@ -144,4 +144,18 @@ class MysqlIssueRepoTest{
     	List<Issue> pl_issue_list = issue_repo.findAll(project1, pl1, option);
     	Assertions.assertEquals(pl_issue_list.size(), 1);
 	}
+	
+	@Test
+	void sortByRecommend() {
+		project_repo.add(project1, dev2);
+		project_repo.add(project1, dev3);
+		
+		issue_repo.setAssignee(issue1, dev1);
+		issue_repo.setState(issue1, State.ASSIGNED);
+		
+		List<User> users = project_repo.findAll(project1, Authority.DEV);
+		List<User> sorted_users = issue_repo.sortByRecommendScore(users);
+		
+		Assertions.assertEquals(sorted_users.get(sorted_users.size()-1).getAccountID(), "dev1");
+	}
 }
