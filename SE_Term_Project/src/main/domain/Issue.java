@@ -10,6 +10,7 @@ public class Issue {
 	private String title;
 	private String description;
 	private Timestamp reportedDate;
+	private Timestamp resolvedDate;
 	private Priority priority;
 	private State state;
 	private Tester reporter;
@@ -24,11 +25,12 @@ public class Issue {
 		this.state = State.NEW;
 	}
 	
-	public Issue(int id, String title, String description, Timestamp reportedDate, Priority priority, State state, Tester reporter, Dev assignee, Dev fixer) {
+	public Issue(int id, String title, String description, Timestamp reportedDate, Timestamp resolvedDate, Priority priority, State state, Tester reporter, Dev assignee, Dev fixer) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.reportedDate = reportedDate;
+		this.resolvedDate = resolvedDate;
 		this.priority = priority;
 		this.state = state;
 		this.reporter = reporter;
@@ -38,48 +40,71 @@ public class Issue {
 	public String getTitle() {
 		return title;
 	}
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
 	public String getDescription() {
 		return description;
 	}
+	
 	public void setDescription(String description) {
 		this.description = description;
 	}
+	
 	public Timestamp getReportedDate() {
 		return reportedDate;
 	}
+	
+	public Timestamp getResolvedDate() {
+		return resolvedDate;
+	}
+	
+	public void setReportedDate(Timestamp resolvedDate) {
+		this.resolvedDate = resolvedDate;
+	}
+	
 	public Priority getPriority() {
 		return priority;
 	}
+	
 	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}
+	
 	public State getState() {
 		return state;
 	}
+	
 	public void setState(State state) {
 		this.state = state;
 	}
+	
 	public Tester getReporter() {
 		return reporter;
 	}
+	
 	public Dev getAssignee() {
 		return assignee;
 	}
+	
 	public void setAssignee(Dev assignee) {
 		this.assignee = assignee;
 	}
+	
 	public Dev getFixer() {
 		return fixer;
 	}
+	
 	public void setFixer(Dev fixer) {
 		this.fixer = fixer;
 	}
+	
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}

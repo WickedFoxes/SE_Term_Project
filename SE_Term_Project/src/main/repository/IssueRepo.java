@@ -1,5 +1,6 @@
 package main.repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import main.domain.Dev;
@@ -14,8 +15,10 @@ public interface IssueRepo {
 	void add(Project project, Issue issue);
 	void setAssignee(Issue issue, Dev assignee);
 	void setFixer(Issue issue, Dev fixer);
+	List<Issue> findAll(Project project);
 	List<Issue> findAll(Project project, User user);
 	List<Issue> findAll(Project project, User user, FilterOption option);
 	void setState(Issue issue, State state);
 	void setPriority(Issue issue, Priority priority);
+	void setResolvedDate(Issue issue);
 }

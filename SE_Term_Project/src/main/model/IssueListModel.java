@@ -1,6 +1,8 @@
 package main.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import main.domain.FilterOption;
@@ -43,6 +45,33 @@ public class IssueListModel extends Model {
 		User user = getUser();
 		List<Issue> issueList = repo.findAll(project, user, option);
 		return issueList;
+	}
+	
+	public List<Issue> getIssuesCreatedWithinLastWeek() {
+		List<Issue> issues = repo.findAll(getProject());
+		List<Issue> recentIssues = new ArrayList<>();
+		Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Timestamp oneWeekAgo = new Timestamp(calendar.getTimeInMillis());
+
+        for (Issue issue : issues) {
+            if (issue.getReportedDate().after(oneWeekAgo)) recentIssues.add(issue);
+        }
+		return issues;
+	}
+	
+	public List<Issue> getIssuesResolvedWithinLastWeek() {
+		List<Issue> issues = repo.findAll(getProject());
+		List<Issue> recentIssues = new ArrayList<>();
+		Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DAY_OF_YEAR, -7);
+        Timestamp oneWeekAgo = new Timestamp(calendar.getTimeInMillis());
+
+        for (Issue issue : issues) {
+        	if(issue.getResolvedDate() == null) continue;
+            if (issue.getResolvedDate().after(oneWeekAgo)) recentIssues.add(issue);
+        }
+		return issues;
 	}
 	
 	public void setFilterOption(FilterOption filterOption) {

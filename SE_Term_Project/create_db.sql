@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS "Issue" (
 	"title" VARCHAR(200) NOT NULL DEFAULT '',
 	"description" TEXT NOT NULL DEFAULT '',
 	"reportedDate" DATETIME NOT NULL DEFAULT '',
+	"resolvedDate" DATETIME DEFAULT '',
 	"priority" VARCHAR(20) NOT NULL DEFAULT '',
 	"state" VARCHAR(20) NOT NULL DEFAULT '',
 	"project_id" INTEGER NULL DEFAULT NULL,
