@@ -187,6 +187,8 @@
 				        <option th:each="dev : ${devs}" th:text="${dev.accountID}" 
 				        value="" th:attrappend="value=${dev.accountID}"></option>
 				    </select>
+				    <strong>recommend : </strong>
+				    <span th:each="rec : ${recommends}" th:text="${rec.accountID} + ' '"></span>
 				</p>
 				<p th:if="${authority != 'PL' && issue.assignee != null}">
 					<strong>Assignee:</strong>

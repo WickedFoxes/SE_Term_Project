@@ -89,6 +89,16 @@
         table tr:hover {
             background-color: #f1f1f1;
         }
+        .statistics {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .statistics h3 {
+            margin-top: 0;
+        }
     </style>
         <script>
         function toggleFilterForm() {
@@ -106,6 +116,11 @@
         <a href="/logout">Logout</a>
     </div>
     <div class="container">
+        <div class="statistics">
+            <h3>Statistics for the Last Week</h3>
+            <p>Issues created: <span th:text="${week_new_issue}">0</span></p>
+            <p>Issues resolved: <span th:text="${week_resolve_issue}">0</span></p>
+        </div>
         <div class="actions">
             <button th:if="${authority == 'TESTER'}" 
             onclick="location.href='/issueList/"

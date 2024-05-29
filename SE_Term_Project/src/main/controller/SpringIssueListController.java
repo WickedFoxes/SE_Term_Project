@@ -51,6 +51,8 @@ public class SpringIssueListController {
 		input.addAttribute("issues", issuelist_model.getIssueList());
 		input.addAttribute("authority", projectlist_model.getUser().getAuthority().name());
 		input.addAttribute("project_id", project_id);
+		input.addAttribute("week_new_issue", issuelist_model.getIssuesCreatedWithinLastWeek().size());
+		input.addAttribute("week_resolve_issue", issuelist_model.getIssuesResolvedWithinLastWeek().size());
 		
 		return "issueList";
 	}

@@ -57,6 +57,9 @@ public class SpringIssueController {
 			states.add(st.name());
 		}
 		
+		List<User> recommend = issue_model.getRecommedAssignee();
+		int recommend_size = recommend.size() > 3 ? 3 : recommend.size();
+		
 		input.addAttribute("project_id", issue_model.getProject().getId());
 		input.addAttribute("priorities", priorities);
 		input.addAttribute("states", states);
@@ -64,6 +67,7 @@ public class SpringIssueController {
 		input.addAttribute("issue", issue_model.getIssue());
 		input.addAttribute("comments", comment_model.getCommentList());
 		input.addAttribute("devs", projectlist_model.getAllAccountsInProject(Authority.DEV));
+		input.addAttribute("recommends", recommend.subList(0, recommend_size));
 		
 		return "issue";
 	}
