@@ -42,6 +42,18 @@ public class SwingIssueDetailController extends SwingController {
 				}
 			}
 		});
+		view.setRecommendListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<User> recommendation = issueModel.getRecommedAssignee();
+				String content = "<HTML><body><center>";
+				for(int i = 0; (i < recommendation.size()) && i < 3; i++) {
+					content = content + (i + 1) + "번째 추천: " +recommendation.get(i).getAccountID() + " <br>";
+				}
+				content = content + "</center></body></HTML>";
+				view.showMessagePopup("Assignee Recommendation", content, JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		setObserver();
 	}
 	
@@ -51,6 +63,7 @@ public class SwingIssueDetailController extends SwingController {
 				if(!view.getAccessableViewNames().contains(view.requestGetCurrentViewName())) return;
 				updateComboBoxs();
 				updateIssueData();
+				updateButtonVisibility();
 			}
 		});
 	}
@@ -69,6 +82,12 @@ public class SwingIssueDetailController extends SwingController {
 	private void updateIssueData() {
 		if(issueModel.getIssue() == null) return;
 		view.updateIssueData(issueModel.getIssue(), issueModel.getUser().getAuthority());
+	}
+	
+	private void updateButtonVisibility() {
+		if(issueModel.getUser() == null) return;
+		boolean isPL = issueModel.getUser().getAuthority() == Authority.PL;
+		view.updateRecommendButtonVisibility(isPL);
 	}
 	
 	private void saveIssue() {

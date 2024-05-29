@@ -44,7 +44,7 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
     private JTextField titleTextField, descriptionTextField, reportedDateTextField;
     private JComboBox<Tester> reporterComboBox;
     private JComboBox<Dev> assigneeComboBox, fixerComboBox;
-    private JButton returnButton, saveButton;
+    private JButton returnButton, saveButton, recommendButton;
     private CommentPanel commentPanel;
     
     private State[] states = new State[] { State.NEW, State.ASSIGNED, State.FIXED, State.RESOLVED, State.CLOSED, State.REOPENED };
@@ -117,6 +117,7 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		commentPanel = new CommentPanel();
 		returnButton = new JButton("Return");
 		saveButton = new JButton("Save");
+		recommendButton = new JButton("Rcmmnd");
 		
 		titleTextField.setBounds(180, 30, 320, 40);
 		stateLabel.setBounds(180, 70, 50, 40);
@@ -135,6 +136,7 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		
 		assigneeLabel.setBounds(180, 380, 100, 40);
 		assigneeComboBox.setBounds(180, 410, 320, 40);
+		recommendButton.setBounds(510, 410, 90, 40);
 		
 		fixerLabel.setBounds(180, 450, 100, 40);
 		fixerComboBox.setBounds(180, 480, 320, 40);
@@ -163,6 +165,7 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		add(commentPanel);
 		add(returnButton);
 		add(saveButton);
+		add(recommendButton);
 	}
 	
 	public Priority getPriority() {
@@ -277,12 +280,20 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		commentPanel.updateComments(comments);
 	}
 	
+	public void updateRecommendButtonVisibility(boolean isVisible) {
+		recommendButton.setVisible(isVisible);
+	}
+	
 	public void setWriteListener(ActionListener listener) {
 		commentPanel.setWriteListener(listener);
-	}
+	}	
 	
 	public void setStateComboBoxListener(ActionListener listener) {
 		stateComboBox.addActionListener(listener);
+	}
+	
+	public void setRecommendListener(ActionListener listener) {
+		recommendButton.addActionListener(listener);
 	}
 
 	public void setSaveListener(ActionListener listener) {
