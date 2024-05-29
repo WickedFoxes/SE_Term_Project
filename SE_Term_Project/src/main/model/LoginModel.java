@@ -14,6 +14,7 @@ public class LoginModel extends Model {
 	public boolean tryLogin(String id, String pw) {
 		if(!repo.contains(id)) return false;
 		User user = repo.find(id);
+		if(!user.getPassword().equals(pw)) return false;
 		setUser(user);
 		setProject(null);
 		setIssue(null);
