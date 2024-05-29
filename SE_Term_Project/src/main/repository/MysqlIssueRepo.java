@@ -73,8 +73,8 @@ public class MysqlIssueRepo implements IssueRepo{
 	public void add(Project project, Issue issue) {
         Connection connection = null;
         PreparedStatement pstm = null;
-        String sql = "insert into Issue (\"title\", \"description\", \"priority\", \"state\", \"reporter\", \"assignee\", \"fixer\", \"project_id\", \"reportedDate\")"
-        		+ "values (?, ?, ?, ?, ?, ?, ?, ?, datetime(\"now\")) ";
+        String sql = "insert into Issue (\"title\", \"description\", \"priority\", \"state\", \"reporter\", \"assignee\", \"fixer\", \"project_id\", \"reportedDate\", \"resolvedDate\")"
+        		+ "values (?, ?, ?, ?, ?, ?, ?, ?, datetime(\"now\"), ?) ";
 
         try {
 			Class.forName(jdbc_name);
@@ -107,6 +107,11 @@ public class MysqlIssueRepo implements IssueRepo{
             
             pstm.setInt(8, project.getId());
             
+            if(issue.getResolvedDate() == null)
+            	pstm.setNull(9, Types.TIMESTAMP);
+            else
+            	pstm.setTimestamp(9, issue.getResolvedDate());
+            
             int res = pstm.executeUpdate();
             if(res > 0 ) {
                 System.out.println("DB입력 성공");
@@ -118,6 +123,59 @@ public class MysqlIssueRepo implements IssueRepo{
         } catch(SQLException e){
             System.err.println(e.getMessage());
         }
+	}
+	
+	@Override
+	public List<Issue> findAll(Project project) {
+		Connection connection = null;
+        PreparedStatement pstm = null;
+        List<Issue> issues = new ArrayList<>();
+        
+        String sql = "select * from Issue where project_id=?";
+        
+        try {
+			Class.forName(jdbc_name);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+        try {
+            connection = DriverManager.getConnection(jdbc_connect);
+
+            pstm = connection.prepareStatement(sql);
+            pstm.setInt(1, project.getId());
+            
+            ResultSet rs = pstm.executeQuery();
+            int id;
+            String title, description;
+            Priority priority;
+            State state;
+            Timestamp reportedDate, resolvedDate;
+            Tester reporter;
+            Dev assignee, fixer;
+            Issue temp;
+            
+            while(rs.next()) {
+            	id = rs.getInt(1);
+            	title = rs.getString(2);
+            	description = rs.getString(3);
+            	reportedDate = rs.getTimestamp(4);
+            	resolvedDate = rs.getTimestamp(5);
+            	priority = Priority.valueOf(rs.getString(6));
+            	state = State.valueOf(rs.getString(7));
+            	reporter = (Tester)getUser(rs.getInt(9));
+            	assignee = (Dev)getUser(rs.getInt(10));
+            	fixer = (Dev)getUser(rs.getInt(11));
+            	
+            	temp = new Issue(id, title, description, reportedDate, resolvedDate,
+            			priority, state, reporter, assignee, fixer);
+            	issues.add(temp);
+            }
+            
+            connection.close(); 
+        } catch(SQLException e){
+            System.err.println(e.getMessage());
+        }
+		return issues;
 	}
 
 	@Override
@@ -146,7 +204,7 @@ public class MysqlIssueRepo implements IssueRepo{
             String title, description;
             Priority priority;
             State state;
-            Timestamp reportedDate;
+            Timestamp reportedDate, resolvedDate;
             Tester reporter;
             Dev assignee, fixer;
             Issue temp;
@@ -156,13 +214,14 @@ public class MysqlIssueRepo implements IssueRepo{
             	title = rs.getString(2);
             	description = rs.getString(3);
             	reportedDate = rs.getTimestamp(4);
-            	priority = Priority.valueOf(rs.getString(5));
-            	state = State.valueOf(rs.getString(6));
-            	reporter = (Tester)getUser(rs.getInt(8));
-            	assignee = (Dev)getUser(rs.getInt(9));
-            	fixer = (Dev)getUser(rs.getInt(10));
+            	resolvedDate = rs.getTimestamp(5);
+            	priority = Priority.valueOf(rs.getString(6));
+            	state = State.valueOf(rs.getString(7));
+            	reporter = (Tester)getUser(rs.getInt(9));
+            	assignee = (Dev)getUser(rs.getInt(10));
+            	fixer = (Dev)getUser(rs.getInt(11));
             	
-            	temp = new Issue(id, title, description, reportedDate, 
+            	temp = new Issue(id, title, description, reportedDate, resolvedDate,
             			priority, state, reporter, assignee, fixer);
             	
             	// user authority check
@@ -216,22 +275,24 @@ public class MysqlIssueRepo implements IssueRepo{
             String title, description;
             Priority priority;
             State state;
-            Timestamp reportedDate;
+            Timestamp reportedDate, resolvedDate;
             Tester reporter;
             Dev assignee, fixer;
+            Issue temp;
             
             while(rs.next()) {
             	id = rs.getInt(1);
             	title = rs.getString(2);
             	description = rs.getString(3);
             	reportedDate = rs.getTimestamp(4);
-            	priority = Priority.valueOf(rs.getString(5));
-            	state = State.valueOf(rs.getString(6));
-            	reporter = (Tester)getUser(rs.getInt(8));
-            	assignee = (Dev)getUser(rs.getInt(9));
-            	fixer = (Dev)getUser(rs.getInt(10));
-            			 
-            	Issue temp = new Issue(id, title, description, reportedDate, 
+            	resolvedDate = rs.getTimestamp(5);
+            	priority = Priority.valueOf(rs.getString(6));
+            	state = State.valueOf(rs.getString(7));
+            	reporter = (Tester)getUser(rs.getInt(9));
+            	assignee = (Dev)getUser(rs.getInt(10));
+            	fixer = (Dev)getUser(rs.getInt(11));
+            	
+            	temp = new Issue(id, title, description, reportedDate, resolvedDate,
             			priority, state, reporter, assignee, fixer);
             	
             	// user authority check
@@ -379,6 +440,36 @@ public class MysqlIssueRepo implements IssueRepo{
             pstm = connection.prepareStatement(sql);
             pstm.setString(1, priority.name().toString());
             pstm.setInt(2, issue.getId());
+            
+            int res = pstm.executeUpdate();
+            if(res > 0 ) {
+                System.out.println("DB입력 성공");
+            }else {
+                System.out.println("DB입력 실패");
+            }
+
+            connection.close(); 
+        } catch(SQLException e){
+            System.err.println(e.getMessage());
+        }
+	}
+
+	@Override
+	public void setResolvedDate(Issue issue) {
+        Connection connection = null;
+        PreparedStatement pstm = null;
+        String sql = "UPDATE Issue SET resolvedDate=datetime(\"now\") WHERE id=?";
+        
+        try {
+			Class.forName(jdbc_name);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+        try {
+            connection = DriverManager.getConnection(jdbc_connect);
+
+            pstm = connection.prepareStatement(sql);
+            pstm.setInt(1, issue.getId());
             
             int res = pstm.executeUpdate();
             if(res > 0 ) {

@@ -28,8 +28,10 @@ public class IssueModel extends Model {
 			}
 		}
 		if(getUser().getAuthority() == Authority.TESTER) {
-			if(issue.getState() == State.FIXED && state == State.RESOLVED) 
+			if(issue.getState() == State.FIXED && state == State.RESOLVED) {
 				repo.setState(issue, state);
+				repo.setResolvedDate(issue);
+			}
 		}
 	}
 	
