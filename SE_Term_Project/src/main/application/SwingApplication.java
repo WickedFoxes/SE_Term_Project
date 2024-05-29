@@ -81,8 +81,8 @@ public class SwingApplication implements Application{
 			loginModel = new LoginModel(systemData, accountRepo);
 			accountModel = new AccountModel(systemData, accountRepo);
 			projectListModel = new ProjectListModel(systemData, projectRepo, accountRepo);
-			issueListModel = new IssueListModel(systemData, issueRepo, projectRepo);
-			issueModel = new IssueModel(systemData, issueRepo);
+			issueListModel = new IssueListModel(systemData, issueRepo);
+			issueModel = new IssueModel(systemData, issueRepo, projectRepo);
 			CommentModel commentModel = new CommentModel(systemData, commentRepo);
 			
 			//Controller

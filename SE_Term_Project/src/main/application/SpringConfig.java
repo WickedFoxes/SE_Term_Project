@@ -49,12 +49,12 @@ public class SpringConfig {
 	
 	@Bean
 	public IssueListModel issueListModel() {
-		return new IssueListModel(sysmanager(), issueRepo(), projectRepo());
+		return new IssueListModel(sysmanager(), issueRepo());
 	}
 
 	@Bean
 	public IssueModel issueModel() {
-		return new IssueModel(sysmanager(), issueRepo());
+		return new IssueModel(sysmanager(), issueRepo(), projectRepo());
 	}
 	
 	@Bean

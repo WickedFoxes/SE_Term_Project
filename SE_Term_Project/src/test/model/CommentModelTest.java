@@ -48,8 +48,8 @@ class CommentModelTest {
 	LoginModel loginModel = new LoginModel(manager, accountRepo);
 	AccountModel accountModel = new AccountModel(manager, accountRepo);
 	ProjectListModel projectListModel = new ProjectListModel(manager, projectRepo, accountRepo);
-	IssueListModel issueListModel = new IssueListModel(manager, issueRepo, projectRepo); 
-	IssueModel issueModel = new IssueModel(manager, issueRepo);
+	IssueListModel issueListModel = new IssueListModel(manager, issueRepo); 
+	IssueModel issueModel = new IssueModel(manager, issueRepo, projectRepo);
 	CommentModel commentModel = new CommentModel(manager, commentRepo);
 	
 	Admin admin = new Admin("admin", "admin");

@@ -43,8 +43,8 @@ public class IssueModelTest {
 	LoginModel loginModel = new LoginModel(manager, accountRepo);
 	AccountModel accountModel = new AccountModel(manager, accountRepo);
 	ProjectListModel projectListModel = new ProjectListModel(manager, projectRepo, accountRepo);
-	IssueListModel issueListModel = new IssueListModel(manager, issueRepo, projectRepo); 
-	IssueModel issueModel = new IssueModel(manager, issueRepo);
+	IssueListModel issueListModel = new IssueListModel(manager, issueRepo); 
+	IssueModel issueModel = new IssueModel(manager, issueRepo, projectRepo);
 	
 	Admin admin = new Admin("admin", "admin");
 	ProjectLeader pl1 = new ProjectLeader("pl1", "pl1");
@@ -91,6 +91,7 @@ public class IssueModelTest {
     	List<Dev> select_dev = new ArrayList<Dev>();
     	select_dev.add((Dev)devs.get(0));
     	select_dev.add((Dev)devs.get(1));
+    	select_dev.add((Dev)devs.get(2));
     	List<Tester> select_tester = new ArrayList<Tester>();
     	select_tester.add((Tester)testers.get(0));
     	select_tester.add((Tester)testers.get(1));
@@ -245,5 +246,60 @@ public class IssueModelTest {
     	issue_contents = issueListModel.getIssueList();
     	
     	Assertions.assertEquals(State.CLOSED, issue_contents.get(0).getState());
+    }
+    
+    @Test
+    void getRecommendAssignee() {
+    	// account
+    	List<User> devs = accountModel.getAllAccounts(Authority.DEV);
+    	
+    	// pl1 행동
+    	loginModel.tryLogin("pl1", "pl1");
+    	List<Project> project_contents = projectListModel.getProjectList();
+    	issueModel.setProject(project_contents.get(0));
+    	List<Issue> issue_contents = issueListModel.getIssueList();
+    	issueModel.setIssue(issue_contents.get(0));
+    	System.out.println(issue_contents.get(0));
+    	// dev1 assignee로 지정
+    	issueModel.modify(issue_contents.get(0), null, State.ASSIGNED, (Dev)devs.get(0));
+    	
+    	// dev1 행동
+    	loginModel.tryLogin("dev1", "dev1");
+    	project_contents = projectListModel.getProjectList();
+    	issueModel.setProject(project_contents.get(0));
+    	issue_contents = issueListModel.getIssueList();
+    	issueModel.setIssue(issue_contents.get(0));
+    	
+    	// assigned -> fixed로 변경
+    	issueModel.modify(issue_contents.get(0), null, State.FIXED, null);
+    	issue_contents = issueListModel.getIssueList();
+
+    	// fixed -> resolved로 변경
+    	loginModel.tryLogin("tester1", "tester1");
+    	project_contents = projectListModel.getProjectList();
+    	issueModel.setProject(project_contents.get(0));
+    	issue_contents = issueListModel.getIssueList();
+    	issueModel.setIssue(issue_contents.get(0));
+    	
+    	issueModel.modify(issue_contents.get(0), null, State.RESOLVED, null);
+    	issue_contents = issueListModel.getIssueList();
+    	
+    	
+    	// isssue2 생성
+    	issueListModel.tryCreateIssue("issue2", "issue description2", Priority.MINOR);
+    	
+    	loginModel.tryLogin("pl1", "pl1");
+    	project_contents = projectListModel.getProjectList();
+    	issueModel.setProject(project_contents.get(0));
+    	issue_contents = issueListModel.getIssueList();
+    	issueModel.setIssue(issue_contents.get(1));
+    	// dev2 assignee로 지정
+    	issueModel.modify(issue_contents.get(0), null, State.ASSIGNED, (Dev)devs.get(1));
+    	
+    	List<User> sorted_devs = issueModel.getRecommedAssignee();
+    	for(User d : sorted_devs) {
+    		System.out.println(d.getAccountID());
+    	}
+    	Assertions.assertEquals("dev2", sorted_devs.get(2).getAccountID());
     }
 }

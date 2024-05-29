@@ -17,13 +17,11 @@ import main.repository.ProjectRepo;
 
 public class IssueListModel extends Model {
 	private IssueRepo issue_repo;
-	private ProjectRepo project_repo;
 	private FilterOption filterOption;
 		
-	public IssueListModel(SystemManager s, IssueRepo r, ProjectRepo p) {
+	public IssueListModel(SystemManager s, IssueRepo r) {
 		super(s);
 		this.issue_repo = r;
-		this.project_repo = p;
 		this.filterOption = new FilterOption(null, null, null);
 	}
 
@@ -84,10 +82,5 @@ public class IssueListModel extends Model {
 	
 	public FilterOption getFilterOption() {
 		return this.filterOption;
-	}
-	
-	public List<User> getRecommedAssignee(){
-		List<User> devs = project_repo.findAll(getProject(), Authority.DEV);
-		return issue_repo.sortByRecommendScore(devs);
 	}
 }
