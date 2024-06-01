@@ -13,14 +13,15 @@ import main.model.LoginModel;
 
 
 @Controller
-public class SpringLoginController extends LoginController{
+public class SpringLoginController{
+	private LoginModel login_model;
 	public SpringLoginController(LoginModel model) {
-		super(model);
+		this.login_model = model;
 	}
 	
 	@GetMapping("/")
 	public String home() {
-		if(model.getUser() == null) return "redirect:/login";
+		if(login_model.getUser() == null) return "redirect:/login";
 		return "redirect:/project";
 	}
 	
@@ -33,14 +34,14 @@ public class SpringLoginController extends LoginController{
 	public String loginHandler(
 			@RequestParam(value="accountID") String accountID,
 			@RequestParam(value="password") String password) {
-		boolean flag = super.model.tryLogin(accountID, password);
+		boolean flag = this.login_model.tryLogin(accountID, password);
 		if(flag) return "redirect:/project";
 		return "redirect:/login";
 	}
 	
 	@GetMapping("/logout")
 	public String logout() {
-		super.model.logout();
+		this.login_model.logout();
 		return "redirect:/login";
 	}
 }

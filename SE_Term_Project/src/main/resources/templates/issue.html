@@ -241,7 +241,7 @@
 <script>
 	var defaultstateSelect = '[[${issue.state}]]';
 	var state = document.querySelector("#state").querySelectorAll('option');
-	for(let i = 0; i<priority.length; i++) {
+	for(let i = 0; i<state.length; i++) {
 	    if(state[i].value == defaultstateSelect) {
 	        state[i].selected = true;
 	        break;
@@ -251,7 +251,7 @@
 <script th:if="${issue.assignee != null}">
   	var defaultAssigneeSelect = '[[${issue.assignee.accountID}]]';
 	var assignee = document.querySelector("#assignee").querySelectorAll('option');
-	for(let i = 0; i<priority.length; i++) {
+	for(let i = 0; i<assignee.length; i++) {
 	    if(assignee[i].value == defaultAssigneeSelect) {
 	        assignee[i].selected = true;
 	        break;
