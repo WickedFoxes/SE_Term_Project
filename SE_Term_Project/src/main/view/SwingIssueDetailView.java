@@ -376,11 +376,7 @@ public class SwingIssueDetailView extends SwingView implements ReturnableView {
 		public void updateComments(List<Comment> comments) {
 			JLabel commentLabel;
 			String content;
-			for(JLabel label : commentLabels) {
-				remove(label);
-				revalidate();
-				repaint();
-			}
+			for(JLabel label : commentLabels) panel.remove(label);
 			commentLabels.clear();
 			
 			for(int i = 0; i < comments.size(); i++) {
