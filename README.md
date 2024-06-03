@@ -1,6 +1,17 @@
 # SE_Term_Project
 2024년 소프트웨어공학 01분반 TermProject Team 17
 
+# 패키지 설명
+- main.application - 어플리케이션 실행
+- main.controller - MVC 패턴의 컨트롤러 클래스
+- main.domain - 모델의 Domain 클래스
+- main.domain.enumeration - Domain 클래스에 활용되는 Enum
+- main.model - MVC 패턴의 모델 클래스
+- main.repository - 모델의 Repo 클래스
+- main.view - MVC 패턴의 뷰 클래스
+- test.model - ModelTest 클래스(JUnit)
+- test.repository -  MysqlRepoTest 클래스(JUnit)
+
 # 실행 방법
 사용하고자 하는 gui의 주석을 제거한다.
 
