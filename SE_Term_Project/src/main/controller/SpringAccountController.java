@@ -10,15 +10,16 @@ import main.domain.enumeration.Authority;
 import main.model.AccountModel;
 
 @Controller
-public class SpringAccountController extends AccountController{
+public class SpringAccountController{
+	private AccountModel account_model;
 	public SpringAccountController(AccountModel model) {
-		super(model);
+		this.account_model = model;
 	}
 
 	@GetMapping("/signup")
 	public String signupPage() {
-		if(model.getUser() == null) return "redirect:/login";
-		if(model.getUser().getAuthority() != Authority.ADMIN) return "redirect:/project";
+		if(account_model.getUser() == null) return "redirect:/login";
+		if(account_model.getUser().getAuthority() != Authority.ADMIN) return "redirect:/project";
 		return "signup";
 	}
 	
@@ -27,8 +28,8 @@ public class SpringAccountController extends AccountController{
 			@RequestParam(value="accountID") String accountID,
 			@RequestParam(value="password") String password,
 			@RequestParam(value="authority") String authority) {
-		if(model.getUser() == null) return "redirect:/login";
-		boolean flag = model.trySignup(accountID, password, Authority.valueOf(authority));
+		if(account_model.getUser() == null) return "redirect:/login";
+		boolean flag = account_model.trySignup(accountID, password, Authority.valueOf(authority));
 		
 		if(flag) return "redirect:/project";
 		return "redirect:/signup";

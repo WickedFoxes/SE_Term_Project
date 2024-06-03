@@ -19,8 +19,8 @@ public class AccountModel extends Model {
 		if(getUser() == null) return false;  
 		if(getUser().getAuthority() != Authority.ADMIN) return false;
 		if(repo.contains(id)) return false;
-		if(id == "") return false;
-		if(pw == "") return false;
+		if(id.equals("")) return false;
+		if(pw.equals("")) return false;
 		
 		switch(authority) {
 		case PL:

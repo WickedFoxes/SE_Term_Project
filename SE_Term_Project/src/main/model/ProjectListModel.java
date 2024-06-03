@@ -20,11 +20,12 @@ public class ProjectListModel extends Model {
 	public boolean tryCreateProject(String name, ProjectLeader pl, List<Dev> devs, List<Tester> testers) {
 		if(getUser() == null) return false;
 		if(getUser().getAuthority() != Authority.ADMIN) return false;
-		if(name == "") return false;
+		if(name.equals("")) return false;
 		
 		Project project = new Project(name);
 		project = project_repo.add(project);
 		
+		if(pl == null) return false;
 		project_repo.add(project, pl);
 		for(Dev dev : devs) {
 			project_repo.add(project, dev);

@@ -16,26 +16,27 @@ import main.model.AccountModel;
 import main.model.ProjectListModel;
 
 @Controller
-public class SpringProjectListController extends ProjectListContorller{
+public class SpringProjectListController{
+	private ProjectListModel project_model;
 	private AccountModel account_model;
 	public SpringProjectListController(ProjectListModel pmodel, AccountModel amodel) {
-		super(pmodel);
+		this.project_model = pmodel;
 		this.account_model = amodel;
 	}
 
 	@GetMapping("/project")
 	public String projectPage(Model input) {
-		if(model.getUser() == null) return "redirect:/login";
-		model.setIssue(null);
-		input.addAttribute("projects", model.getProjectList());
-		input.addAttribute("authority", model.getUser().getAuthority().name());
+		if(project_model.getUser() == null) return "redirect:/login";
+		project_model.setIssue(null);
+		input.addAttribute("projects", project_model.getProjectList());
+		input.addAttribute("authority", project_model.getUser().getAuthority().name());
 		return "projectList";
 	}
 
 	@GetMapping("/project/create")
 	public String projectCreatePage(Model input) {
-		if(model.getUser() == null) return "redirect:/login";
-		if(model.getUser().getAuthority() != Authority.ADMIN) return "redirect:/project";
+		if(project_model.getUser() == null) return "redirect:/login";
+		if(project_model.getUser().getAuthority() != Authority.ADMIN) return "redirect:/project";
 		
 		input.addAttribute("pls", account_model.getAllAccounts(Authority.PL));
 		input.addAttribute("devs", account_model.getAllAccounts(Authority.DEV));
@@ -72,7 +73,8 @@ public class SpringProjectListController extends ProjectListContorller{
 			}
 		}
 		
-		if(model.tryCreateProject(name, projectleader, dev_list, tester_list)) return "redirect:/project";
+		if(project_model.tryCreateProject(name, projectleader, dev_list, tester_list)) 
+			return "redirect:/project";
 		
 		return "redirect:/project/create";
 	}
