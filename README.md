@@ -23,6 +23,9 @@ SE_Term_Project/SE_Term_Project/src/main/application/Run.java
 // 2. Spring gui
 // Application app = new SpringApp(args);
 ```
+- Spring : java 프로젝트를 실행시 로그인 gui 화면이 생성된다.
+- Spring : http://localhost:8080/ 에서 로그인 화면을 확인한다.
+
 
 # 구현- Swing
 ## 로그인 화면(LoginView)
